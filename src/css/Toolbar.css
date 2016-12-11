@@ -1,0 +1,333 @@
+.Toolbar {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
+  color: white;
+  background-color: #333333;
+}
+
+.Toolbar__title {
+  margin: 0;
+  padding: 5px 10px;
+  background-color: rgba(255,255,255,0.1);
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.Toolbar__button {
+  float: right;
+}
+
+.Toolbar__scroller {
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.Toolbar__intro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  height: 100%;
+  transition: opacity 100ms ease;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.Toolbar--isOpen .Toolbar__intro {
+  transition: none;
+  opacity: 0;
+}
+
+.Toolbar__groupTitle {
+  margin: 10px 10px 10px;
+  transition: all 100ms ease;
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #aaaaaa;
+  font-size: 16px;
+}
+
+.Toolbar__groupTitle:last-of-type {
+  margin-top: 40px;
+}
+
+.Toolbar__groupTitle.Toolbar__disabled {
+  color: #444444;
+  border-color: #444444;
+}
+
+.Toolbar__section {
+  margin-bottom: 20px;
+  padding: 5px;
+  text-align: center;
+}
+
+.Toolbar__splitSection {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Toolbar h3,
+.Toolbar h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  transition: all 100ms ease;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.Toolbar h3.Toolbar__disabled,
+.Toolbar h4.Toolbar__disabled {
+  color: #444444;
+}
+
+.Toolbar h3 {
+  font-size: 14px;
+}
+
+.Toolbar h4 {
+  font-size: 12px;
+}
+
+.Toolbar__nudgeButton {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  transition: all 100ms ease;
+  vertical-align: middle;
+  color: white;
+  border: 3px solid #111111;
+  border-radius: 4px;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+}
+
+.Toolbar__nudgeButton:hover {
+  border-color: #ffffff;
+}
+
+.Toolbar__nudgeButton:active {
+  color: #4b91b3;
+  border-color: #4b91b3;
+}
+
+.Toolbar__nudgeText {
+  display: inline-block;
+  min-width: 25px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.Toolbar__basisInput {
+  width: 40px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  vertical-align: baseline;
+  color: #ffffff;
+  border: 3px solid #111111;
+  border-radius: 4px;
+  outline: none;
+  background: transparent;
+}
+
+.Toolbar__basisInput:focus {
+  border-color: #ffffff;
+}
+
+.Toolbar__iconRadioLabel {
+  display: inline-block;
+}
+
+.Toolbar__iconRadioLabel > input {
+  display: none;
+}
+
+/* Flexbox Icons */
+
+.fbi {
+  display: block;
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  cursor: default;
+  user-select: none;
+}
+
+.Toolbar--isColumn .fbi-jc .fbi-items,
+.Toolbar--isColumn .fbi-ai .fbi-items {
+  flex-direction: column;
+}
+
+.fbi-items {
+  display: flex;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  padding: 2px;
+  transition: all 100ms ease;
+  border: 3px solid #111111;
+  border-radius: 4px;
+}
+
+.Toolbar__iconRadioLabel:hover .fbi > .fbi-items {
+  border-color: white;
+}
+
+.Toolbar__iconRadioLabel > input:checked + .fbi > .fbi-items {
+  border-color: #4b91b3;
+  background-color: #4b91b3;
+}
+
+.Toolbar__iconRadioLabel > input:checked + .fbi > .fbi-items > i {
+  background-color: #ffffff;
+}
+
+.Toolbar__iconRadioLabel > input:disabled + .fbi > .fbi-items {
+  border-color: #444444;
+  background-color: transparent;
+}
+
+.Toolbar__iconRadioLabel > input:disabled + .fbi > .fbi-items > i {
+  background-color: #444444;
+}
+
+.fbi-items > i {
+  display: block;
+  min-width: 4px;
+  min-height: 4px;
+  margin: 1px;
+  transition: all 100ms ease;
+  border-radius: 4px;
+  background-color: #999999;
+}
+
+.fbi > span {
+  display: block;
+  margin-top: 1px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 9px;
+  font-style: normal;
+}
+
+.Toolbar__default {
+  position: relative;
+}
+
+.Toolbar__default:after {
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  width: 100%;
+  content: 'DEFAULT';
+  color: #666666;
+  font-size: 8px;
+  line-height: 8px;
+}
+
+.Toolbar__iconRadioLabel > input:disabled + .fbi > span,
+.Toolbar__iconRadioLabel > input:disabled + .fbi > .Toolbar__default:after {
+  color: #444444;
+}
+
+.fbi-column > .fbi-items {
+  flex-direction: column;
+}
+
+.fbi-wrap > .fbi-items {
+  flex-wrap: wrap;
+}
+
+.fbi-jc-flex-end > .fbi-items {
+  justify-content: flex-end;
+}
+
+.fbi-jc-center > .fbi-items {
+  justify-content: center;
+}
+
+.fbi-jc-space-between > .fbi-items {
+  justify-content: space-between;
+}
+
+.fbi-jc-space-around > .fbi-items {
+  justify-content: space-around;
+}
+
+.fbi-ai-stretch > .fbi-items {
+  align-items: stretch;
+}
+
+.fbi-ai-center > .fbi-items {
+  align-items: center;
+}
+
+.fbi-ai-flex-start > .fbi-items {
+  align-items: flex-start;
+}
+
+.fbi-ai-flex-end > .fbi-items {
+  align-items: flex-end;
+}
+
+.fbi-ai-baseline > .fbi-items {
+  align-items: baseline;
+}
+
+.fbi-ai-baseline > .fbi-items > i {
+  padding: 1px;
+  text-align: center;
+  color: #333333;
+  font-size: 6px;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.fbi-ai-baseline > .fbi-items > i:last-child {
+  font-size: 9px;
+}
+
+.fbi-as-auto > .fbi-items {
+  align-items: center;
+  justify-content: center;
+}
+
+.fbi-as-auto > .fbi-items > i {
+  align-self: auto;
+  background-color: transparent;
+  font-style: normal;
+}
+
+.Toolbar__iconRadioLabel > input:checked + .fbi-as-auto > .fbi-items > i {
+  background-color: transparent;
+}
+
+.fbi-as-stretch > .fbi-items > i {
+  align-self: stretch;
+}
+
+.fbi-as-center > .fbi-items > i {
+  align-self: center;
+}
+
+.fbi-as-flex-start > .fbi-items > i {
+  align-self: flex-start;
+}
+
+.fbi-as-flex-end > .fbi-items > i {
+  align-self: flex-end;
+}

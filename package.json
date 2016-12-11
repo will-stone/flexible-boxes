@@ -1,0 +1,28 @@
+{
+  "name": "flexible-boxes",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "^0.8.3"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "font-awesome": "^4.7.0",
+    "immutability-helper": "^2.0.0",
+    "jsurl": "^0.1.4",
+    "react": "^15.3.1",
+    "react-clipboard.js": "^1.0.1",
+    "react-dom": "^15.3.1",
+    "react-split-pane": "^0.1.52",
+    "react-syntax-highlighter": "^3.0.0",
+    "string.prototype.repeat": "^0.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/react-scripts/config/eslint.js"
+  }
+}

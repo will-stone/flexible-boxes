@@ -1,0 +1,21 @@
+.Css {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: #333333;
+}
+
+.Css__title {
+  margin: 0;
+  padding: 5px 10px;
+  background-color: rgba(255,255,255,0.1);
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.Css pre {
+  margin: 0 !important;
+  background-color: transparent !important;
+}

@@ -1,0 +1,17 @@
+{
+	"name": "Flexible Boxes",
+	"icons": [
+		{
+			"src": "\/android-chrome-192x192.png?v=qAqYlprbv7",
+			"sizes": "192x192",
+			"type": "image\/png"
+		},
+		{
+			"src": "\/android-chrome-384x384.png?v=qAqYlprbv7",
+			"sizes": "384x384",
+			"type": "image\/png"
+		}
+	],
+	"theme_color": "#4b91b3",
+	"display": "standalone"
+}

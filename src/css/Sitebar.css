@@ -1,0 +1,45 @@
+.Sitebar {
+  height: 100%;
+  padding: 10px;
+  color: white;
+  background-color: #4b91b3;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.Sitebar__logo {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  font-weight: 100;
+}
+
+.Sitebar__subTitle {
+  margin: 0 0 10px;
+  color: white;
+  font-size: 14px;
+}
+
+.Sitebar__sectionHeading {
+  margin-bottom: 10px;
+}
+
+.Sitebar__button {
+  margin: 5px 2px;
+}
+
+.Sitebar > hr {
+  opacity: 0.3;
+  margin: 20px 0;
+}
+
+.Sitebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Sitebar li:first-child {
+  margin-bottom: 10px;
+}

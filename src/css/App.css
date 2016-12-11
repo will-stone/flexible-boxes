@@ -1,0 +1,104 @@
+.App {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #333333;
+}
+
+.App__fullPageWarning {
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: #333333;
+  transition: transform 300ms ease;
+  text-align: center
+}
+
+.App__fullPageWarning > div {
+  max-width: 300px;
+}
+
+.App__fullPageWarning p {
+  text-align: justify;
+  line-height: 1.3;
+}
+
+.App__fullPageWarning i {
+  color: #4b91b3;
+}
+
+.App__fullPageWarning button {
+  padding: 0;
+  cursor: pointer;
+  color: #4b91b3;
+  border-width: 0;
+  outline: none;
+  background-color: transparent;
+  font-size: inherit;
+}
+
+@media(min-width: 1024px) {
+  .App__screenTooSmall {
+    display: none;
+  }
+}
+
+.App__screenTooSmall--isHidden {
+  transform: translate(-100%, 0);
+}
+
+.App__browserWarning {
+  z-index: 9;
+}
+
+.Resizer {
+  z-index: 1;
+  box-sizing: border-box;
+  opacity: 0.2;
+  background: #000000;
+  background-clip: padding-box;
+}
+
+.Resizer:hover {
+  transition: all 2s ease;
+}
+
+.Resizer.horizontal {
+  width: 100%;
+  height: 5px;
+  margin: -2px 0;
+  cursor: row-resize;
+  border-top: 2px solid rgba(255, 255, 255, 0);
+  border-bottom: 2px solid rgba(255, 255, 255, 0);
+}
+
+.Resizer.horizontal:hover {
+  border-top: 2px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.vertical {
+  width: 5px;
+  margin: 0 -2px;
+  cursor: col-resize;
+  border-right: 2px solid rgba(255, 255, 255, 0);
+  border-left: 2px solid rgba(255, 255, 255, 0);
+}
+
+.Resizer.vertical:hover {
+  border-right: 2px solid rgba(0, 0, 0, 0.5);
+  border-left: 2px solid rgba(0, 0, 0, 0.5);
+}
+Resizer.disabled {
+  cursor: not-allowed;
+}
+Resizer.disabled:hover {
+  border-color: transparent;
+}

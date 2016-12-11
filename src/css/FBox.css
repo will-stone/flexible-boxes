@@ -1,0 +1,97 @@
+.FBox {
+  position: relative;
+  display: flex;
+  transition: all 100ms ease-in-out;
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.6);
+  background-color: #222;
+  padding: 4px;
+  color: white;
+}
+
+.FBox.isActive {
+  background-color: #4B91B3 !important;
+  color: #fff;
+}
+
+.FBox__title {
+  line-height: 1;
+  font-size: 12px;
+  user-select: none;
+  cursor: default;
+}
+
+.FBox.isRootBox {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  box-shadow: none;
+}
+
+.FBox.isActive > .FBox__id {
+  opacity: 1;
+}
+
+.FBox__actionButtons {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  cursor: default;
+  transition: all 50ms ease-in-out;
+  text-align: center;
+  opacity: 0.3;
+  color: #ffffff;
+  border: none;
+  outline: 0;
+  background-color: royalblue;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 16px;
+}
+
+.FBox__actionButtons:hover {
+  opacity: 1;
+}
+
+.FBox.isActive > .FBox__actionButtons {
+  color: royalblue;
+  background-color: #ffffff;
+}
+
+.FBox__addButton {
+  top: 0;
+  right: 0;
+}
+
+.FBox__deleteButton {
+  right: 0;
+  bottom: 0;
+}
+
+.FBox__moveLeftButton {
+  top: 50%;
+  left: 0;
+  height: 30px;
+  margin-top: -15px;
+}
+
+.FBox__moveRightButton {
+  top: 50%;
+  right: 0;
+  height: 30px;
+  margin-top: -15px;
+}
+
+.FBox__moveUpButton {
+  top: 0;
+  left: 50%;
+  width: 30px;
+  margin-left: -15px;
+}
+
+.FBox__moveDownButton {
+  bottom: 0;
+  left: 50%;
+  width: 30px;
+  margin-left: -15px;
+}
