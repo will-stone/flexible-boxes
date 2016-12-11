@@ -24,7 +24,7 @@ class Sitebar extends Component {
         <hr/>
 
         <ul>
-          <li><a href="#" className="button button--link"><i className="fa fa-github"/> Source</a></li>
+          <li><a href="https://github.com/will-stone/flexible-boxes/issues" className="button button--link"><i className="fa fa-github"/> Issues?</a></li>
           <li><a href="https://twitter.com/wstone_io" className="button button--link"><i className="fa fa-twitter"/> wstone_io</a></li>
         </ul>
 
