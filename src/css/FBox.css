@@ -1,26 +1,29 @@
 .FBox {
   position: relative;
   display: flex;
-  transition: all 100ms ease-in-out;
-  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.6);
-  background-color: #222;
   padding: 4px;
+  transition: all 100ms ease-in-out;
   color: white;
+  background-color: #222222;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 
 .FBox.isActive {
-  background-color: #4B91B3 !important;
-  color: #fff;
+  color: #ffffff;
+  background-color: #4b91b3 !important;
 }
 
 .FBox__title {
-  line-height: 1;
-  font-size: 12px;
-  user-select: none;
   cursor: default;
+  user-select: none;
+  font-size: 12px;
+  line-height: 1;
 }
 
 .FBox.isRootBox {
+  position: absolute;
+  top: 0;
+  left: 0;
   overflow: hidden;
   width: 100%;
   height: 100%;
