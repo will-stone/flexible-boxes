@@ -44,7 +44,7 @@ class FBox extends Component {
         );
       }
     } else {
-      inner = <div className="FBox__title">{(thisBox.t ? thisBox.t : 'Box')}</div>
+      inner = thisBox.t ? thisBox.t : 'Box'
     }
 
     return (

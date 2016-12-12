@@ -13,13 +13,6 @@
   background-color: #4b91b3 !important;
 }
 
-.FBox__title {
-  cursor: default;
-  user-select: none;
-  font-size: 12px;
-  line-height: 1;
-}
-
 .FBox.isRootBox {
   overflow: hidden;
   flex-grow: 1 !important;
