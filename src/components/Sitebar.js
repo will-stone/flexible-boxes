@@ -10,7 +10,7 @@ class Sitebar extends Component {
     return (
       <div className="Sitebar">
         <h1 className="Sitebar__logo">Flexible Boxes</h1>
-        <h2 className="Sitebar__subTitle">By <a className="button button--link" href="http://wstone.io/">Will Stone</a></h2>
+        <h2 className="Sitebar__subTitle">By <a className="button button--link" href="http://wstone.io/2016/flexible-boxes/">Will Stone</a></h2>
 
         <hr/>
 
