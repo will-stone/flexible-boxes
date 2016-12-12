@@ -29,8 +29,7 @@ class App extends Component {
           c: [2, 3, 4]
         },
         2: {
-          t: 'header',
-          b: '10%'
+          t: 'header'
         },
         3: {
           t: 'main',
@@ -38,8 +37,7 @@ class App extends Component {
           c: [5, 6, 7]
         },
         4: {
-          t: 'footer',
-          b: '10%'
+          t: 'footer'
         },
         5: {
           t: 'sidebarL',
