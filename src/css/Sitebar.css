@@ -1,14 +1,14 @@
 .Sitebar {
-  height: 100%;
+  overflow-y: auto;
+  flex-grow: 1;
   padding: 10px;
+  text-align: center;
   color: white;
   background-color: #4b91b3;
-  text-align: center;
-  overflow-y: auto;
 }
 
 .Sitebar__logo {
-  margin-top: 0px;
+  margin-top: 0;
   margin-bottom: 5px;
   font-family: 'Caveat', cursive;
   font-size: 28px;
@@ -30,14 +30,14 @@
 }
 
 .Sitebar > hr {
-  opacity: 0.3;
   margin: 20px 0;
+  opacity: 0.3;
 }
 
 .Sitebar ul {
-  list-style: none;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .Sitebar li:first-child {

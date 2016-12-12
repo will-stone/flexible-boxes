@@ -1,0 +1,4 @@
+.Pane {
+  display: flex;
+  flex-direction: column;
+}

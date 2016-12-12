@@ -6,6 +6,7 @@ import classnames from 'classnames';
 
 import './../css/App.css';
 import './../css/button.css';
+import './../css/Pane.css';
 
 import FBox from './../components/FBox';
 import Toolbar from './../components/Toolbar';
