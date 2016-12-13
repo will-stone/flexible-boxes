@@ -43,8 +43,9 @@ class FBox extends Component {
             />
         );
       }
-    } else {
-      inner = thisBox.t ? thisBox.t : 'Box'
+    }
+    else {
+      inner = <div className="FBox__label">{thisBox.t ? thisBox.t : 'Box'}</div>
     }
 
     return (
