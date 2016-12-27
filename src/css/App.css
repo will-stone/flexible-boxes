@@ -2,7 +2,6 @@
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background-color: #333333;
 }
 
 .App__fullPageWarning {
@@ -16,7 +15,7 @@
   width: 100%;
   height: 100%;
   color: white;
-  background-color: #333333;
+  background-color: #252831;
   transition: transform 300ms ease;
   text-align: center
 }

@@ -24,33 +24,13 @@ class App extends Component {
       selectedBoxId: null,
       boxes: { // default layout
         1: {
-          t: 'body',
-          d: 'column',
           c: [2, 3, 4]
         },
         2: {
-          t: 'header'
         },
         3: {
-          t: 'main',
-          g: 1,
-          c: [5, 6, 7]
         },
         4: {
-          t: 'footer'
-        },
-        5: {
-          t: 'sidebarL',
-          s: 0,
-          b: '150px'
-        },
-        6: {
-          g: 1
-        },
-        7: {
-          t: 'sidebarR',
-          s: 0,
-          b: '150px'
         }
       }
     };

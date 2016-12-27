@@ -145,11 +145,11 @@ ${buildUpBoxCSSProperties(1)}}
 ${builtCode}`;
 
     return (
-      <div className="Css">
-        <h2 className="Css__title">
+      <div className="Css Pane__component">
+        <h2 className="Pane__title">
           CSS
           <ClipboardButton
-            button-className="Html__button button"
+            button-className="Pane__titleButton button"
             data-clipboard-text={css}
             onSuccess={this.onSuccessfulyCopy.bind(this)}
             >

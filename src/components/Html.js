@@ -74,11 +74,11 @@ class Html extends Component {
 ${rootComment}${builtCode}${rootCompEnd}`;
 
     return (
-      <div className="Html">
-        <h2 className="Html__title">
+      <div className="Html Pane__component">
+        <h2 className="Pane__title">
           HTML
           <ClipboardButton
-            button-className="Html__button button"
+            button-className="Pane__titleButton button"
             data-clipboard-text={html}
             onSuccess={this.onSuccessfulyCopy.bind(this)}
             >

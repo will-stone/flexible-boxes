@@ -1,23 +1,6 @@
 .Dom {
   position: relative;
-  display: flex;
   overflow: hidden;
-  flex-direction: column;
-  flex-grow: 1;
-  color: white;
-  background-color: #333333;
-}
-
-.Dom__title {
-  margin: 0;
-  padding: 5px 10px;
-  background-color: rgba(255,255,255,0.1);
-  font-size: 16px;
-  line-height: 25px;
-}
-
-.Dom__button {
-  float: right;
 }
 
 .Dom__boxes {

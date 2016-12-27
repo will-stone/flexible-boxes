@@ -6,7 +6,7 @@
   text-decoration: none;
   color: white;
   border: 0;
-  border-radius: 5px;
+  border-radius: 0px;
   outline: 0;
   background: rgba(255,255,255,0.1);
   font-size: 12px;
@@ -14,7 +14,7 @@
 }
 
 .button:hover {
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.15);
 }
 
 .button:active {

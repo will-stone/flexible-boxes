@@ -10,15 +10,15 @@ class Toolbar extends Component {
 
     return (
       <div className={classnames(
-        'Toolbar',
+        'Toolbar Pane__component',
         { 'Toolbar--isOpen': thisBox },
         { 'Toolbar--isColumn': thisBox && thisBox.d && thisBox.d === 'column' }
       )}>
-        <h2 className="Toolbar__title">
+        <h2 className="Pane__title">
           TOOLBAR
           {
             thisBox &&
-            <button className="Toolbar__button button" onClick={this.props.resetBox.bind(this, this.props.id)}>DEFAULT</button>
+            <button className="Pane__titleButton button" onClick={this.props.resetBox.bind(this, this.props.id)}>DEFAULT</button>
           }
         </h2>
         <div className="Toolbar__scroller">

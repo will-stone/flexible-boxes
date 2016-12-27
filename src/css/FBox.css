@@ -19,7 +19,7 @@
   overflow: hidden;
   flex-grow: 1 !important;
   box-shadow: none;
-  background-color: #222222;
+  background-color: #252831;
 }
 
 .FBox.isActive > .FBox__id {
@@ -27,7 +27,7 @@
 }
 
 .FBox.isActive .FBox {
-  background: #222222;
+  background: #252831;
 }
 
 .FBox__label {

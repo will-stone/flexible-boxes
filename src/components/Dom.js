@@ -56,8 +56,8 @@ class Dom extends Component {
     domBoxes.push.apply(domBoxes, buildDom(1, 0));
 
     return (
-      <div className="Dom">
-        <h2 className="Dom__title">DOM <a className="Dom__button button" href="/#~(1~())" onClick={() => selectBox(null)}>CLEAR</a></h2>
+      <div className="Dom Pane__component">
+        <h2 className="Pane__title">DOM <a className="Pane__titleButton button" href="/#~(1~())" onClick={() => selectBox(null)}>CLEAR</a></h2>
         <ul className="Dom__boxes" onClick={() => selectBox(null)}>
           {domBoxes}
         </ul>

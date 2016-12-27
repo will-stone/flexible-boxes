@@ -1,23 +1,6 @@
 .Toolbar {
   position: relative;
-  display: flex;
   overflow: hidden;
-  flex-direction: column;
-  flex-grow: 1;
-  color: white;
-  background-color: #333333;
-}
-
-.Toolbar__title {
-  margin: 0;
-  padding: 5px 10px;
-  background-color: rgba(255,255,255,0.1);
-  font-size: 16px;
-  line-height: 25px;
-}
-
-.Toolbar__button {
-  float: right;
 }
 
 .Toolbar__scroller {
@@ -60,8 +43,8 @@
 }
 
 .Toolbar__groupTitle.Toolbar__disabled {
-  color: #444444;
-  border-color: #444444;
+  color: #0b0c0f;
+  border-color: #0b0c0f;
 }
 
 .Toolbar__section {
@@ -86,7 +69,7 @@
 
 .Toolbar h3.Toolbar__disabled,
 .Toolbar h4.Toolbar__disabled {
-  color: #444444;
+  color: #0b0c0f;
 }
 
 .Toolbar h3 {
@@ -104,8 +87,7 @@
   transition: all 100ms ease;
   vertical-align: middle;
   color: white;
-  border: 3px solid #111111;
-  border-radius: 4px;
+  border: 3px solid #0b0c0f;
   outline: none;
   background: transparent;
   font-size: 20px;
@@ -135,8 +117,7 @@
   text-align: center;
   vertical-align: baseline;
   color: #ffffff;
-  border: 3px solid #111111;
-  border-radius: 4px;
+  border: 3px solid #0b0c0f;
   outline: none;
   background: transparent;
 }
@@ -177,8 +158,7 @@
   margin: 0 auto;
   padding: 2px;
   transition: all 100ms ease;
-  border: 3px solid #111111;
-  border-radius: 4px;
+  border: 3px solid #0b0c0f;
 }
 
 .Toolbar__iconRadioLabel:hover .fbi > .fbi-items {
@@ -195,12 +175,12 @@
 }
 
 .Toolbar__iconRadioLabel > input:disabled + .fbi > .fbi-items {
-  border-color: #444444;
+  border-color: #0b0c0f;
   background-color: transparent;
 }
 
 .Toolbar__iconRadioLabel > input:disabled + .fbi > .fbi-items > i {
-  background-color: #444444;
+  background-color: #0b0c0f;
 }
 
 .fbi-items > i {
@@ -209,7 +189,6 @@
   min-height: 4px;
   margin: 1px;
   transition: all 100ms ease;
-  border-radius: 4px;
   background-color: #999999;
 }
 
@@ -233,14 +212,14 @@
   left: 0;
   width: 100%;
   content: 'DEFAULT';
-  color: #666666;
+  color: #0b0c0f;
   font-size: 8px;
   line-height: 8px;
 }
 
 .Toolbar__iconRadioLabel > input:disabled + .fbi > span,
 .Toolbar__iconRadioLabel > input:disabled + .fbi > .Toolbar__default:after {
-  color: #444444;
+  color: #0b0c0f;
 }
 
 .fbi-column > .fbi-items {
@@ -290,7 +269,7 @@
 .fbi-ai-baseline > .fbi-items > i {
   padding: 1px;
   text-align: center;
-  color: #333333;
+  color: #252831;
   font-size: 6px;
   font-weight: bold;
   font-style: normal;
