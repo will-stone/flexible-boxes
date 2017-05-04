@@ -25,7 +25,7 @@ class Sitebar extends Component {
 
         <ul>
           <li><a href="https://github.com/will-stone/flexible-boxes/issues" className="button button--link"><i className="fa fa-github"/> Issues?</a></li>
-          <li><a href="https://twitter.com/wstone_io" className="button button--link"><i className="fa fa-twitter"/> wstone_io</a></li>
+          <li><a href="https://twitter.com/will_stone_" className="button button--link"><i className="fa fa-twitter"/> will_stone_</a></li>
         </ul>
 
       </div>
