@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import classnames from 'classnames';
+import classnames from 'classnames'
+import repeat from 'lodash/repeat'
+import React, { Component } from 'react'
 
-require('string.prototype.repeat');
-
-import './../css/DomBox.css';
+import './../css/DomBox.css'
 
 class DomBox extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       title: this.props.box.t ? this.props.box.t : '',
@@ -32,7 +31,7 @@ class DomBox extends Component {
 
   titleKeyDown(e) {
     if (e.key === 'Enter') {
-      this.toggleEditTitle();
+      this.toggleEditTitle()
     }
   }
 
@@ -46,41 +45,72 @@ class DomBox extends Component {
   render() {
     return (
       <li
-        className={classnames(
-          'DomBox',
-          { 'DomBox--isActive': this.props.id === this.props.selectedBoxId }
-        )}
-        onClick={(e) => { e.stopPropagation(); this.props.selectBox(this.props.id); } }>
+        className={classnames('DomBox', {
+          'DomBox--isActive': this.props.id === this.props.selectedBoxId
+        })}
+        onClick={e => {
+          e.stopPropagation()
+          this.props.selectBox(this.props.id)
+        }}
+      >
         <span className="DomBox__id">{this.props.id}</span>
-        <span className="DomBox__indenter">{'··'.repeat(this.props.indentLevel)}</span>
-        {
-          this.state.showEditTitle && this.props.id === this.props.selectedBoxId ?
-            <input autoFocus className="DomBox__titleInput" type="text" name="t" value={this.state.title} onChange={e => this.updateTitle(e)} onKeyDown={e => this.titleKeyDown(e)} />
-            : <span className="DomBox__name">{this.props.box.t ? this.props.box.t : 'Box'}</span>
-        }
+        <span className="DomBox__indenter">
+          {repeat('..', this.props.indentLevel)}
+        </span>
+        {this.state.showEditTitle &&
+        this.props.id === this.props.selectedBoxId ? (
+          <input
+            autoFocus
+            className="DomBox__titleInput"
+            type="text"
+            name="t"
+            value={this.state.title}
+            onChange={e => this.updateTitle(e)}
+            onKeyDown={e => this.titleKeyDown(e)}
+          />
+        ) : (
+          <span className="DomBox__name">
+            {this.props.box.t ? this.props.box.t : 'Box'}
+          </span>
+        )}
 
         <span className="DomBox__buttons">
-          {
-            this.props.id !== 1 &&
+          {this.props.id !== 1 && (
             <button
               className="DomBox__deleteButton DomBox__button"
-              onClick={(e) => { e.stopPropagation(); this.props.deleteBox(this.props.id, this.props.parentId); } }
-              ><i className="fa fa-trash" /></button>
-          }
+              onClick={e => {
+                e.stopPropagation()
+                this.props.deleteBox(this.props.id, this.props.parentId)
+              }}
+            >
+              <i className="fa fa-trash" />
+            </button>
+          )}
 
           <button
             className="DomBox__renameButton DomBox__button"
-            onClick={(e) => { e.stopPropagation(); this.toggleEditTitle(); this.props.selectBox(this.props.id); } }
-            ><i className="fa fa-pencil" /></button>
+            onClick={e => {
+              e.stopPropagation()
+              this.toggleEditTitle()
+              this.props.selectBox(this.props.id)
+            }}
+          >
+            <i className="fa fa-pencil" />
+          </button>
 
           <button
             className="DomBox__addButton DomBox__button"
-            onClick={(e) => { e.stopPropagation(); this.props.addBoxTo(this.props.id); } }
-            ><i className="fa fa-plus" /></button>
+            onClick={e => {
+              e.stopPropagation()
+              this.props.addBoxTo(this.props.id)
+            }}
+          >
+            <i className="fa fa-plus" />
+          </button>
         </span>
       </li>
-    );
+    )
   }
 }
 
-export default DomBox;
+export default DomBox

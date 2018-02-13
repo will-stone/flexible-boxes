@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneDark } from 'react-syntax-highlighter/dist/styles';
+import { atomOneDark } from 'react-syntax-highlighter/styles/hljs';
 import ClipboardButton from 'react-clipboard.js';
 
 import './../css/Css.css';
