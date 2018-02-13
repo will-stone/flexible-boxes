@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import classnames from 'classnames';
+import React, { Component } from 'react'
+import classnames from 'classnames'
 
-import './../css/FBox.css';
+import './../css/FBox.css'
 
 class FBox extends Component {
   render() {
+    var boxes = this.props.boxes
+    var id = parseInt(this.props.id, 10)
 
-    var boxes = this.props.boxes;
-    var id = parseInt(this.props.id, 10);
-
-    var thisBox = boxes[id];
+    var thisBox = boxes[id]
 
     // Style of this box
     var divStyle = {
@@ -21,15 +20,15 @@ class FBox extends Component {
       justifyContent: thisBox.jc ? thisBox.jc : 'flex-start',
       alignContent: thisBox.ac ? thisBox.ac : 'stretch',
       alignItems: thisBox.ai ? thisBox.ai : 'stretch',
-      alignSelf: thisBox.as ? thisBox.as : 'auto'//,
-    };
+      alignSelf: thisBox.as ? thisBox.as : 'auto' //,
+    }
 
     // Build JSX for all child boxes of this box
-    var childBoxesJSX = [];
-    var inner = '';
+    var childBoxesJSX = []
+    var inner = ''
     if (thisBox.c) {
       for (let index = 0; index < thisBox.c.length; index++) {
-        var childId = thisBox.c[index];
+        var childId = thisBox.c[index]
         childBoxesJSX.push(
           <FBox
             key={childId}
@@ -40,11 +39,10 @@ class FBox extends Component {
             deleteBox={this.props.deleteBox}
             moveBox={this.props.moveBox}
             selectedBoxId={this.props.selectedBoxId}
-            />
-        );
+          />
+        )
       }
-    }
-    else {
+    } else {
       inner = <div className="FBox__label">{thisBox.t ? thisBox.t : 'Box'}</div>
     }
 
@@ -52,18 +50,20 @@ class FBox extends Component {
       <div
         className={classnames(
           'FBox',
-          {'isActive': id === this.props.selectedBoxId},
-          {'isRootBox': id === 1}
+          { isActive: id === this.props.selectedBoxId },
+          { isRootBox: id === 1 }
         )}
         style={divStyle}
-        onClick={(e) => { e.stopPropagation(); this.props.selectBox(id); } }
-        >
+        onClick={e => {
+          e.stopPropagation()
+          this.props.selectBox(id)
+        }}
+      >
         {childBoxesJSX}
         {inner}
       </div>
-    );
-
+    )
   }
 }
 
-export default FBox;
+export default FBox
