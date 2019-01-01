@@ -107,10 +107,7 @@ class App extends Component {
 
                 case 'c': // children
                   // remove empty child object
-                  if (
-                    typeof value === 'object' &&
-                    Object.keys(value).length === 0
-                  ) {
+                  if (typeof value === 'object' && Object.keys(value).length === 0) {
                     delete boxes[compId].c
                   }
                   break
@@ -204,9 +201,7 @@ class App extends Component {
     var parentId = findParentOf(selectedBoxId)
     var parentIdOfParent = findParentOf(parentId)
     if (parentIdOfParent) {
-      var indexOfParentInParent = boxes[parentIdOfParent].c.indexOf(
-        parseInt(parentId, 10)
-      )
+      var indexOfParentInParent = boxes[parentIdOfParent].c.indexOf(parseInt(parentId, 10))
     }
     var indexOfSelected = boxes[parentId].c.indexOf(selectedBoxId)
 
@@ -223,10 +218,7 @@ class App extends Component {
         boxes[boxes[parentId].c[indexOfSelected - 1]].c.push(selectedBoxId)
         // else swap selected with box above it in array
       } else {
-        ;[
-          boxes[parentId].c[indexOfSelected],
-          boxes[parentId].c[indexOfSelected - 1]
-        ] = [
+        ;[boxes[parentId].c[indexOfSelected], boxes[parentId].c[indexOfSelected - 1]] = [
           boxes[parentId].c[indexOfSelected - 1],
           boxes[parentId].c[indexOfSelected]
         ]
@@ -235,10 +227,7 @@ class App extends Component {
       // Direction up and currently at beginning of children array, move to parent
       removeSelected()
       boxes[parentIdOfParent].c.splice(indexOfParentInParent, 0, selectedBoxId)
-    } else if (
-      direction === 'down' &&
-      indexOfSelected !== boxes[parentId].c.length - 1
-    ) {
+    } else if (direction === 'down' && indexOfSelected !== boxes[parentId].c.length - 1) {
       // Direction down and NOT currently at end of children array
       // if box below has children, move selected box into beginning of that array
       if (boxes[boxes[parentId].c[indexOfSelected + 1]].c) {
@@ -246,25 +235,15 @@ class App extends Component {
         boxes[boxes[parentId].c[indexOfSelected]].c.unshift(selectedBoxId)
         // else swap selected with box below it in array
       } else {
-        ;[
-          boxes[parentId].c[indexOfSelected],
-          boxes[parentId].c[indexOfSelected + 1]
-        ] = [
+        ;[boxes[parentId].c[indexOfSelected], boxes[parentId].c[indexOfSelected + 1]] = [
           boxes[parentId].c[indexOfSelected + 1],
           boxes[parentId].c[indexOfSelected]
         ]
       }
-    } else if (
-      direction === 'down' &&
-      indexOfSelected === boxes[parentId].c.length - 1
-    ) {
+    } else if (direction === 'down' && indexOfSelected === boxes[parentId].c.length - 1) {
       // Direction down and currently at end of children array, move to parent
       removeSelected()
-      boxes[parentIdOfParent].c.splice(
-        indexOfParentInParent + 1,
-        0,
-        selectedBoxId
-      )
+      boxes[parentIdOfParent].c.splice(indexOfParentInParent + 1, 0, selectedBoxId)
     }
 
     window.location.hash = jsurl.stringify(boxes)
@@ -324,9 +303,7 @@ class App extends Component {
               boxes[parentBoxId].c &&
               boxes[parentBoxId].c.indexOf(boxId) > -1
             ) {
-              boxes[parentBoxId].c[
-                boxes[parentBoxId].c.indexOf(boxId)
-              ] = idCounter
+              boxes[parentBoxId].c[boxes[parentBoxId].c.indexOf(boxId)] = idCounter
               break
             }
           }
@@ -446,36 +423,24 @@ class App extends Component {
             </h1>
             <h1>Flexible Boxes</h1>
             <p>
-              This is a tool to help with creating Flexbox based website
-              layouts. Due to all the toolbars and output boxes, it really does{' '}
-              <strong>NOT</strong> work well with small screen sizes.
+              This is a tool to help with creating Flexbox based website layouts. Due to all the
+              toolbars and output boxes, it really does <strong>NOT</strong> work well with small
+              screen sizes.
             </p>
             <p>
-              Try maximising your browser or, if you are using a tablet, try
-              turning it to landscape.
+              Try maximising your browser or, if you are using a tablet, try turning it to
+              landscape.
             </p>
             <p>
               If you would like to proceed anyway, please click{' '}
-              <button onClick={this.removeScreenWarning.bind(this)}>
-                here
-              </button>{' '}
-              (you have been warned).
+              <button onClick={this.removeScreenWarning.bind(this)}>here</button> (you have been
+              warned).
             </p>
           </div>
         </div>
 
-        <SplitPane
-          split="vertical"
-          defaultSize={275}
-          minSize={275}
-          primary="second"
-        >
-          <SplitPane
-            split="horizontal"
-            defaultSize="50%"
-            minSize={300}
-            maxSize={-300}
-          >
+        <SplitPane split="vertical" defaultSize={275} minSize={275} primary="second">
+          <SplitPane split="horizontal" defaultSize="50%" minSize={300} maxSize={-300}>
             <SplitPane split="vertical" defaultSize={250} minSize={250}>
               <Dom
                 boxes={this.state.boxes}
@@ -495,20 +460,10 @@ class App extends Component {
               />
             </SplitPane>
 
-            <SplitPane
-              split="vertical"
-              defaultSize={150}
-              minSize={150}
-              maxSize={150}
-            >
+            <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
               <Sitebar handleSelectBox={this.handleSelectBox.bind(this)} />
 
-              <SplitPane
-                split="vertical"
-                defaultSize="50%"
-                minSize={300}
-                maxSize={-300}
-              >
+              <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
                 <Html boxes={this.state.boxes} />
 
                 <Css boxes={this.state.boxes} />

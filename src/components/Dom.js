@@ -61,46 +61,40 @@ class Dom extends Component {
       <div className="Dom Pane__component">
         <h2 className="Pane__title">
           DOM{' '}
-          <a
-            className="Pane__titleButton button"
-            href="/#~(1~())"
-            onClick={() => selectBox(null)}
-          >
+          <a className="Pane__titleButton button" href="/#~(1~())" onClick={() => selectBox(null)}>
             CLEAR
           </a>
         </h2>
         <ul className="Dom__boxes" onClick={() => selectBox(null)}>
           {domBoxes}
         </ul>
-        {selectedBoxId &&
-          selectedBoxId !== 1 && (
-            <div className="Dom__boxReorderButtons">
-              <button
-                className={cc([
-                  'button',
-                  {
-                    'Dom__boxReorderButton--isDisabled':
-                      selectedBoxId === boxes[1].c[0]
-                  }
-                ])}
-                onClick={this.props.moveBox.bind(this, 'up')}
-              >
-                UP
-              </button>
-              <button
-                className={cc([
-                  'button',
-                  {
-                    'Dom__boxReorderButton--isDisabled':
-                      selectedBoxId === boxes[1].c[boxes[1].c.length - 1]
-                  }
-                ])}
-                onClick={this.props.moveBox.bind(this, 'down')}
-              >
-                DOWN
-              </button>
-            </div>
-          )}
+        {selectedBoxId && selectedBoxId !== 1 && (
+          <div className="Dom__boxReorderButtons">
+            <button
+              className={cc([
+                'button',
+                {
+                  'Dom__boxReorderButton--isDisabled': selectedBoxId === boxes[1].c[0]
+                }
+              ])}
+              onClick={this.props.moveBox.bind(this, 'up')}
+            >
+              UP
+            </button>
+            <button
+              className={cc([
+                'button',
+                {
+                  'Dom__boxReorderButton--isDisabled':
+                    selectedBoxId === boxes[1].c[boxes[1].c.length - 1]
+                }
+              ])}
+              onClick={this.props.moveBox.bind(this, 'down')}
+            >
+              DOWN
+            </button>
+          </div>
+        )}
       </div>
     )
   }

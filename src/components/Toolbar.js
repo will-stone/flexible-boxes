@@ -47,9 +47,7 @@ class Toolbar extends Component {
                 <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>Flow</h3>
                 <div className="Toolbar__splitSection">
                   <div>
-                    <h4 className={cc({ Toolbar__disabled: !thisBox.c })}>
-                      Direction
-                    </h4>
+                    <h4 className={cc({ Toolbar__disabled: !thisBox.c })}>Direction</h4>
                     <label className="Toolbar__iconRadioLabel">
                       <input
                         type="radio"
@@ -89,9 +87,7 @@ class Toolbar extends Component {
                   </div>
 
                   <div>
-                    <h4 className={cc({ Toolbar__disabled: !thisBox.c })}>
-                      Wrap
-                    </h4>
+                    <h4 className={cc({ Toolbar__disabled: !thisBox.c })}>Wrap</h4>
                     <label className="Toolbar__iconRadioLabel">
                       <input
                         type="radio"
@@ -139,9 +135,7 @@ class Toolbar extends Component {
               </div>
 
               <div className="Toolbar__section">
-                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>
-                  Justify Content
-                </h3>
+                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>Justify Content</h3>
                 <label className="Toolbar__iconRadioLabel">
                   <input
                     type="radio"
@@ -234,9 +228,7 @@ class Toolbar extends Component {
               </div>
 
               <div className="Toolbar__section">
-                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>
-                  Align Items
-                </h3>
+                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>Align Items</h3>
 
                 <label className="Toolbar__iconRadioLabel">
                   <input
@@ -348,9 +340,7 @@ class Toolbar extends Component {
                       >
                         <i className="fa fa-minus" />
                       </button>
-                      <span className="Toolbar__nudgeText">
-                        {thisBox.g ? thisBox.g : 0}
-                      </span>
+                      <span className="Toolbar__nudgeText">{thisBox.g ? thisBox.g : 0}</span>
                       <button
                         className="Toolbar__nudgeButton"
                         onClick={this.props.nudge.bind(

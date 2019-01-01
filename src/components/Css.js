@@ -156,11 +156,7 @@ ${builtCode}`
             {this.state.copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter
-          language="css"
-          style={atomOneDark}
-          showLineNumbers={true}
-        >
+        <SyntaxHighlighter language="css" style={atomOneDark} showLineNumbers={true}>
           {css}
         </SyntaxHighlighter>
       </div>

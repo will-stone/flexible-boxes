@@ -57,11 +57,8 @@ class DomBox extends Component {
         }}
       >
         <span className="DomBox__id">{this.props.id}</span>
-        <span className="DomBox__indenter">
-          {repeat('..', this.props.indentLevel)}
-        </span>
-        {this.state.showEditTitle &&
-        this.props.id === this.props.selectedBoxId ? (
+        <span className="DomBox__indenter">{repeat('..', this.props.indentLevel)}</span>
+        {this.state.showEditTitle && this.props.id === this.props.selectedBoxId ? (
           <input
             autoFocus
             className="DomBox__titleInput"
@@ -72,9 +69,7 @@ class DomBox extends Component {
             onKeyDown={e => this.titleKeyDown(e)}
           />
         ) : (
-          <span className="DomBox__name">
-            {this.props.box.t ? this.props.box.t : 'Box'}
-          </span>
+          <span className="DomBox__name">{this.props.box.t ? this.props.box.t : 'Box'}</span>
         )}
 
         <span className="DomBox__buttons">

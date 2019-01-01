@@ -87,11 +87,7 @@ ${rootComment}${builtCode}${rootCompEnd}`
             {this.state.copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter
-          language="html"
-          style={atomOneDark}
-          showLineNumbers={true}
-        >
+        <SyntaxHighlighter language="html" style={atomOneDark} showLineNumbers={true}>
           {html}
         </SyntaxHighlighter>
       </div>
