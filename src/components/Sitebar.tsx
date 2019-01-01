@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import './../css/Sitebar.css'
 
-class Sitebar extends Component {
+class Sitebar extends Component<{ handleSelectBox: (any: any) => void }> {
   render() {
     var selectBox = this.props.handleSelectBox
 

@@ -1,9 +1,15 @@
-import React, { Component } from 'react'
 import cc from 'classcat'
-
+import React, { Component } from 'react'
+import { IBox } from '../containers/App'
 import './../css/Toolbar.css'
 
-class Toolbar extends Component {
+class Toolbar extends Component<{
+  selectedBox: IBox
+  resetBox: (id: number) => void
+  id: number
+  updateBox: (event: any, id: number) => void
+  nudge: (...any: any[]) => void
+}> {
   render() {
     var thisBox = this.props.selectedBox
 

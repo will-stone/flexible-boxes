@@ -1,18 +1,15 @@
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atomOneDark } from 'react-syntax-highlighter/styles/hljs'
+import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
 import ClipboardButton from 'react-clipboard.js'
 
 import './../css/Html.css'
+import { IBoxes } from '../containers/App'
 
-class Html extends Component {
-  constructor() {
-    super()
-
-    this.state = {
-      copyButtonText: 'COPY'
-    }
+class Html extends Component<{ boxes: IBoxes }> {
+  state = {
+    copyButtonText: 'COPY'
   }
 
   onSuccessfulyCopy() {
@@ -28,10 +25,10 @@ class Html extends Component {
   }
 
   render() {
-    var boxes = this.props.boxes
+    var boxes = this.props.boxes as any
 
-    function buildUpCode(id, indentMultiplier) {
-      var output = ``
+    function buildUpCode(id: any, indentMultiplier: any) {
+      var output = `` as any
       indentMultiplier++
       let indent = repeat('  ', indentMultiplier)
 

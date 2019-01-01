@@ -1,14 +1,21 @@
-import React, { Component } from 'react'
 import cc from 'classcat'
-
+import React, { Component } from 'react'
 import './../css/FBox.css'
+import { IBoxes, TSelectedBoxId } from '../containers/App'
 
-class FBox extends Component {
+class FBox extends Component<{
+  boxes: IBoxes
+  id: number
+  selectBox: (id: number) => void
+  selectedBoxId: TSelectedBoxId
+  addBox?: any
+  deleteBox?: any
+  moveBox?: any
+}> {
   render() {
     var boxes = this.props.boxes
-    var id = parseInt(this.props.id, 10)
 
-    var thisBox = boxes[id]
+    var thisBox = boxes[this.props.id]
 
     // Style of this box
     var divStyle = {
@@ -24,8 +31,8 @@ class FBox extends Component {
     }
 
     // Build JSX for all child boxes of this box
-    var childBoxesJSX = []
-    var inner = ''
+    const childBoxesJSX = []
+    var inner = '' as any
     if (thisBox.c) {
       for (let index = 0; index < thisBox.c.length; index++) {
         var childId = thisBox.c[index]
@@ -50,13 +57,13 @@ class FBox extends Component {
       <div
         className={cc([
           'FBox',
-          { isActive: id === this.props.selectedBoxId },
-          { isRootBox: id === 1 }
+          { isActive: this.props.id === this.props.selectedBoxId },
+          { isRootBox: this.props.id === 1 }
         ])}
         style={divStyle}
         onClick={e => {
           e.stopPropagation()
-          this.props.selectBox(id)
+          this.props.selectBox(this.props.id)
         }}
       >
         {childBoxesJSX}

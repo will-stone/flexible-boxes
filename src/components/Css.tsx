@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
-import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atomOneDark } from 'react-syntax-highlighter/styles/hljs'
 import ClipboardButton from 'react-clipboard.js'
-
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
+import { IBoxes } from '../containers/App'
 import './../css/Css.css'
 
-class Css extends Component {
-  constructor() {
-    super()
-
-    this.state = {
-      copyButtonText: 'COPY'
-    }
+class Css extends Component<{ boxes: IBoxes }> {
+  state = {
+    copyButtonText: 'COPY'
   }
 
   onSuccessfulyCopy() {
@@ -27,9 +23,9 @@ class Css extends Component {
   }
 
   render() {
-    var boxes = this.props.boxes
+    var boxes = this.props.boxes as any
 
-    function buildUpBoxCSSProperties(id) {
+    function buildUpBoxCSSProperties(id: any) {
       var output = ''
 
       for (var property in boxes[id]) {
@@ -85,7 +81,7 @@ class Css extends Component {
       return output
     }
 
-    function buildUpCode(id) {
+    function buildUpCode(id: any) {
       var output = ``
 
       if (boxes[id].c) {

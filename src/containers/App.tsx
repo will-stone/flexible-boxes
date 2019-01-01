@@ -1,40 +1,62 @@
-import React, { Component } from 'react'
+import cc from 'classcat'
 import update from 'immutability-helper'
 import jsurl from 'jsurl'
+import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
-import cc from 'classcat'
-
+import Css from '../components/Css'
+import Dom from '../components/Dom'
+import FBox from '../components/FBox'
+import Html from '../components/Html'
+import Sitebar from '../components/Sitebar'
+import Toolbar from '../components/Toolbar'
 import './../css/App.css'
 import './../css/button.css'
 import './../css/Pane.css'
 
-import FBox from './../components/FBox'
-import Toolbar from './../components/Toolbar'
-import Html from './../components/Html'
-import Css from './../components/Css'
-import Dom from './../components/Dom'
-import Sitebar from './../components/Sitebar'
+export interface IBox {
+  c?: number[]
+  t?: string
+  d?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
+  w?: 'nowrap' | 'wrap' | 'wrap-reverse'
+  g?: number
+  s?: number
+  b?: string
+  ac?: string
+  ai?: string
+  as?: string
+  jc?: string
+  js?: string
+}
+
+export interface IBoxes {
+  [key: string]: IBox
+}
+
+export type TSelectedBoxId = any
+// export type TSelectedBoxId = number | null
+
+interface IState {
+  screenWarningHidden: boolean
+  selectedBoxId: TSelectedBoxId
+  boxes: IBoxes
+}
 
 class App extends Component {
-  constructor() {
-    super()
-
-    this.state = {
-      screenWarningHidden: false,
-      selectedBoxId: null,
-      boxes: {
-        // default layout
-        1: {
-          c: [2, 3, 4]
-        },
-        2: {},
-        3: {},
-        4: {}
-      }
+  state: IState = {
+    screenWarningHidden: false,
+    selectedBoxId: null,
+    boxes: {
+      // default layout
+      1: {
+        c: [2, 3, 4]
+      },
+      2: {},
+      3: {},
+      4: {}
     }
   }
 
-  sanitiseBoxes(boxes) {
+  sanitiseBoxes = (boxes: any) => {
     var counter = 1
     for (var compId in boxes) {
       if (boxes.hasOwnProperty(compId) && parseInt(compId, 10) === counter) {
@@ -130,12 +152,12 @@ class App extends Component {
     return boxes
   }
 
-  handleSelectBox(id) {
+  handleSelectBox = (id: number) => {
     this.setState({ selectedBoxId: id })
   }
 
   // TODO: merge this with nudge?
-  handleUpdateBox(changeEvent, compId) {
+  handleUpdateBox = (changeEvent: any, compId: number) => {
     var name = changeEvent.target.name
     var value = changeEvent.target.value
     var boxes = this.state.boxes
@@ -148,7 +170,7 @@ class App extends Component {
     window.location.hash = jsurl.stringify(boxes)
   }
 
-  handleNudge(compId, name, newValue) {
+  handleNudge = (compId: number, name: string, newValue: any) => {
     var boxes = this.state.boxes
     boxes = update(boxes, {
       [compId]: {
@@ -159,19 +181,20 @@ class App extends Component {
     window.location.hash = jsurl.stringify(boxes)
   }
 
-  handleAddBoxTo(id) {
-    let boxes = this.state.boxes
+  handleAddBoxTo = (id: number) => {
+    let boxes = this.state.boxes as any
     let largestBoxId = 0
 
     // find next box id
-    for (var box in boxes) {
+    Object.keys(boxes).forEach(box => {
+      const boxNumber = Number(box)
       if (boxes.hasOwnProperty(box)) {
-        if (box > largestBoxId) {
+        if (boxNumber > largestBoxId) {
           largestBoxId++
         }
       }
-    }
-    largestBoxId++ // this is the new id
+      largestBoxId++ // this is the new id
+    })
 
     if (boxes[id].c) {
       boxes[id].c.push(largestBoxId)
@@ -183,11 +206,11 @@ class App extends Component {
     window.location.hash = jsurl.stringify(boxes)
   }
 
-  handleReorderBox(direction) {
-    var boxes = this.state.boxes
+  handleReorderBox = (direction: any) => {
+    var boxes = this.state.boxes as any
     var selectedBoxId = this.state.selectedBoxId
 
-    var findParentOf = id => {
+    var findParentOf = (id: any) => {
       for (var boxId in boxes) {
         if (boxes.hasOwnProperty(boxId)) {
           var box = boxes[boxId]
@@ -198,8 +221,8 @@ class App extends Component {
       }
     }
 
-    var parentId = findParentOf(selectedBoxId)
-    var parentIdOfParent = findParentOf(parentId)
+    var parentId = findParentOf(selectedBoxId) as any
+    var parentIdOfParent = findParentOf(parentId) as any
     if (parentIdOfParent) {
       var indexOfParentInParent = boxes[parentIdOfParent].c.indexOf(parseInt(parentId, 10))
     }
@@ -249,8 +272,8 @@ class App extends Component {
     window.location.hash = jsurl.stringify(boxes)
   }
 
-  handleDeleteBox(id, parentId) {
-    var boxes = this.state.boxes
+  handleDeleteBox = (id: any, parentId: any) => {
+    var boxes = this.state.boxes as any
     var selectedBoxChildren = boxes[id].c
     var selectedBoxId = this.state.selectedBoxId
 
@@ -289,10 +312,10 @@ class App extends Component {
 
     // Rebase box ids
     var idCounter = 1
-    for (let boxId in boxes) {
+    Object.keys(boxes).forEach(boxId => {
       if (boxes.hasOwnProperty(boxId)) {
-        boxId = parseInt(boxId, 10)
-        if (boxId !== idCounter && boxId !== 1) {
+        const boxNum = parseInt(boxId, 10)
+        if (boxNum !== idCounter && boxNum !== 1) {
           boxes[idCounter] = boxes[boxId]
           delete boxes[boxId]
 
@@ -301,21 +324,21 @@ class App extends Component {
             if (
               boxes.hasOwnProperty(parentBoxId) &&
               boxes[parentBoxId].c &&
-              boxes[parentBoxId].c.indexOf(boxId) > -1
+              boxes[parentBoxId].c.indexOf(boxNum) > -1
             ) {
-              boxes[parentBoxId].c[boxes[parentBoxId].c.indexOf(boxId)] = idCounter
+              boxes[parentBoxId].c[boxes[parentBoxId].c.indexOf(boxNum)] = idCounter
               break
             }
           }
 
           // update selected id
-          if (selectedBoxId === boxId) {
+          if (selectedBoxId === boxNum) {
             selectedBoxId = idCounter
           }
         }
         idCounter++
       }
-    }
+    })
 
     // Update boxes in state
     window.location.hash = jsurl.stringify(boxes)
@@ -324,7 +347,7 @@ class App extends Component {
     })
   }
 
-  handleResetBox(id) {
+  handleResetBox = (id: any) => {
     var boxes = this.state.boxes
     boxes = update(boxes, {
       [id]: {
@@ -343,7 +366,7 @@ class App extends Component {
     window.location.hash = jsurl.stringify(boxes)
   }
 
-  urlToBoxes() {
+  urlToBoxes = () => {
     if (window.location.hash) {
       var parsedBoxes
       try {
@@ -371,13 +394,13 @@ class App extends Component {
     }
   }
 
-  removeScreenWarning() {
+  removeScreenWarning = () => {
     this.setState({
       screenWarningHidden: true
     })
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     this.urlToBoxes()
     window.addEventListener(
       'hashchange',
@@ -388,7 +411,7 @@ class App extends Component {
     )
   }
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     window.location.hash = jsurl.stringify(this.state.boxes)
   }
 
@@ -444,24 +467,24 @@ class App extends Component {
             <SplitPane split="vertical" defaultSize={250} minSize={250}>
               <Dom
                 boxes={this.state.boxes}
-                handleSelectBox={this.handleSelectBox.bind(this)}
+                handleSelectBox={this.handleSelectBox}
                 selectedBoxId={this.state.selectedBoxId}
-                handleAddBoxTo={this.handleAddBoxTo.bind(this)}
-                handleDeleteBox={this.handleDeleteBox.bind(this)}
-                updateBox={this.handleUpdateBox.bind(this)}
-                moveBox={this.handleReorderBox.bind(this)}
+                handleAddBoxTo={this.handleAddBoxTo}
+                handleDeleteBox={this.handleDeleteBox}
+                updateBox={this.handleUpdateBox}
+                moveBox={this.handleReorderBox}
               />
 
               <FBox
                 boxes={this.state.boxes}
-                id="1"
-                selectBox={this.handleSelectBox.bind(this)}
+                id={1}
+                selectBox={this.handleSelectBox}
                 selectedBoxId={this.state.selectedBoxId}
               />
             </SplitPane>
 
             <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
-              <Sitebar handleSelectBox={this.handleSelectBox.bind(this)} />
+              <Sitebar handleSelectBox={this.handleSelectBox} />
 
               <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
                 <Html boxes={this.state.boxes} />
@@ -474,9 +497,9 @@ class App extends Component {
           <Toolbar
             id={this.state.selectedBoxId}
             selectedBox={this.state.boxes[this.state.selectedBoxId]}
-            updateBox={this.handleUpdateBox.bind(this)}
-            nudge={this.handleNudge.bind(this)}
-            resetBox={this.handleResetBox.bind(this)}
+            updateBox={this.handleUpdateBox}
+            nudge={this.handleNudge}
+            resetBox={this.handleResetBox}
           />
         </SplitPane>
       </div>

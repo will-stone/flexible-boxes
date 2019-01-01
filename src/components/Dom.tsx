@@ -1,21 +1,28 @@
-import React, { Component } from 'react'
 import cc from 'classcat'
-
+import React, { Component } from 'react'
+import { IBoxes, TSelectedBoxId } from '../containers/App'
+import './../css/Dom.css'
 import DomBox from './DomBox'
 
-import './../css/Dom.css'
-
-class Dom extends Component {
+class Dom extends Component<{
+  boxes: IBoxes
+  selectedBoxId: TSelectedBoxId
+  handleSelectBox: (any: any) => void
+  handleAddBoxTo: (id: number) => void
+  handleDeleteBox: (id: any, parentId: any) => void
+  updateBox: (changeEvent: any, compId: number) => void
+  moveBox: (direction: any) => void
+}> {
   render() {
-    var boxes = this.props.boxes
+    var boxes = this.props.boxes as any
     var selectedBoxId = this.props.selectedBoxId
     var selectBox = this.props.handleSelectBox
     var addBoxTo = this.props.handleAddBoxTo
     var deleteBox = this.props.handleDeleteBox
     var updateBox = this.props.updateBox
 
-    function buildDom(id, indentMultiplier) {
-      var output = null
+    function buildDom(id: any, indentMultiplier: any) {
+      var output = null as any
       if (boxes[id].c) {
         output = []
         indentMultiplier++

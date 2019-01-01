@@ -3,18 +3,25 @@ import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
 
 import './../css/DomBox.css'
+import { IBox, TSelectedBoxId } from '../containers/App'
 
-class DomBox extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      title: this.props.box.t ? this.props.box.t : '',
-      showEditTitle: false
-    }
+class DomBox extends Component<{
+  box: IBox
+  updateBox: (event: any, id: any) => void
+  selectBox: (id: number) => void
+  deleteBox: (id: number, parentId: number | 'null') => void
+  addBoxTo: (id: number) => void
+  id: number
+  parentId: number | 'null'
+  selectedBoxId: TSelectedBoxId
+  indentLevel: number
+}> {
+  state = {
+    title: this.props.box.t ? this.props.box.t : '',
+    showEditTitle: false
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: any) {
     if (this.state.showEditTitle && this.props.id !== nextProps.selectedBoxId) {
       this.setState({
         showEditTitle: false
@@ -22,14 +29,14 @@ class DomBox extends Component {
     }
   }
 
-  updateTitle(changeEvent) {
+  updateTitle(changeEvent: any) {
     this.props.updateBox(changeEvent, this.props.id)
     this.setState({
       title: changeEvent.target.value
     })
   }
 
-  titleKeyDown(e) {
+  titleKeyDown(e: any) {
     if (e.key === 'Enter') {
       this.toggleEditTitle()
     }
