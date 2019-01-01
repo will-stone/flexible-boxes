@@ -8,4 +8,4 @@ Install all the packages:
 
 Start the development server:
 
-`yarn run start`
+`yarn start`
