@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import classnames from 'classnames'
+import cc from 'classcat'
 
 import DomBox from './DomBox'
 
@@ -76,19 +76,25 @@ class Dom extends Component {
           selectedBoxId !== 1 && (
             <div className="Dom__boxReorderButtons">
               <button
-                className={classnames('button', {
-                  'Dom__boxReorderButton--isDisabled':
-                    selectedBoxId === boxes[1].c[0]
-                })}
+                className={cc([
+                  'button',
+                  {
+                    'Dom__boxReorderButton--isDisabled':
+                      selectedBoxId === boxes[1].c[0]
+                  }
+                ])}
                 onClick={this.props.moveBox.bind(this, 'up')}
               >
                 UP
               </button>
               <button
-                className={classnames('button', {
-                  'Dom__boxReorderButton--isDisabled':
-                    selectedBoxId === boxes[1].c[boxes[1].c.length - 1]
-                })}
+                className={cc([
+                  'button',
+                  {
+                    'Dom__boxReorderButton--isDisabled':
+                      selectedBoxId === boxes[1].c[boxes[1].c.length - 1]
+                  }
+                ])}
                 onClick={this.props.moveBox.bind(this, 'down')}
               >
                 DOWN

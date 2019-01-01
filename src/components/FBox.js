@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import classnames from 'classnames'
+import cc from 'classcat'
 
 import './../css/FBox.css'
 
@@ -48,11 +48,11 @@ class FBox extends Component {
 
     return (
       <div
-        className={classnames(
+        className={cc([
           'FBox',
           { isActive: id === this.props.selectedBoxId },
           { isRootBox: id === 1 }
-        )}
+        ])}
         style={divStyle}
         onClick={e => {
           e.stopPropagation()

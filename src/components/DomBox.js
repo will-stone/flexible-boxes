@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import cc from 'classcat'
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
 
@@ -45,9 +45,12 @@ class DomBox extends Component {
   render() {
     return (
       <li
-        className={classnames('DomBox', {
-          'DomBox--isActive': this.props.id === this.props.selectedBoxId
-        })}
+        className={cc([
+          'DomBox',
+          {
+            'DomBox--isActive': this.props.id === this.props.selectedBoxId
+          }
+        ])}
         onClick={e => {
           e.stopPropagation()
           this.props.selectBox(this.props.id)

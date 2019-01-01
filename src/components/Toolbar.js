@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import classnames from 'classnames'
+import cc from 'classcat'
 
 import './../css/Toolbar.css'
 
@@ -9,13 +9,13 @@ class Toolbar extends Component {
 
     return (
       <div
-        className={classnames(
+        className={cc([
           'Toolbar Pane__component',
           { 'Toolbar--isOpen': thisBox },
           {
             'Toolbar--isColumn': thisBox && thisBox.d && thisBox.d === 'column'
           }
-        )}
+        ])}
       >
         <h2 className="Pane__title">
           TOOLBAR
@@ -33,22 +33,21 @@ class Toolbar extends Component {
           thisBox ? (
             <div className="Toolbar__tools">
               <h2
-                className={classnames('Toolbar__groupTitle', {
-                  Toolbar__disabled: !thisBox.c
-                })}
+                className={cc([
+                  'Toolbar__groupTitle',
+                  {
+                    Toolbar__disabled: !thisBox.c
+                  }
+                ])}
               >
                 Affects child boxes
               </h2>
 
               <div className="Toolbar__section">
-                <h3 className={classnames({ Toolbar__disabled: !thisBox.c })}>
-                  Flow
-                </h3>
+                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>Flow</h3>
                 <div className="Toolbar__splitSection">
                   <div>
-                    <h4
-                      className={classnames({ Toolbar__disabled: !thisBox.c })}
-                    >
+                    <h4 className={cc({ Toolbar__disabled: !thisBox.c })}>
                       Direction
                     </h4>
                     <label className="Toolbar__iconRadioLabel">
@@ -90,9 +89,7 @@ class Toolbar extends Component {
                   </div>
 
                   <div>
-                    <h4
-                      className={classnames({ Toolbar__disabled: !thisBox.c })}
-                    >
+                    <h4 className={cc({ Toolbar__disabled: !thisBox.c })}>
                       Wrap
                     </h4>
                     <label className="Toolbar__iconRadioLabel">
@@ -142,7 +139,7 @@ class Toolbar extends Component {
               </div>
 
               <div className="Toolbar__section">
-                <h3 className={classnames({ Toolbar__disabled: !thisBox.c })}>
+                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>
                   Justify Content
                 </h3>
                 <label className="Toolbar__iconRadioLabel">
@@ -237,7 +234,7 @@ class Toolbar extends Component {
               </div>
 
               <div className="Toolbar__section">
-                <h3 className={classnames({ Toolbar__disabled: !thisBox.c })}>
+                <h3 className={cc({ Toolbar__disabled: !thisBox.c })}>
                   Align Items
                 </h3>
 
@@ -337,7 +334,7 @@ class Toolbar extends Component {
               <div className="Toolbar__section">
                 <h3>flex</h3>
                 <div className="Toolbar__splitSection">
-                  <div className={classnames({ Toolbar__default: !thisBox.g })}>
+                  <div className={cc({ Toolbar__default: !thisBox.g })}>
                     <h4>GROW</h4>
                     <div>
                       <button
@@ -369,7 +366,7 @@ class Toolbar extends Component {
                   </div>
 
                   <div
-                    className={classnames({
+                    className={cc({
                       Toolbar__default: thisBox.s !== 0 && !thisBox.s
                     })}
                   >
@@ -403,7 +400,7 @@ class Toolbar extends Component {
                     </div>
                   </div>
 
-                  <div className={classnames({ Toolbar__default: !thisBox.b })}>
+                  <div className={cc({ Toolbar__default: !thisBox.b })}>
                     <h4>BASIS</h4>
                     <input
                       className="Toolbar__basisInput"

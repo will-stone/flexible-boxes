@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import update from 'immutability-helper'
 import jsurl from 'jsurl'
 import SplitPane from 'react-split-pane'
-import classnames from 'classnames'
+import cc from 'classcat'
 
 import './../css/App.css'
 import './../css/button.css'
@@ -433,9 +433,12 @@ class App extends Component {
         <div dangerouslySetInnerHTML={browserWarning} />
 
         <div
-          className={classnames('App__screenTooSmall App__fullPageWarning', {
-            'App__screenTooSmall--isHidden': this.state.screenWarningHidden
-          })}
+          className={cc([
+            'App__screenTooSmall App__fullPageWarning',
+            {
+              'App__screenTooSmall--isHidden': this.state.screenWarningHidden
+            }
+          ])}
         >
           <div>
             <h1>
