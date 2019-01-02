@@ -1,6 +1,6 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
-import { IBoxes, TSelectedBoxId } from '../containers/App'
+import { IBoxes, TBoxId, TSelectedBoxId } from '../containers/App'
 import './../css/Dom.css'
 import DomBox from './DomBox'
 

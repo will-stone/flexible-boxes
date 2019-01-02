@@ -1,11 +1,11 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
 import './../css/FBox.css'
-import { IBoxes, TSelectedBoxId } from '../containers/App'
+import { IBoxes, TBoxId, TSelectedBoxId } from '../containers/App'
 
 class FBox extends Component<{
   boxes: IBoxes
-  id: number
+  id: TBoxId
   selectBox: (id: number) => void
   selectedBoxId: TSelectedBoxId
   addBox?: any
@@ -13,9 +13,7 @@ class FBox extends Component<{
   moveBox?: any
 }> {
   render() {
-    var boxes = this.props.boxes
-
-    var thisBox = boxes[this.props.id]
+    const thisBox = this.props.boxes[this.props.id]
 
     // Style of this box
     var divStyle = {
@@ -39,7 +37,7 @@ class FBox extends Component<{
         childBoxesJSX.push(
           <FBox
             key={childId}
-            boxes={boxes}
+            boxes={this.props.boxes}
             id={childId}
             selectBox={this.props.selectBox}
             addBox={this.props.addBox}

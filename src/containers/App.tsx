@@ -14,7 +14,7 @@ import './../css/button.css'
 import './../css/Pane.css'
 
 export interface IBox {
-  c?: number[]
+  c?: TBoxId[]
   t?: string
   d?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
   w?: 'nowrap' | 'wrap' | 'wrap-reverse'
@@ -32,8 +32,8 @@ export interface IBoxes {
   [key: string]: IBox
 }
 
-export type TSelectedBoxId = any
-// export type TSelectedBoxId = number | null
+export type TBoxId = number
+export type TSelectedBoxId = number | undefined
 
 interface IState {
   screenWarningHidden: boolean
@@ -44,7 +44,7 @@ interface IState {
 class App extends Component {
   state: IState = {
     screenWarningHidden: false,
-    selectedBoxId: null,
+    selectedBoxId: undefined,
     boxes: {
       // default layout
       1: {
@@ -157,12 +157,12 @@ class App extends Component {
   }
 
   // TODO: merge this with nudge?
-  handleUpdateBox = (changeEvent: any, compId: number) => {
+  handleUpdateBox = (changeEvent: any, compId: TSelectedBoxId) => {
     var name = changeEvent.target.name
     var value = changeEvent.target.value
     var boxes = this.state.boxes
     boxes = update(boxes, {
-      [compId]: {
+      [String(compId)]: {
         [name]: { $set: value }
       }
     })
@@ -284,7 +284,7 @@ class App extends Component {
 
         // deselect
         if (selectedBoxId === child) {
-          selectedBoxId = null
+          selectedBoxId = undefined
         }
 
         delete boxes[child]
@@ -296,7 +296,7 @@ class App extends Component {
 
     // deselect if this id
     if (selectedBoxId === id) {
-      selectedBoxId = null
+      selectedBoxId = undefined
     }
 
     // find link to id in parent's' children array and remove it
@@ -342,9 +342,7 @@ class App extends Component {
 
     // Update boxes in state
     window.location.hash = jsurl.stringify(boxes)
-    this.setState({
-      selectedBoxId: selectedBoxId
-    })
+    this.setState({ selectedBoxId })
   }
 
   handleResetBox = (id: any) => {
@@ -495,8 +493,8 @@ class App extends Component {
           </SplitPane>
 
           <Toolbar
-            id={this.state.selectedBoxId}
-            selectedBox={this.state.boxes[this.state.selectedBoxId]}
+            selectedBoxId={this.state.selectedBoxId}
+            boxes={this.state.boxes}
             updateBox={this.handleUpdateBox}
             nudge={this.handleNudge}
             resetBox={this.handleResetBox}

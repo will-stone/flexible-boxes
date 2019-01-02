@@ -3,7 +3,7 @@ import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
 
 import './../css/DomBox.css'
-import { IBox, TSelectedBoxId } from '../containers/App'
+import { IBox, TBoxId, TSelectedBoxId } from '../containers/App'
 
 class DomBox extends Component<{
   box: IBox
@@ -11,7 +11,7 @@ class DomBox extends Component<{
   selectBox: (id: number) => void
   deleteBox: (id: number, parentId: number | 'null') => void
   addBoxTo: (id: number) => void
-  id: number
+  id: TBoxId
   parentId: number | 'null'
   selectedBoxId: TSelectedBoxId
   indentLevel: number

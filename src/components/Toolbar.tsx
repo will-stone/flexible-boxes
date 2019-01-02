@@ -1,17 +1,17 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
-import { IBox } from '../containers/App'
+import { IBox, TBoxId, IBoxes, TSelectedBoxId } from '../containers/App'
 import './../css/Toolbar.css'
 
 class Toolbar extends Component<{
-  selectedBox: IBox
-  resetBox: (id: number) => void
-  id: number
-  updateBox: (event: any, id: number) => void
+  resetBox: (id: TSelectedBoxId) => void
+  selectedBoxId: TSelectedBoxId
+  updateBox: (event: any, id: TSelectedBoxId) => void
   nudge: (...any: any[]) => void
+  boxes: IBoxes
 }> {
   render() {
-    var thisBox = this.props.selectedBox
+    var thisBox = this.props.selectedBoxId && this.props.boxes[this.props.selectedBoxId]
 
     return (
       <div
@@ -28,7 +28,7 @@ class Toolbar extends Component<{
           {thisBox && (
             <button
               className="Pane__titleButton button"
-              onClick={this.props.resetBox.bind(this, this.props.id)}
+              onClick={this.props.resetBox.bind(this, this.props.selectedBoxId)}
             >
               DEFAULT
             </button>
@@ -60,7 +60,7 @@ class Toolbar extends Component<{
                         name="d"
                         value="row"
                         checked={!thisBox.d || thisBox.d === 'row'}
-                        onChange={e => this.props.updateBox(e, this.props.id)}
+                        onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                         disabled={!thisBox.c}
                       />
                       <i className="fbi fbi-row">
@@ -78,7 +78,7 @@ class Toolbar extends Component<{
                         name="d"
                         value="column"
                         checked={thisBox.d === 'column'}
-                        onChange={e => this.props.updateBox(e, this.props.id)}
+                        onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                         disabled={!thisBox.c}
                       />
                       <i className="fbi fbi-column">
@@ -100,7 +100,7 @@ class Toolbar extends Component<{
                         name="w"
                         value="nowrap"
                         checked={!thisBox.w || thisBox.w === 'nowrap'}
-                        onChange={e => this.props.updateBox(e, this.props.id)}
+                        onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                         disabled={!thisBox.c}
                       />
                       <i className="fbi fbi-nowrap">
@@ -121,7 +121,7 @@ class Toolbar extends Component<{
                         name="w"
                         value="wrap"
                         checked={thisBox.w === 'wrap'}
-                        onChange={e => this.props.updateBox(e, this.props.id)}
+                        onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                         disabled={!thisBox.c}
                       />
                       <i className="fbi fbi-wrap">
@@ -148,7 +148,7 @@ class Toolbar extends Component<{
                     name="jc"
                     value="flex-start"
                     checked={!thisBox.jc || thisBox.jc === 'flex-start'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-jc fbi-jc-flex-start">
@@ -166,7 +166,7 @@ class Toolbar extends Component<{
                     name="jc"
                     value="flex-end"
                     checked={thisBox.jc === 'flex-end'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-jc fbi-jc-flex-end">
@@ -184,7 +184,7 @@ class Toolbar extends Component<{
                     name="jc"
                     value="center"
                     checked={thisBox.jc === 'center'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-jc fbi-jc-center">
@@ -202,7 +202,7 @@ class Toolbar extends Component<{
                     name="jc"
                     value="space-between"
                     checked={thisBox.jc === 'space-between'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-jc fbi-jc-space-between">
@@ -220,7 +220,7 @@ class Toolbar extends Component<{
                     name="jc"
                     value="space-around"
                     checked={thisBox.jc === 'space-around'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-jc fbi-jc-space-around">
@@ -242,7 +242,7 @@ class Toolbar extends Component<{
                     name="ai"
                     value="flex-start"
                     checked={thisBox.ai === 'flex-start'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-ai fbi-ai-flex-start">
@@ -260,7 +260,7 @@ class Toolbar extends Component<{
                     name="ai"
                     value="flex-end"
                     checked={thisBox.ai === 'flex-end'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-ai fbi-ai-flex-end">
@@ -278,7 +278,7 @@ class Toolbar extends Component<{
                     name="ai"
                     value="center"
                     checked={thisBox.ai === 'center'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-ai fbi-ai-center">
@@ -296,7 +296,7 @@ class Toolbar extends Component<{
                     name="ai"
                     value="stretch"
                     checked={!thisBox.ai || thisBox.ai === 'stretch'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-ai fbi-ai-stretch">
@@ -314,7 +314,7 @@ class Toolbar extends Component<{
                     name="ai"
                     value="baseline"
                     checked={thisBox.ai === 'baseline'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                     disabled={!thisBox.c}
                   />
                   <i className="fbi fbi-ai fbi-ai-baseline">
@@ -339,7 +339,7 @@ class Toolbar extends Component<{
                         className="Toolbar__nudgeButton"
                         onClick={this.props.nudge.bind(
                           this,
-                          this.props.id,
+                          this.props.selectedBoxId,
                           'g',
                           thisBox.g ? thisBox.g - 1 : 0
                         )}
@@ -351,7 +351,7 @@ class Toolbar extends Component<{
                         className="Toolbar__nudgeButton"
                         onClick={this.props.nudge.bind(
                           this,
-                          this.props.id,
+                          this.props.selectedBoxId,
                           'g',
                           thisBox.g ? thisBox.g + 1 : 1
                         )}
@@ -372,7 +372,7 @@ class Toolbar extends Component<{
                         className="Toolbar__nudgeButton"
                         onClick={this.props.nudge.bind(
                           this,
-                          this.props.id,
+                          this.props.selectedBoxId,
                           's',
                           thisBox.s ? thisBox.s - 1 : 0
                         )}
@@ -386,7 +386,7 @@ class Toolbar extends Component<{
                         className="Toolbar__nudgeButton"
                         onClick={this.props.nudge.bind(
                           this,
-                          this.props.id,
+                          this.props.selectedBoxId,
                           's',
                           thisBox.s || thisBox.s === 0 ? thisBox.s + 1 : 2
                         )}
@@ -404,7 +404,7 @@ class Toolbar extends Component<{
                       name="b"
                       placeholder="auto"
                       value={thisBox.b ? thisBox.b : ''}
-                      onChange={e => this.props.updateBox(e, this.props.id)}
+                      onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                       autoComplete="off"
                     />
                   </div>
@@ -419,7 +419,7 @@ class Toolbar extends Component<{
                     name="as"
                     value="flex-start"
                     checked={thisBox.as === 'flex-start'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                   />
                   <i className="fbi fbi-as fbi-as-flex-start">
                     <i className="fbi-items">
@@ -435,7 +435,7 @@ class Toolbar extends Component<{
                     name="as"
                     value="flex-end"
                     checked={thisBox.as === 'flex-end'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                   />
                   <i className="fbi fbi-as fbi-as-flex-end">
                     <i className="fbi-items">
@@ -451,7 +451,7 @@ class Toolbar extends Component<{
                     name="as"
                     value="center"
                     checked={thisBox.as === 'center'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                   />
                   <i className="fbi fbi-as fbi-as-center">
                     <i className="fbi-items">
@@ -467,7 +467,7 @@ class Toolbar extends Component<{
                     name="as"
                     value="stretch"
                     checked={thisBox.as === 'stretch'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                   />
                   <i className="fbi fbi-as fbi-as-stretch">
                     <i className="fbi-items">
@@ -483,7 +483,7 @@ class Toolbar extends Component<{
                     name="as"
                     value="auto"
                     checked={!thisBox.as || thisBox.as === 'auto'}
-                    onChange={e => this.props.updateBox(e, this.props.id)}
+                    onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
                   />
                   <i className="fbi fbi-as fbi-as-auto">
                     <i className="fbi-items">
