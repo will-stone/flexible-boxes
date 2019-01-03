@@ -1,3 +1,4 @@
+import produce from 'immer'
 import cc from 'classcat'
 import update from 'immutability-helper'
 import jsurl from 'jsurl'
@@ -14,7 +15,7 @@ import './../css/button.css'
 import './../css/Pane.css'
 
 export interface IBox {
-  c?: TBoxId[]
+  c?: number[]
   t?: string
   d?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
   w?: 'nowrap' | 'wrap' | 'wrap-reverse'
@@ -28,182 +29,97 @@ export interface IBox {
   js?: string
 }
 
-export interface IBoxes {
-  [key: string]: IBox
-}
-
-export type TBoxId = number
 export type TSelectedBoxId = number | undefined
 
 interface IState {
   screenWarningHidden: boolean
   selectedBoxId: TSelectedBoxId
-  boxes: IBoxes
+  boxes: IBox[]
 }
 
 class App extends Component {
   state: IState = {
     screenWarningHidden: false,
     selectedBoxId: undefined,
-    boxes: {
+    boxes: [
       // default layout
-      1: {
-        c: [2, 3, 4]
+      {
+        c: [1, 2, 3]
       },
-      2: {},
-      3: {},
-      4: {}
-    }
+      {},
+      {},
+      {}
+    ]
   }
 
-  sanitiseBoxes = (boxes: any) => {
-    var counter = 1
-    for (var compId in boxes) {
-      if (boxes.hasOwnProperty(compId) && parseInt(compId, 10) === counter) {
-        // second clause is dirty check for corrupt boxes; checks box IDs start at 1 and are squential.
-        for (var key in boxes[compId]) {
-          if (boxes[compId].hasOwnProperty(key)) {
-            var value = boxes[compId][key]
-            if (value === '') {
-              // remove an empty property
-              delete boxes[compId][key]
-            } else {
-              switch (key) {
-                case 't': // title
-                  boxes[compId].t = boxes[compId].t.replace(' ', '_') // spaces to underscores
-                  break
+  sanitiseBoxes = (boxes: IBox[]) =>
+    produce(boxes, draftBoxes => {
+      draftBoxes.forEach(box => {
+        // Children
+        if (!box.c || !box.c.length) delete box.c
 
-                case 'd': // direction
-                  if (boxes[compId].d !== 'column') {
-                    delete boxes[compId].d
-                  }
-                  break
+        // Text
+        if (!box.t || box.t === '') delete box.t
+        // spaces to underscores
+        else box.t = box.t.replace(' ', '_')
 
-                case 'w': // wrap
-                  if (boxes[compId].w !== 'wrap') {
-                    delete boxes[compId].w
-                  }
-                  break
+        // Flex Direction
+        if (!box.d || box.d === 'row') delete box.d
 
-                case 'g': // grow
-                  if (parseInt(boxes[compId].g, 10) === 0) {
-                    delete boxes[compId].g
-                  }
-                  break
+        // Flex Wrap
+        if (!box.w || box.w === 'nowrap') delete box.w
 
-                case 's': // shrink
-                  if (parseInt(boxes[compId].s, 10) === 1) {
-                    delete boxes[compId].s
-                  }
-                  break
+        // Flex Grow
+        if (!box.g || box.g !== 0) delete box.g
 
-                case 'b': // basis
-                  if (boxes[compId].b === 'auto') {
-                    delete boxes[compId].b
-                  }
-                  break
+        // Flex Shrink
+        if ((!box.s && box.s !== 0) || box.s !== 1) delete box.s
 
-                case 'jc': // justify-content
-                  if (boxes[compId].jc === 'flex-start') {
-                    delete boxes[compId].jc
-                  }
-                  break
+        // Flex Basis
+        if (!box.b || box.b === 'auto') delete box.b
 
-                case 'ac': // align-content
-                  if (boxes[compId].ac === 'stretch') {
-                    delete boxes[compId].ac
-                  }
-                  break
+        // Justify Content
+        if (!box.jc || box.jc === 'flex-start') delete box.jc
 
-                case 'ai': // align-items
-                  if (boxes[compId].ai === 'stretch') {
-                    delete boxes[compId].ai
-                  }
-                  break
+        // Align Content
+        if (!box.ac || box.ac === 'stretch') delete box.ac
 
-                case 'as': // align-items
-                  if (boxes[compId].as === 'auto') {
-                    delete boxes[compId].as
-                  }
-                  break
+        // Align Items
+        if (!box.ai || box.ai === 'stretch') delete box.ai
 
-                case 'c': // children
-                  // remove empty child object
-                  if (typeof value === 'object' && Object.keys(value).length === 0) {
-                    delete boxes[compId].c
-                  }
-                  break
+        // Align Self
+        if (!box.as || box.as === 'auto') delete box.as
 
-                default:
-                  delete boxes[compId][key]
-                  break
-              }
-            }
-          }
-        }
-        counter++
-      } else {
-        // corrupt boxes
-        console.log('Coponents are corrupt, resetting.')
-        boxes = this.state.boxes
-        break
-      }
-    }
-    return boxes
-  }
+        return box
+      })
+    })
 
   handleSelectBox = (id: number) => {
     this.setState({ selectedBoxId: id })
   }
 
-  // TODO: merge this with nudge?
-  handleUpdateBox = (changeEvent: any, compId: TSelectedBoxId) => {
-    var name = changeEvent.target.name
-    var value = changeEvent.target.value
-    var boxes = this.state.boxes
-    boxes = update(boxes, {
-      [String(compId)]: {
-        [name]: { $set: value }
-      }
-    })
-    boxes = this.sanitiseBoxes(boxes)
-    window.location.hash = jsurl.stringify(boxes)
+  handleUpdateBox = (boxIndex: number, key: keyof IBox, value: any) => {
+    this.setState(
+      produce((draft: IState) => {
+        draft.boxes[boxIndex][key] = value
+        window.location.hash = jsurl.stringify(draft.boxes)
+      })
+    )
   }
 
-  handleNudge = (compId: number, name: string, newValue: any) => {
-    var boxes = this.state.boxes
-    boxes = update(boxes, {
-      [compId]: {
-        [name]: { $set: newValue }
-      }
-    })
-    boxes = this.sanitiseBoxes(boxes)
-    window.location.hash = jsurl.stringify(boxes)
-  }
-
-  handleAddBoxTo = (id: number) => {
-    let boxes = this.state.boxes as any
-    let largestBoxId = 0
-
-    // find next box id
-    Object.keys(boxes).forEach(box => {
-      const boxNumber = Number(box)
-      if (boxes.hasOwnProperty(box)) {
-        if (boxNumber > largestBoxId) {
-          largestBoxId++
-        }
-      }
-      largestBoxId++ // this is the new id
-    })
-
-    if (boxes[id].c) {
-      boxes[id].c.push(largestBoxId)
-    } else {
-      boxes[id].c = [largestBoxId]
-    }
-    boxes[largestBoxId] = {}
-
-    window.location.hash = jsurl.stringify(boxes)
+  handleAddBoxTo = (boxIndex: number) => {
+    this.setState(
+      produce((draft: IState) => {
+        // add new box index to children array
+        const newBoxIndex = draft.boxes.length
+        const c = draft.boxes[boxIndex].c
+        if (c) c.push(newBoxIndex)
+        else draft.boxes[boxIndex].c = [newBoxIndex]
+        // add new box
+        draft.boxes.push({})
+        window.location.hash = jsurl.stringify(draft.boxes)
+      })
+    )
   }
 
   handleReorderBox = (direction: any) => {

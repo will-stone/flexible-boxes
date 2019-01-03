@@ -17,6 +17,7 @@
     "@types/react-dom": "^16.0.11",
     "classcat": "^3.2.5",
     "font-awesome": "^4.7.0",
+    "immer": "^1.9.3",
     "immutability-helper": "^2.6.3",
     "jsurl": "^0.1.5",
     "lodash": "^4.17.5",
