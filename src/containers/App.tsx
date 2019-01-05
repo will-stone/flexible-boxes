@@ -15,7 +15,7 @@ import './../css/button.css'
 import './../css/Pane.css'
 
 export interface IBox {
-  c?: number[]
+  c?: IBox[]
   t?: string
   d?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
   w?: 'nowrap' | 'wrap' | 'wrap-reverse'
@@ -34,7 +34,7 @@ export type TSelectedBoxId = number | undefined
 interface IState {
   screenWarningHidden: boolean
   selectedBoxId: TSelectedBoxId
-  boxes: IBox[]
+  boxes: [IBox]
 }
 
 class App extends Component {
@@ -42,13 +42,9 @@ class App extends Component {
     screenWarningHidden: false,
     selectedBoxId: undefined,
     boxes: [
-      // default layout
       {
-        c: [1, 2, 3]
-      },
-      {},
-      {},
-      {}
+        c: [{}, {}, {}]
+      }
     ]
   }
 
@@ -94,30 +90,77 @@ class App extends Component {
       })
     })
 
-  handleSelectBox = (id: number) => {
-    this.setState({ selectedBoxId: id })
+  handleSelectBox = (path: number[]) => {
+    this.setState({ selectedBoxId: path })
   }
 
-  handleUpdateBox = (boxIndex: number, key: keyof IBox, value: any) => {
+  handleUpdateBox = (path: number[], key: keyof IBox, value: any) => {
     this.setState(
       produce((draft: IState) => {
-        draft.boxes[boxIndex][key] = value
-        window.location.hash = jsurl.stringify(draft.boxes)
+        let pathIndex = 0
+        const recursion = (obj: IBox) => {
+          if (pathIndex === path.length - 1) {
+            obj[key] = value
+          } else {
+            pathIndex++
+            if (obj.c && obj.c[path[pathIndex]]) {
+              recursion(obj.c[path[pathIndex]])
+            } else {
+              throw new Error('corrupt path')
+            }
+          }
+          return obj
+        }
+        recursion(draft.boxes[path[pathIndex]])
       })
     )
   }
 
-  handleAddBoxTo = (boxIndex: number) => {
+  handleAddBoxTo = (path: number[]) => {
     this.setState(
       produce((draft: IState) => {
-        // add new box index to children array
-        const newBoxIndex = draft.boxes.length
-        const c = draft.boxes[boxIndex].c
-        if (c) c.push(newBoxIndex)
-        else draft.boxes[boxIndex].c = [newBoxIndex]
-        // add new box
-        draft.boxes.push({})
-        window.location.hash = jsurl.stringify(draft.boxes)
+        let pathIndex = 0
+        const recursion = (obj: IBox) => {
+          if (pathIndex === path.length - 1) {
+            if (obj.c) {
+              obj.c.push({})
+            } else {
+              obj.c = [{}]
+            }
+          } else {
+            pathIndex++
+            if (obj.c && obj.c[path[pathIndex]]) {
+              recursion(obj.c[path[pathIndex]])
+            } else {
+              throw new Error('corrupt path')
+            }
+          }
+          return obj
+        }
+        recursion(draft.boxes[path[pathIndex]])
+      })
+    )
+  }
+
+  handleDeleteBox = (path: number[]) => {
+    this.setState(
+      produce((draft: IState) => {
+        let pathIndex = 0
+        const recursion = (arr: IBox[]) => {
+          if (pathIndex === path.length - 1) {
+            arr.splice(path[pathIndex], 1)
+          } else {
+            const children = arr[path[pathIndex]].c
+            if (children) {
+              pathIndex++
+              recursion(children)
+            } else {
+              throw new Error('corrupt path')
+            }
+          }
+          return arr
+        }
+        recursion(draft.boxes)
       })
     )
   }
@@ -188,96 +231,26 @@ class App extends Component {
     window.location.hash = jsurl.stringify(boxes)
   }
 
-  handleDeleteBox = (id: any, parentId: any) => {
-    var boxes = this.state.boxes as any
-    var selectedBoxChildren = boxes[id].c
-    var selectedBoxId = this.state.selectedBoxId
-
-    // delete all children of box
-    if (selectedBoxChildren) {
-      for (let index = 0; index < selectedBoxChildren.length; index++) {
-        let child = selectedBoxChildren[index]
-
-        // deselect
-        if (selectedBoxId === child) {
-          selectedBoxId = undefined
-        }
-
-        delete boxes[child]
-      }
-    }
-
-    // delete selected box
-    delete boxes[id]
-
-    // deselect if this id
-    if (selectedBoxId === id) {
-      selectedBoxId = undefined
-    }
-
-    // find link to id in parent's' children array and remove it
-    let indexOfChildInParent = boxes[parentId].c.indexOf(id)
-    let parentsChildrenCount = boxes[parentId].c.length
-    if (parentsChildrenCount === 1) {
-      // if only child, remove children (c) property from parent
-      delete boxes[parentId].c
-    } else {
-      // else just remove the child if present
-      boxes[parentId].c.splice(indexOfChildInParent, 1)
-    }
-
-    // Rebase box ids
-    var idCounter = 1
-    Object.keys(boxes).forEach(boxId => {
-      if (boxes.hasOwnProperty(boxId)) {
-        const boxNum = parseInt(boxId, 10)
-        if (boxNum !== idCounter && boxNum !== 1) {
-          boxes[idCounter] = boxes[boxId]
-          delete boxes[boxId]
-
-          // replace reference to child in parent's children array
-          for (var parentBoxId in boxes) {
-            if (
-              boxes.hasOwnProperty(parentBoxId) &&
-              boxes[parentBoxId].c &&
-              boxes[parentBoxId].c.indexOf(boxNum) > -1
-            ) {
-              boxes[parentBoxId].c[boxes[parentBoxId].c.indexOf(boxNum)] = idCounter
-              break
+  handleResetBox = (path: number[]) => {
+    this.setState(
+      produce((draft: IState) => {
+        let pathIndex = 0
+        const recursion = (obj: IBox) => {
+          if (pathIndex === path.length - 1) {
+            for (const key in obj) delete obj[key as keyof IBox]
+          } else {
+            pathIndex++
+            if (obj.c && obj.c[path[pathIndex]]) {
+              recursion(obj.c[path[pathIndex]])
+            } else {
+              throw new Error('corrupt path')
             }
           }
-
-          // update selected id
-          if (selectedBoxId === boxNum) {
-            selectedBoxId = idCounter
-          }
+          return obj
         }
-        idCounter++
-      }
-    })
-
-    // Update boxes in state
-    window.location.hash = jsurl.stringify(boxes)
-    this.setState({ selectedBoxId })
-  }
-
-  handleResetBox = (id: any) => {
-    var boxes = this.state.boxes
-    boxes = update(boxes, {
-      [id]: {
-        d: { $set: 'row' },
-        w: { $set: 'nowrap' },
-        g: { $set: '0' },
-        s: { $set: '1' },
-        b: { $set: 'auto' },
-        ac: { $set: 'stretch' },
-        ai: { $set: 'stretch' },
-        as: { $set: 'auto' },
-        jc: { $set: 'flex-start' }
-      }
-    })
-    boxes = this.sanitiseBoxes(boxes)
-    window.location.hash = jsurl.stringify(boxes)
+        recursion(draft.boxes[path[pathIndex]])
+      })
+    )
   }
 
   urlToBoxes = () => {
