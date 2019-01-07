@@ -7,9 +7,9 @@ import DomBox from './DomBox'
 class Dom extends Component<{
   boxes: IBoxes
   selectedBoxId: TSelectedBoxId
-  handleSelectBox: (any: any) => void
-  handleAddBoxTo: (id: number) => void
-  handleDeleteBox: (id: any, parentId: any) => void
+  selectBox: (any: any) => void
+  addBoxTo: (id: number) => void
+  deleteBox: (id: any, parentId: any) => void
   updateBox: (changeEvent: any, compId: number) => void
   moveBox: (direction: any) => void
 }> {
@@ -21,11 +21,12 @@ class Dom extends Component<{
     var deleteBox = this.props.handleDeleteBox
     var updateBox = this.props.updateBox
 
-    function buildDom(id: any, indentMultiplier: any) {
+    function buildDom(id: any, pathNumber: number, path: number[]) {
+      path.push(pathNumber)
       var output = null as any
       if (boxes[id].c) {
         output = []
-        indentMultiplier++
+        pathNumber++
         for (var i = 0; i < boxes[id].c.length; i++) {
           var childId = boxes[id].c[i]
           output.push(
@@ -34,7 +35,7 @@ class Dom extends Component<{
               id={childId}
               parentId={id}
               selectedBoxId={selectedBoxId}
-              indentLevel={indentMultiplier}
+              indentLevel={pathNumber}
               selectBox={selectBox}
               box={boxes[childId]}
               addBoxTo={addBoxTo}
@@ -42,7 +43,7 @@ class Dom extends Component<{
               updateBox={updateBox}
             />
           )
-          output.push.apply(output, buildDom(childId, indentMultiplier))
+          output.push.apply(output, buildDom(childId, pathNumber, path))
         }
       }
       return output
@@ -62,7 +63,7 @@ class Dom extends Component<{
         updateBox={updateBox}
       />
     ]
-    domBoxes.push.apply(domBoxes, buildDom(1, 0))
+    domBoxes.push.apply(domBoxes, buildDom(1, 0, []))
 
     return (
       <div className="Dom Pane__component">

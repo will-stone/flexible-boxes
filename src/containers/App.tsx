@@ -15,6 +15,7 @@ import { IBox } from '../model'
 import './../css/App.css'
 import './../css/button.css'
 import './../css/Pane.css'
+import { moveBox } from '../boxUtils/moveBox'
 
 export type TSelectedBoxId = number | undefined
 
@@ -90,71 +91,8 @@ class App extends Component {
   handleDeleteBox = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: deleteBox(state.boxes, path) }))
 
-  handleReorderBox = (direction: any) => {
-    var boxes = this.state.boxes as any
-    var selectedBoxId = this.state.selectedBoxId
-
-    var findParentOf = (id: any) => {
-      for (var boxId in boxes) {
-        if (boxes.hasOwnProperty(boxId)) {
-          var box = boxes[boxId]
-          if (box.c && box.c.indexOf(parseInt(id, 10)) > -1) {
-            return boxId
-          }
-        }
-      }
-    }
-
-    var parentId = findParentOf(selectedBoxId) as any
-    var parentIdOfParent = findParentOf(parentId) as any
-    if (parentIdOfParent) {
-      var indexOfParentInParent = boxes[parentIdOfParent].c.indexOf(parseInt(parentId, 10))
-    }
-    var indexOfSelected = boxes[parentId].c.indexOf(selectedBoxId)
-
-    // Remove selected from children array
-    var removeSelected = () => {
-      boxes[parentId].c.splice(indexOfSelected, 1)
-    }
-
-    // Direction up and NOT currently at beginning of children array
-    if (direction === 'up' && indexOfSelected !== 0) {
-      // if box above has children, move selected box into the end of that array
-      if (boxes[boxes[parentId].c[indexOfSelected - 1]].c) {
-        removeSelected()
-        boxes[boxes[parentId].c[indexOfSelected - 1]].c.push(selectedBoxId)
-        // else swap selected with box above it in array
-      } else {
-        ;[boxes[parentId].c[indexOfSelected], boxes[parentId].c[indexOfSelected - 1]] = [
-          boxes[parentId].c[indexOfSelected - 1],
-          boxes[parentId].c[indexOfSelected]
-        ]
-      }
-    } else if (direction === 'up' && indexOfSelected === 0) {
-      // Direction up and currently at beginning of children array, move to parent
-      removeSelected()
-      boxes[parentIdOfParent].c.splice(indexOfParentInParent, 0, selectedBoxId)
-    } else if (direction === 'down' && indexOfSelected !== boxes[parentId].c.length - 1) {
-      // Direction down and NOT currently at end of children array
-      // if box below has children, move selected box into beginning of that array
-      if (boxes[boxes[parentId].c[indexOfSelected + 1]].c) {
-        removeSelected()
-        boxes[boxes[parentId].c[indexOfSelected]].c.unshift(selectedBoxId)
-        // else swap selected with box below it in array
-      } else {
-        ;[boxes[parentId].c[indexOfSelected], boxes[parentId].c[indexOfSelected + 1]] = [
-          boxes[parentId].c[indexOfSelected + 1],
-          boxes[parentId].c[indexOfSelected]
-        ]
-      }
-    } else if (direction === 'down' && indexOfSelected === boxes[parentId].c.length - 1) {
-      // Direction down and currently at end of children array, move to parent
-      removeSelected()
-      boxes[parentIdOfParent].c.splice(indexOfParentInParent + 1, 0, selectedBoxId)
-    }
-
-  //   window.location.hash = jsurl.stringify(boxes)
-  // }
+  handleReorderBox = (path: number[], direction: 'up' | 'down') =>
+    this.setState((state: IState) => ({ boxes: moveBox(state.boxes, path, direction) }))
 
   handleResetBox = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: resetBox(state.boxes, path) }))
@@ -261,10 +199,11 @@ class App extends Component {
                 boxes={this.state.boxes}
                 handleSelectBox={this.handleSelectBox}
                 selectedBoxId={this.state.selectedBoxId}
-                handleAddBoxTo={this.handleAddBoxTo}
-                handleDeleteBox={this.handleDeleteBox}
+                addBoxTo={this.handleAddBoxTo}
+                deleteBox={this.handleDeleteBox}
                 updateBox={this.handleUpdateBox}
                 moveBox={this.handleReorderBox}
+                selectBox={this.handleSelectBox}
               />
 
               <FBox
