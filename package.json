@@ -4,7 +4,11 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "@types/jest": "^23.3.11",
     "@types/lodash": "^4.14.119",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
     "@types/react-syntax-highlighter": "^10.1.0",
     "@types/uuid": "^3.4.4",
     "gh-pages": "^0.12.0",
@@ -12,10 +16,6 @@
     "react-scripts": "^2.1.2"
   },
   "dependencies": {
-    "@types/jest": "^23.3.11",
-    "@types/node": "^10.12.18",
-    "@types/react": "^16.7.18",
-    "@types/react-dom": "^16.0.11",
     "classcat": "^3.2.5",
     "font-awesome": "^4.7.0",
     "immer": "^1.9.3",
@@ -35,12 +35,8 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build",
-    "prettier": "prettier --config .prettierrc --write src/**/*.js"
+    "prettier": "prettier --config .prettierrc --write src/**/*.js",
+    "test": "react-scripts test"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
 }

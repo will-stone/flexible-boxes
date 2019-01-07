@@ -1,33 +1,20 @@
-import produce from 'immer'
 import cc from 'classcat'
-import update from 'immutability-helper'
-import jsurl from 'jsurl'
 import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
+import { addBoxTo } from '../boxUtils/addBoxTo'
+import { deleteBox } from '../boxUtils/deleteBox'
+import { resetBox } from '../boxUtils/resetBox'
+import { updateBox } from '../boxUtils/updateBox'
 import Css from '../components/Css'
 import Dom from '../components/Dom'
 import FBox from '../components/FBox'
 import Html from '../components/Html'
 import Sitebar from '../components/Sitebar'
 import Toolbar from '../components/Toolbar'
+import { IBox } from '../model'
 import './../css/App.css'
 import './../css/button.css'
 import './../css/Pane.css'
-
-export interface IBox {
-  c?: IBox[]
-  t?: string
-  d?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
-  w?: 'nowrap' | 'wrap' | 'wrap-reverse'
-  g?: number
-  s?: number
-  b?: string
-  ac?: string
-  ai?: string
-  as?: string
-  jc?: string
-  js?: string
-}
 
 export type TSelectedBoxId = number | undefined
 
@@ -48,122 +35,60 @@ class App extends Component {
     ]
   }
 
-  sanitiseBoxes = (boxes: IBox[]) =>
-    produce(boxes, draftBoxes => {
-      draftBoxes.forEach(box => {
-        // Children
-        if (!box.c || !box.c.length) delete box.c
+  // sanitiseBoxes = (boxes: IBox[]) =>
+  //   produce(boxes, draftBoxes => {
+  //     draftBoxes.forEach(box => {
+  //       // Children
+  //       if (!box.c || !box.c.length) delete box.c
 
-        // Text
-        if (!box.t || box.t === '') delete box.t
-        // spaces to underscores
-        else box.t = box.t.replace(' ', '_')
+  //       // Text
+  //       if (!box.t || box.t === '') delete box.t
+  //       // spaces to underscores
+  //       else box.t = box.t.replace(' ', '_')
 
-        // Flex Direction
-        if (!box.d || box.d === 'row') delete box.d
+  //       // Flex Direction
+  //       if (!box.d || box.d === 'row') delete box.d
 
-        // Flex Wrap
-        if (!box.w || box.w === 'nowrap') delete box.w
+  //       // Flex Wrap
+  //       if (!box.w || box.w === 'nowrap') delete box.w
 
-        // Flex Grow
-        if (!box.g || box.g !== 0) delete box.g
+  //       // Flex Grow
+  //       if (!box.g || box.g !== 0) delete box.g
 
-        // Flex Shrink
-        if ((!box.s && box.s !== 0) || box.s !== 1) delete box.s
+  //       // Flex Shrink
+  //       if ((!box.s && box.s !== 0) || box.s !== 1) delete box.s
 
-        // Flex Basis
-        if (!box.b || box.b === 'auto') delete box.b
+  //       // Flex Basis
+  //       if (!box.b || box.b === 'auto') delete box.b
 
-        // Justify Content
-        if (!box.jc || box.jc === 'flex-start') delete box.jc
+  //       // Justify Content
+  //       if (!box.jc || box.jc === 'flex-start') delete box.jc
 
-        // Align Content
-        if (!box.ac || box.ac === 'stretch') delete box.ac
+  //       // Align Content
+  //       if (!box.ac || box.ac === 'stretch') delete box.ac
 
-        // Align Items
-        if (!box.ai || box.ai === 'stretch') delete box.ai
+  //       // Align Items
+  //       if (!box.ai || box.ai === 'stretch') delete box.ai
 
-        // Align Self
-        if (!box.as || box.as === 'auto') delete box.as
+  //       // Align Self
+  //       if (!box.as || box.as === 'auto') delete box.as
 
-        return box
-      })
-    })
+  //       return box
+  //     })
+  //   })
 
   handleSelectBox = (path: number[]) => {
     this.setState({ selectedBoxId: path })
   }
 
-  handleUpdateBox = (path: number[], key: keyof IBox, value: any) => {
-    this.setState(
-      produce((draft: IState) => {
-        let pathIndex = 0
-        const recursion = (obj: IBox) => {
-          if (pathIndex === path.length - 1) {
-            obj[key] = value
-          } else {
-            pathIndex++
-            if (obj.c && obj.c[path[pathIndex]]) {
-              recursion(obj.c[path[pathIndex]])
-            } else {
-              throw new Error('corrupt path')
-            }
-          }
-          return obj
-        }
-        recursion(draft.boxes[path[pathIndex]])
-      })
-    )
-  }
+  handleUpdateBox = (path: number[], key: keyof IBox, value: any) =>
+    this.setState((state: IState) => ({ boxes: updateBox(state.boxes, path, key, value) }))
 
-  handleAddBoxTo = (path: number[]) => {
-    this.setState(
-      produce((draft: IState) => {
-        let pathIndex = 0
-        const recursion = (obj: IBox) => {
-          if (pathIndex === path.length - 1) {
-            if (obj.c) {
-              obj.c.push({})
-            } else {
-              obj.c = [{}]
-            }
-          } else {
-            pathIndex++
-            if (obj.c && obj.c[path[pathIndex]]) {
-              recursion(obj.c[path[pathIndex]])
-            } else {
-              throw new Error('corrupt path')
-            }
-          }
-          return obj
-        }
-        recursion(draft.boxes[path[pathIndex]])
-      })
-    )
-  }
+  handleAddBoxTo = (path: number[]) =>
+    this.setState((state: IState) => ({ boxes: addBoxTo(state.boxes, path) }))
 
-  handleDeleteBox = (path: number[]) => {
-    this.setState(
-      produce((draft: IState) => {
-        let pathIndex = 0
-        const recursion = (arr: IBox[]) => {
-          if (pathIndex === path.length - 1) {
-            arr.splice(path[pathIndex], 1)
-          } else {
-            const children = arr[path[pathIndex]].c
-            if (children) {
-              pathIndex++
-              recursion(children)
-            } else {
-              throw new Error('corrupt path')
-            }
-          }
-          return arr
-        }
-        recursion(draft.boxes)
-      })
-    )
-  }
+  handleDeleteBox = (path: number[]) =>
+    this.setState((state: IState) => ({ boxes: deleteBox(state.boxes, path) }))
 
   handleReorderBox = (direction: any) => {
     var boxes = this.state.boxes as any
@@ -228,79 +153,59 @@ class App extends Component {
       boxes[parentIdOfParent].c.splice(indexOfParentInParent + 1, 0, selectedBoxId)
     }
 
-    window.location.hash = jsurl.stringify(boxes)
-  }
+  //   window.location.hash = jsurl.stringify(boxes)
+  // }
 
-  handleResetBox = (path: number[]) => {
-    this.setState(
-      produce((draft: IState) => {
-        let pathIndex = 0
-        const recursion = (obj: IBox) => {
-          if (pathIndex === path.length - 1) {
-            for (const key in obj) delete obj[key as keyof IBox]
-          } else {
-            pathIndex++
-            if (obj.c && obj.c[path[pathIndex]]) {
-              recursion(obj.c[path[pathIndex]])
-            } else {
-              throw new Error('corrupt path')
-            }
-          }
-          return obj
-        }
-        recursion(draft.boxes[path[pathIndex]])
-      })
-    )
-  }
+  handleResetBox = (path: number[]) =>
+    this.setState((state: IState) => ({ boxes: resetBox(state.boxes, path) }))
 
-  urlToBoxes = () => {
-    if (window.location.hash) {
-      var parsedBoxes
-      try {
-        // check if parse-able otherwise reset
-        parsedBoxes = jsurl.parse(window.location.hash.substring(1))
-      } catch (err) {
-        console.log(err)
-        parsedBoxes = false
-      }
+  // urlToBoxes = () => {
+  //   if (window.location.hash) {
+  //     var parsedBoxes
+  //     try {
+  //       // check if parse-able otherwise reset
+  //       parsedBoxes = jsurl.parse(window.location.hash.substring(1))
+  //     } catch (err) {
+  //       console.log(err)
+  //       parsedBoxes = false
+  //     }
 
-      if (parsedBoxes) {
-        // successful parse
-        parsedBoxes = this.sanitiseBoxes(parsedBoxes)
-        this.setState({
-          boxes: parsedBoxes
-        })
-      } else {
-        // unsuccessful parse
-        // set to default
-        window.location.hash = jsurl.stringify(this.state.boxes)
-      }
-    } else {
-      // set to default
-      window.location.hash = jsurl.stringify(this.state.boxes)
-    }
-  }
+  //     if (parsedBoxes) {
+  //       // successful parse
+  //       parsedBoxes = this.sanitiseBoxes(parsedBoxes)
+  //       this.setState({
+  //         boxes: parsedBoxes
+  //       })
+  //     } else {
+  //       // unsuccessful parse
+  //       // set to default
+  //       window.location.hash = jsurl.stringify(this.state.boxes)
+  //     }
+  //   } else {
+  //     // set to default
+  //     window.location.hash = jsurl.stringify(this.state.boxes)
+  //   }
+  // }
 
-  removeScreenWarning = () => {
+  removeScreenWarning = () =>
     this.setState({
       screenWarningHidden: true
     })
-  }
 
-  componentWillMount = () => {
-    this.urlToBoxes()
-    window.addEventListener(
-      'hashchange',
-      () => {
-        this.urlToBoxes()
-      },
-      false
-    )
-  }
+  // componentWillMount = () => {
+  //   this.urlToBoxes()
+  //   window.addEventListener(
+  //     'hashchange',
+  //     () => {
+  //       this.urlToBoxes()
+  //     },
+  //     false
+  //   )
+  // }
 
-  componentDidUpdate = () => {
-    window.location.hash = jsurl.stringify(this.state.boxes)
-  }
+  // componentDidUpdate = () => {
+  //   window.location.hash = jsurl.stringify(this.state.boxes)
+  // }
 
   render() {
     var browserWarning = {
