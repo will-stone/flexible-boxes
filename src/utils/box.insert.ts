@@ -1,12 +1,13 @@
 import produce from 'immer'
 import { IBox } from '../model'
+import { mutableArrayInsertAt } from './array.mutableInsertAt'
 
 export const insertBox = (boxes: [IBox], box: IBox, path: number[], offset = 0) =>
   produce(boxes, draft => {
     let pathIndex = 0
     const recursion = (arr: IBox[]) => {
       if (pathIndex === path.length - 1) {
-        arr.splice(path[pathIndex] + offset, 0, box)
+        mutableArrayInsertAt(arr, box, path[pathIndex] + offset)
       } else {
         const children = arr[path[pathIndex]].c
         if (children) {
@@ -16,7 +17,6 @@ export const insertBox = (boxes: [IBox], box: IBox, path: number[], offset = 0) 
           throw new Error('corrupt path')
         }
       }
-      return arr
     }
     recursion(draft)
   })

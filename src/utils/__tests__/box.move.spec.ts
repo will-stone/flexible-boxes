@@ -1,9 +1,9 @@
-import { moveBox } from '../moveBox'
+import { moveBox } from '../box.move'
 import { IBox } from '../../model'
 
 const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
-describe('boxUtils/insertBox', () => {
+describe('boxUtils/box.insert', () => {
   it('should move first in array box up', () => {
     const newBoxes = moveBox(boxes, [0, 0], 'up')
     expect(newBoxes).toEqual([{}, { c: [{}, { c: [{}, {}] }] }])

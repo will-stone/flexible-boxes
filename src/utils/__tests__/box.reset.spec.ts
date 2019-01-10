@@ -1,9 +1,9 @@
-import { resetBox } from '../resetBox'
+import { resetBox } from '../box.reset'
 import { IBox } from '../../model'
 
 const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
-describe('boxUtils/resetBox', () => {
+describe('boxUtils/box.reset', () => {
   it('should reset a box', () => {
     const newBoxes = resetBox(boxes, [0])
     expect(newBoxes).toEqual([{}])

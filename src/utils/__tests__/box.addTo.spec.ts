@@ -1,9 +1,9 @@
-import { addBoxTo } from '../addBoxTo'
+import { addBoxTo } from '../box.addTo'
 import { IBox } from '../../model'
 
 const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
-describe('boxUtils/addBoxTo', () => {
+describe('boxUtils/box.addTo', () => {
   it('should add a box', () => {
     const newBoxes = addBoxTo(boxes, [0])
     expect(newBoxes).toEqual([{ c: [{}, {}, { c: [{}, {}] }, {}] }])

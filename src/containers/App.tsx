@@ -1,10 +1,10 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
-import { addBoxTo } from '../boxUtils/addBoxTo'
-import { deleteBox } from '../boxUtils/deleteBox'
-import { resetBox } from '../boxUtils/resetBox'
-import { updateBox } from '../boxUtils/updateBox'
+import { addBoxTo } from '../utils/box.addTo'
+import { deleteBox } from '../utils/box.delete'
+import { resetBox } from '../utils/box.reset'
+import { updateBox } from '../utils/box.update'
 import Css from '../components/Css'
 import Dom from '../components/Dom'
 import FBox from '../components/FBox'
@@ -15,7 +15,7 @@ import { IBox } from '../model'
 import './../css/App.css'
 import './../css/button.css'
 import './../css/Pane.css'
-import { moveBox } from '../boxUtils/moveBox'
+import { moveBox } from '../utils/box.move'
 
 export type TSelectedBoxId = number | undefined
 

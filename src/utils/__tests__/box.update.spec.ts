@@ -1,9 +1,9 @@
-import { updateBox } from '../updateBox'
+import { updateBox } from '../box.update'
 import { IBox } from '../../model'
 
 const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
-describe('boxUtils/updateBox', () => {
+describe('boxUtils/box.update', () => {
   it('should update first box', () => {
     const newBoxes = updateBox(boxes, [0], 't', 'Title')
     expect(newBoxes).toEqual([{ c: [{}, {}, { c: [{}, {}] }], t: 'Title' }])

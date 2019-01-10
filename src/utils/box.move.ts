@@ -1,7 +1,8 @@
 import produce from 'immer'
 import { IBox } from '../model'
-import { deleteBox } from './deleteBox'
-import { insertBox } from './insertBox'
+import { insertBox } from './box.insert'
+import { mutableArraySwap } from './array.mutableSwap'
+import { mutableArrayDelete } from './array.mutableDelete'
 
 export const moveBox = (boxes: [IBox], path: number[], direction: 'up' | 'down') =>
   produce(boxes, draft => {
@@ -14,26 +15,18 @@ export const moveBox = (boxes: [IBox], path: number[], direction: 'up' | 'down')
         const box = arr[currentPathNumber]
         if (direction === 'up') {
           if (currentPathNumber === 0) {
-            draft = deleteBox(draft, path)
+            mutableArrayDelete(arr, currentPathNumber)
             draft = insertBox(draft, box, parentPath)
           } else {
-            // swap
-            ;[arr[currentPathNumber], arr[currentPathNumber - 1]] = [
-              arr[currentPathNumber - 1],
-              arr[currentPathNumber]
-            ]
+            mutableArraySwap(arr, currentPathNumber, currentPathNumber - 1)
           }
         }
         if (direction === 'down') {
           if (currentPathNumber === arr.length - 1) {
-            draft = deleteBox(draft, path)
+            mutableArrayDelete(arr, currentPathNumber)
             draft = insertBox(draft, box, parentPath, 1)
           } else {
-            // swap
-            ;[arr[currentPathNumber], arr[currentPathNumber + 1]] = [
-              arr[currentPathNumber + 1],
-              arr[currentPathNumber]
-            ]
+            mutableArraySwap(arr, currentPathNumber, currentPathNumber + 1)
           }
         }
       } else {
