@@ -23,11 +23,7 @@ class Dom extends Component<{
       <div className="Dom Pane__component">
         <h2 className="Pane__title">
           DOM{' '}
-          <a
-            className="Pane__titleButton button"
-            href="/#~(1~())"
-            onClick={() => this.props.onSelectBox(undefined)}
-          >
+          <a className="Pane__titleButton button" href="/#~(~())">
             CLEAR
           </a>
         </h2>

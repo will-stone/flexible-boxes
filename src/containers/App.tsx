@@ -11,6 +11,8 @@ import { moveBox } from '../utils/box.move'
 import { resetBox } from '../utils/box.reset'
 import { updateBox } from '../utils/box.update'
 import Dom from '../components/Dom'
+import { boxesToString } from '../utils/boxes.toString'
+import { boxesFromString } from '../utils/boxes.fromString'
 
 export type TSelectedBoxPath = number[] | undefined
 
@@ -32,48 +34,6 @@ class App extends Component<{}, IState> {
     ],
     showEditTitle: false
   }
-
-  // sanitiseBoxes = (boxes: IBox[]) =>
-  //   produce(boxes, draftBoxes => {
-  //     draftBoxes.forEach(box => {
-  //       // Children
-  //       if (!box.c || !box.c.length) delete box.c
-
-  //       // Text
-  //       if (!box.t || box.t === '') delete box.t
-  //       // spaces to underscores
-  //       else box.t = box.t.replace(' ', '_')
-
-  //       // Flex Direction
-  //       if (!box.d || box.d === 'row') delete box.d
-
-  //       // Flex Wrap
-  //       if (!box.w || box.w === 'nowrap') delete box.w
-
-  //       // Flex Grow
-  //       if (!box.g || box.g !== 0) delete box.g
-
-  //       // Flex Shrink
-  //       if ((!box.s && box.s !== 0) || box.s !== 1) delete box.s
-
-  //       // Flex Basis
-  //       if (!box.b || box.b === 'auto') delete box.b
-
-  //       // Justify Content
-  //       if (!box.jc || box.jc === 'flex-start') delete box.jc
-
-  //       // Align Content
-  //       if (!box.ac || box.ac === 'stretch') delete box.ac
-
-  //       // Align Items
-  //       if (!box.ai || box.ai === 'stretch') delete box.ai
-
-  //       // Align Self
-  //       if (!box.as || box.as === 'auto') delete box.as
-
-  //       return box
-  //     })
-  //   })
 
   handleSelectBox = (path: TSelectedBoxPath) => {
     this.setState(state => ({
@@ -109,53 +69,36 @@ class App extends Component<{}, IState> {
 
   handleToggleEditTitle = () => this.setState(state => ({ showEditTitle: !state.showEditTitle }))
 
-  // urlToBoxes = () => {
-  //   if (window.location.hash) {
-  //     var parsedBoxes
-  //     try {
-  //       // check if parse-able otherwise reset
-  //       parsedBoxes = jsurl.parse(window.location.hash.substring(1))
-  //     } catch (err) {
-  //       console.log(err)
-  //       parsedBoxes = false
-  //     }
-
-  //     if (parsedBoxes) {
-  //       // successful parse
-  //       parsedBoxes = this.sanitiseBoxes(parsedBoxes)
-  //       this.setState({
-  //         boxes: parsedBoxes
-  //       })
-  //     } else {
-  //       // unsuccessful parse
-  //       // set to default
-  //       window.location.hash = jsurl.stringify(this.state.boxes)
-  //     }
-  //   } else {
-  //     // set to default
-  //     window.location.hash = jsurl.stringify(this.state.boxes)
-  //   }
-  // }
+  urlToBoxes = () => {
+    if (window.location.hash) {
+      try {
+        // check if parse-able otherwise reset
+        const parsed = boxesFromString(window.location.hash.substring(1))
+        this.setState({
+          boxes: parsed
+        })
+      } catch (err) {
+        console.log(err)
+        window.location.hash = boxesToString(this.state.boxes)
+      }
+    } else {
+      // set to default
+      window.location.hash = boxesToString(this.state.boxes)
+    }
+  }
 
   removeScreenWarning = () =>
     this.setState({
       screenWarningHidden: true
     })
 
-  // componentWillMount = () => {
-  //   this.urlToBoxes()
-  //   window.addEventListener(
-  //     'hashchange',
-  //     () => {
-  //       this.urlToBoxes()
-  //     },
-  //     false
-  //   )
-  // }
+  componentWillMount = () => {
+    this.urlToBoxes()
+  }
 
-  // componentDidUpdate = () => {
-  //   window.location.hash = jsurl.stringify(this.state.boxes)
-  // }
+  componentDidUpdate = () => {
+    window.location.hash = boxesToString(this.state.boxes)
+  }
 
   render() {
     var browserWarning = {
@@ -176,8 +119,6 @@ class App extends Component<{}, IState> {
         </div>
       <![endif]-->`
     }
-
-    console.log(this.state.selectedBoxPath)
 
     return (
       <div className="App">
