@@ -1,121 +1,167 @@
 import cc from 'classcat'
-import repeat from 'lodash/repeat'
-import React, { Component } from 'react'
-
+import React, { Component, FormEvent } from 'react'
+import { TSelectedBoxPath } from '../containers/App'
+import { IBox, IFlattenedBox } from '../model'
 import './../css/DomBox.css'
-import { IBox, TBoxId, TSelectedBoxId } from '../containers/App'
+import isEqual from 'lodash/isEqual'
+import repeat from 'lodash/repeat'
 
 class DomBox extends Component<{
-  box: IBox
-  updateBox: (event: any, id: any) => void
-  selectBox: (id: number) => void
-  deleteBox: (id: number, parentId: number | 'null') => void
-  addBoxTo: (id: number) => void
-  id: TBoxId
-  parentId: number | 'null'
-  selectedBoxId: TSelectedBoxId
-  indentLevel: number
+  box: IFlattenedBox
+  onUpdateBox: (path: number[], key: keyof IBox, value: any) => void
+  onSelectBox: (path: TSelectedBoxPath) => void
+  onDeleteBox: (path: number[]) => void
+  onAddBoxTo: (path: number[]) => void
+  onToggleEditTitle: () => void
+  selectedBoxPath: TSelectedBoxPath
+  showEditTitle: boolean
 }> {
-  state = {
-    title: this.props.box.t ? this.props.box.t : '',
-    showEditTitle: false
+  setTitle = (e: React.FormEvent<HTMLInputElement>) => {
+    this.props.onUpdateBox(this.props.box.path, 't', e.currentTarget.value)
   }
 
-  componentWillReceiveProps(nextProps: any) {
-    if (this.state.showEditTitle && this.props.id !== nextProps.selectedBoxId) {
-      this.setState({
-        showEditTitle: false
-      })
-    }
-  }
-
-  updateTitle(changeEvent: any) {
-    this.props.updateBox(changeEvent, this.props.id)
-    this.setState({
-      title: changeEvent.target.value
-    })
-  }
-
-  titleKeyDown(e: any) {
+  titleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
-      this.toggleEditTitle()
+      this.props.onToggleEditTitle()
     }
-  }
-
-  toggleEditTitle() {
-    this.setState({
-      title: this.props.box.t ? this.props.box.t : '',
-      showEditTitle: !this.state.showEditTitle
-    })
   }
 
   render() {
+    const isSelected = isEqual(this.props.box.path, this.props.selectedBoxPath)
     return (
       <li
         className={cc([
           'DomBox',
           {
-            'DomBox--isActive': this.props.id === this.props.selectedBoxId
+            'DomBox--isActive': isSelected
           }
         ])}
         onClick={e => {
           e.stopPropagation()
-          this.props.selectBox(this.props.id)
+          this.props.onSelectBox(this.props.box.path)
         }}
       >
-        <span className="DomBox__id">{this.props.id}</span>
-        <span className="DomBox__indenter">{repeat('..', this.props.indentLevel)}</span>
-        {this.state.showEditTitle && this.props.id === this.props.selectedBoxId ? (
+        <span className="DomBox__indenter">{repeat('..', this.props.box.path.length - 1)}</span>
+        {this.props.showEditTitle && isSelected ? (
           <input
             autoFocus
             className="DomBox__titleInput"
             type="text"
             name="t"
-            value={this.state.title}
-            onChange={e => this.updateTitle(e)}
-            onKeyDown={e => this.titleKeyDown(e)}
+            defaultValue={this.props.box.t}
+            onChange={this.setTitle}
+            onKeyDown={this.titleKeyDown}
           />
         ) : (
           <span className="DomBox__name">{this.props.box.t ? this.props.box.t : 'Box'}</span>
         )}
 
-        <span className="DomBox__buttons">
-          {this.props.id !== 1 && (
+        {isSelected && (
+          <span className="DomBox__buttons">
+            {this.props.box.path.length !== 1 && (
+              <button
+                className="DomBox__deleteButton DomBox__button"
+                onClick={e => {
+                  e.stopPropagation()
+                  this.props.onDeleteBox(this.props.box.path)
+                }}
+              >
+                <i className="fa fa-trash" />
+              </button>
+            )}
+
             <button
-              className="DomBox__deleteButton DomBox__button"
+              className="DomBox__renameButton DomBox__button"
               onClick={e => {
                 e.stopPropagation()
-                this.props.deleteBox(this.props.id, this.props.parentId)
+                this.props.onToggleEditTitle()
               }}
             >
-              <i className="fa fa-trash" />
+              <i className="fa fa-pencil" />
             </button>
-          )}
 
-          <button
-            className="DomBox__renameButton DomBox__button"
-            onClick={e => {
-              e.stopPropagation()
-              this.toggleEditTitle()
-              this.props.selectBox(this.props.id)
-            }}
-          >
-            <i className="fa fa-pencil" />
-          </button>
-
-          <button
-            className="DomBox__addButton DomBox__button"
-            onClick={e => {
-              e.stopPropagation()
-              this.props.addBoxTo(this.props.id)
-            }}
-          >
-            <i className="fa fa-plus" />
-          </button>
-        </span>
+            <button
+              className="DomBox__addButton DomBox__button"
+              onClick={e => {
+                e.stopPropagation()
+                this.props.onAddBoxTo(this.props.box.path)
+              }}
+            >
+              <i className="fa fa-plus" />
+            </button>
+          </span>
+        )}
       </li>
     )
   }
+
+  // render() {
+  //   return (
+  //     <li
+  // className={cc([
+  //   'DomBox',
+  //   {
+  //     'DomBox--isActive': this.props.id === this.props.selectedBoxId
+  //   }
+  // ])}
+  //       onClick={e => {
+  //         e.stopPropagation()
+  //         this.props.selectBox(this.props.id)
+  //       }}
+  //     >
+  //       <span className="DomBox__id">{this.props.id}</span>
+  //       <span className="DomBox__indenter">{repeat('..', this.props.indentLevel)}</span>
+  //       {this.state.showEditTitle && this.props.id === this.props.selectedBoxId ? (
+  //         <input
+  //           autoFocus
+  //           className="DomBox__titleInput"
+  //           type="text"
+  //           name="t"
+  //           value={this.state.title}
+  //           onChange={e => this.updateTitle(e)}
+  //           onKeyDown={e => this.titleKeyDown(e)}
+  //         />
+  //       ) : (
+  //         <span className="DomBox__name">{this.props.box.t ? this.props.box.t : 'Box'}</span>
+  //       )}
+
+  //       <span className="DomBox__buttons">
+  //         {this.props.id !== 1 && (
+  //           <button
+  //             className="DomBox__deleteButton DomBox__button"
+  //             onClick={e => {
+  //               e.stopPropagation()
+  //               this.props.deleteBox(this.props.id, this.props.parentId)
+  //             }}
+  //           >
+  //             <i className="fa fa-trash" />
+  //           </button>
+  //         )}
+
+  //         <button
+  //           className="DomBox__renameButton DomBox__button"
+  //           onClick={e => {
+  //             e.stopPropagation()
+  //             this.toggleEditTitle()
+  //             this.props.selectBox(this.props.id)
+  //           }}
+  //         >
+  //           <i className="fa fa-pencil" />
+  //         </button>
+
+  //         <button
+  //           className="DomBox__addButton DomBox__button"
+  //           onClick={e => {
+  //             e.stopPropagation()
+  //             this.props.addBoxTo(this.props.id)
+  //           }}
+  //         >
+  //           <i className="fa fa-plus" />
+  //         </button>
+  //       </span>
+  //     </li>
+  //   )
+  // }
 }
 
 export default DomBox

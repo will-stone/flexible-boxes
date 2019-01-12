@@ -1,39 +1,36 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
+import '../css/App.css'
+import '../css/button.css'
+import '../css/Pane.css'
+import { IBox } from '../model'
 import { addBoxTo } from '../utils/box.addTo'
 import { deleteBox } from '../utils/box.delete'
+import { moveBox } from '../utils/box.move'
 import { resetBox } from '../utils/box.reset'
 import { updateBox } from '../utils/box.update'
-import Css from '../components/Css'
 import Dom from '../components/Dom'
-import FBox from '../components/FBox'
-import Html from '../components/Html'
-import Sitebar from '../components/Sitebar'
-import Toolbar from '../components/Toolbar'
-import { IBox } from '../model'
-import './../css/App.css'
-import './../css/button.css'
-import './../css/Pane.css'
-import { moveBox } from '../utils/box.move'
 
-export type TSelectedBoxId = number | undefined
+export type TSelectedBoxPath = number[] | undefined
 
 interface IState {
   screenWarningHidden: boolean
-  selectedBoxId: TSelectedBoxId
+  selectedBoxPath: TSelectedBoxPath
   boxes: [IBox]
+  showEditTitle: boolean
 }
 
-class App extends Component {
+class App extends Component<{}, IState> {
   state: IState = {
     screenWarningHidden: false,
-    selectedBoxId: undefined,
+    selectedBoxPath: undefined,
     boxes: [
       {
         c: [{}, {}, {}]
       }
-    ]
+    ],
+    showEditTitle: false
   }
 
   // sanitiseBoxes = (boxes: IBox[]) =>
@@ -78,8 +75,11 @@ class App extends Component {
   //     })
   //   })
 
-  handleSelectBox = (path: number[]) => {
-    this.setState({ selectedBoxId: path })
+  handleSelectBox = (path: TSelectedBoxPath) => {
+    this.setState(state => ({
+      selectedBoxPath: path,
+      showEditTitle: !path ? false : state.showEditTitle
+    }))
   }
 
   handleUpdateBox = (path: number[], key: keyof IBox, value: any) =>
@@ -91,11 +91,23 @@ class App extends Component {
   handleDeleteBox = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: deleteBox(state.boxes, path) }))
 
-  handleReorderBox = (path: number[], direction: 'up' | 'down') =>
-    this.setState((state: IState) => ({ boxes: moveBox(state.boxes, path, direction) }))
+  handleMoveBox = (direction: 'up' | 'down') => {
+    this.setState((state: IState) => {
+      if (state.selectedBoxPath) {
+        const [newBoxes, newPath] = moveBox(state.boxes, state.selectedBoxPath, direction)
+        return {
+          boxes: newBoxes,
+          selectedBoxPath: newPath
+        }
+      }
+      return state
+    })
+  }
 
   handleResetBox = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: resetBox(state.boxes, path) }))
+
+  handleToggleEditTitle = () => this.setState(state => ({ showEditTitle: !state.showEditTitle }))
 
   // urlToBoxes = () => {
   //   if (window.location.hash) {
@@ -152,11 +164,20 @@ class App extends Component {
           <div>
             <h1><i class="fa fa-warning fa-3x"></i></h1>
             <h1>Flexible Boxes</h1>
-            <p>Unfortunately your browser is not supported. Please upgrade. Alternatively you could try either <a class="button button--link" href="https://www.mozilla.org/firefox/"/>Firefox</a> or <a class="button button--link" href="https://www.google.com/chrome/">Chrome</a> browsers.</p>
+            <p>
+              Unfortunately your browser is not supported. Please upgrade. Alternatively you could
+              try either
+              <a class="button button--link" href="https://www.mozilla.org/firefox/"/>Firefox</a>
+              or
+              <a class="button button--link" href="https://www.google.com/chrome/">Chrome</a>
+              browsers.
+            </p>
           </div>
         </div>
       <![endif]-->`
     }
+
+    console.log(this.state.selectedBoxPath)
 
     return (
       <div className="App">
@@ -197,41 +218,47 @@ class App extends Component {
             <SplitPane split="vertical" defaultSize={250} minSize={250}>
               <Dom
                 boxes={this.state.boxes}
-                handleSelectBox={this.handleSelectBox}
-                selectedBoxId={this.state.selectedBoxId}
-                addBoxTo={this.handleAddBoxTo}
-                deleteBox={this.handleDeleteBox}
-                updateBox={this.handleUpdateBox}
-                moveBox={this.handleReorderBox}
-                selectBox={this.handleSelectBox}
+                selectedBoxPath={this.state.selectedBoxPath}
+                onSelectBox={this.handleSelectBox}
+                onAddBoxTo={this.handleAddBoxTo}
+                onDeleteBox={this.handleDeleteBox}
+                onMoveBox={this.handleMoveBox}
+                onUpdateBox={this.handleUpdateBox}
+                onToggleEditTitle={this.handleToggleEditTitle}
+                showEditTitle={this.state.showEditTitle}
               />
 
-              <FBox
+              <div />
+
+              {/* <FBox
                 boxes={this.state.boxes}
-                id={1}
-                selectBox={this.handleSelectBox}
-                selectedBoxId={this.state.selectedBoxId}
-              />
+                onSelectBox={this.handleSelectBox}
+                selectedBoxPath={this.state.selectedBoxPath}
+              /> */}
             </SplitPane>
 
             <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
-              <Sitebar handleSelectBox={this.handleSelectBox} />
+              {/* <Sitebar handleSelectBox={this.handleSelectBox} /> */}
+              <div />
 
               <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
-                <Html boxes={this.state.boxes} />
+                {/* <Html boxes={this.state.boxes} /> */}
+                <div />
 
-                <Css boxes={this.state.boxes} />
+                {/* <Css boxes={this.state.boxes} /> */}
+                <div />
               </SplitPane>
             </SplitPane>
           </SplitPane>
 
-          <Toolbar
+          {/* <Toolbar
             selectedBoxId={this.state.selectedBoxId}
             boxes={this.state.boxes}
             updateBox={this.handleUpdateBox}
             nudge={this.handleNudge}
             resetBox={this.handleResetBox}
-          />
+          /> */}
+          <div />
         </SplitPane>
       </div>
     )

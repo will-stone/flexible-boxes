@@ -12,3 +12,7 @@ export interface IBox {
   jc?: string
   js?: string
 }
+
+export interface IFlattenedBox extends IBox {
+  path: number[]
+}

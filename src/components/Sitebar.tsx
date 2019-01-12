@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import './../css/Sitebar.css'
 
 class Sitebar extends Component<{ handleSelectBox: (any: any) => void }> {

@@ -1,23 +1,9 @@
 import produce from 'immer'
 import { IBox } from '../model'
-import { mutableArrayDelete } from './array.mutableDelete'
+import { selectContainer } from './box.selectContainer'
 
 export const deleteBox = (boxes: [IBox], path: number[]) =>
   produce(boxes, draft => {
-    let pathIndex = 0
-    const recursion = (arr: IBox[]) => {
-      if (pathIndex === path.length - 1) {
-        mutableArrayDelete(arr, path[pathIndex])
-      } else {
-        const children = arr[path[pathIndex]].c
-        if (children) {
-          pathIndex++
-          recursion(children)
-        } else {
-          throw new Error('corrupt path')
-        }
-      }
-      return arr
-    }
-    recursion(draft)
+    const container = selectContainer(draft, path)
+    container.splice(path[path.length - 1], 1)
   })

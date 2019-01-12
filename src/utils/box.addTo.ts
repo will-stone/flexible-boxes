@@ -1,25 +1,13 @@
 import produce from 'immer'
 import { IBox } from '../model'
+import { selectBox } from './box.select'
 
 export const addBoxTo = (boxes: [IBox], path: number[]) =>
   produce(boxes, draft => {
-    let pathIndex = 0
-    const recursion = (obj: IBox) => {
-      if (pathIndex === path.length - 1) {
-        if (obj.c) {
-          obj.c.push({})
-        } else {
-          obj.c = [{}]
-        }
-      } else {
-        pathIndex++
-        if (obj.c && obj.c[path[pathIndex]]) {
-          recursion(obj.c[path[pathIndex]])
-        } else {
-          throw new Error('corrupt path')
-        }
-      }
-      return obj
+    const box = selectBox(draft, path)
+    if (box.c) {
+      box.c.push({})
+    } else {
+      box.c = [{}]
     }
-    recursion(draft[path[pathIndex]])
   })

@@ -1,13 +1,12 @@
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
+import ClipboardButton from 'react-clipboard.js'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
-import ClipboardButton from 'react-clipboard.js'
-
 import './../css/Html.css'
-import { IBoxes } from '../containers/App'
+import { IBox } from '../model'
 
-class Html extends Component<{ boxes: IBoxes }> {
+class Html extends Component<{ boxes: [IBox] }> {
   state = {
     copyButtonText: 'COPY'
   }

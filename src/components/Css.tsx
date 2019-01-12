@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import ClipboardButton from 'react-clipboard.js'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
-import { IBoxes } from '../containers/App'
 import './../css/Css.css'
+import { IBox } from '../model'
 
-class Css extends Component<{ boxes: IBoxes }> {
+class Css extends Component<{ boxes: [IBox] }> {
   state = {
     copyButtonText: 'COPY'
   }

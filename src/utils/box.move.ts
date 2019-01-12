@@ -1,44 +1,53 @@
 import produce from 'immer'
 import { IBox } from '../model'
-import { insertBox } from './box.insert'
 import { mutableArraySwap } from './array.mutableSwap'
-import { mutableArrayDelete } from './array.mutableDelete'
+import { selectBox } from './box.select'
+import { selectContainer } from './box.selectContainer'
 
-export const moveBox = (boxes: [IBox], path: number[], direction: 'up' | 'down') =>
-  produce(boxes, draft => {
-    let pathIndex = 0
-    const recursion = (arr: IBox[]) => {
-      if (pathIndex === path.length - 1) {
-        const parentPath = [...path]
-        parentPath.pop()
-        const currentPathNumber = path[pathIndex]
-        const box = arr[currentPathNumber]
-        if (direction === 'up') {
-          if (currentPathNumber === 0) {
-            mutableArrayDelete(arr, currentPathNumber)
-            draft = insertBox(draft, box, parentPath)
-          } else {
-            mutableArraySwap(arr, currentPathNumber, currentPathNumber - 1)
-          }
-        }
-        if (direction === 'down') {
-          if (currentPathNumber === arr.length - 1) {
-            mutableArrayDelete(arr, currentPathNumber)
-            draft = insertBox(draft, box, parentPath, 1)
-          } else {
-            mutableArraySwap(arr, currentPathNumber, currentPathNumber + 1)
-          }
-        }
+export const moveBox = (boxes: [IBox], path: number[], direction: 'up' | 'down') => {
+  const newPath = [...path]
+  const newBoxes = produce(boxes, draft => {
+    const currentIndex = path[path.length - 1]
+    const parentIndex = path[path.length - 2]
+    const box = selectBox(draft, path)
+    const boxContainer = selectContainer(draft, path)
+    const parentContainer = selectContainer(draft, path, 1)
+    if (direction === 'up') {
+      if (currentIndex === 0) {
+        boxContainer.splice(currentIndex, 1)
+        parentContainer.splice(parentIndex, 0, box)
+        newPath.pop()
       } else {
-        const children = arr[path[pathIndex]].c
-        if (children) {
-          pathIndex++
-          recursion(children)
+        const aboveChildren = boxContainer[currentIndex - 1].c
+        if (aboveChildren && aboveChildren.length) {
+          boxContainer.splice(currentIndex, 1)
+          aboveChildren.push(box)
+          newPath[newPath.length - 1] = newPath[newPath.length - 1] - 1
+          newPath.push(aboveChildren.length - 1)
         } else {
-          throw new Error('corrupt path')
+          mutableArraySwap(boxContainer, currentIndex, currentIndex - 1)
+          newPath[newPath.length - 1] = newPath[newPath.length - 1] - 1
         }
       }
-      return arr
     }
-    recursion(draft)
+    if (direction === 'down') {
+      if (currentIndex === boxContainer.length - 1) {
+        boxContainer.splice(currentIndex, 1)
+        parentContainer.splice(parentIndex + 1, 0, box)
+        newPath.pop()
+        newPath[newPath.length - 1] = newPath[newPath.length - 1] + 1
+      } else {
+        const belowChildren = boxContainer[currentIndex + 1].c
+        if (belowChildren && belowChildren.length) {
+          boxContainer.splice(currentIndex, 1)
+          belowChildren.unshift(box)
+          newPath.push(0)
+        } else {
+          mutableArraySwap(boxContainer, currentIndex, currentIndex + 1)
+          newPath[newPath.length - 1] = newPath[newPath.length - 1] + 1
+        }
+      }
+    }
   })
+  return [newBoxes, newPath]
+}
