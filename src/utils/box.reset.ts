@@ -6,6 +6,8 @@ export const resetBox = (boxes: IBox[], path: number[]) =>
   produce(boxes, draft => {
     const box = selectBox(draft, path)
     for (const key of Object.keys(box)) {
-      delete box[key as keyof IBox]
+      if (key !== 'c') {
+        delete box[key as keyof IBox]
+      }
     }
   })
