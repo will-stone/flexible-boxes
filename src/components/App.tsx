@@ -4,7 +4,7 @@ import SplitPane from 'react-split-pane'
 import '../css/App.css'
 import '../css/Pane.css'
 import '../css/button.css'
-import { IBox } from '../model'
+import { defaultBoxes, IBox } from '../model'
 import { addBoxTo } from '../utils/box.addTo'
 import { deleteBox } from '../utils/box.delete'
 import { moveBox } from '../utils/box.move'
@@ -28,9 +28,11 @@ class App extends Component<{}, IState> {
   public state: IState = {
     screenWarningHidden: false,
     selectedBoxPath: undefined,
-    boxes: [{ c: [{}, {}, {}] }],
+    boxes: defaultBoxes,
     showEditTitle: false,
   }
+
+  public handleClearBoxes = () => this.setState({ boxes: [{}] })
 
   public handleSelectBox = (path: TSelectedBoxPath) => {
     this.setState(state => ({
@@ -41,7 +43,7 @@ class App extends Component<{}, IState> {
 
   public handleUpdateBox = (path: number[], key: keyof IBox, value: any) =>
     this.setState((state: IState) => ({
-      boxes: updateBox(state.boxes, path, key, value),
+      boxes: cleanupBoxes(updateBox(state.boxes, path, key, value)),
     }))
 
   public handleAddBoxTo = (path: number[]) =>
@@ -69,26 +71,18 @@ class App extends Component<{}, IState> {
   public handleToggleEditTitle = () =>
     this.setState(state => ({ showEditTitle: !state.showEditTitle }))
 
-  public setBoxes = (boxes: IBox[]) => {
-    const cleanedBoxes = cleanupBoxes(boxes)
-    this.setState({ boxes: cleanedBoxes })
-  }
-
   public urlToBoxes = () => {
+    // check if hash otherwise reset
     if (window.location.hash) {
+      // check if parse-able otherwise reset
       try {
-        // check if parse-able otherwise reset
         const parsed = boxesFromString(window.location.hash.substring(1))
-        cleanupBoxes(parsed)
-        this.setState({
-          boxes: parsed,
-        })
+        this.setState({ boxes: cleanupBoxes(parsed) })
       } catch (err) {
-        window.location.hash = boxesToString(this.state.boxes)
+        this.setState({ boxes: defaultBoxes })
       }
     } else {
-      // set to default
-      window.location.hash = boxesToString(this.state.boxes)
+      this.setState({ boxes: defaultBoxes })
     }
   }
 
@@ -171,6 +165,7 @@ class App extends Component<{}, IState> {
                 onMoveBox={this.handleMoveBox}
                 onUpdateBox={this.handleUpdateBox}
                 onToggleEditTitle={this.handleToggleEditTitle}
+                onClearBoxes={this.handleClearBoxes}
                 showEditTitle={this.state.showEditTitle}
               />
 

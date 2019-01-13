@@ -17,15 +17,16 @@ class Dom extends Component<{
   onUpdateBox: (path: number[], key: keyof IBox, value: any) => void
   onMoveBox: (direction: 'up' | 'down') => void
   onToggleEditTitle: () => void
+  onClearBoxes: () => void
 }> {
   public render() {
     return (
       <div className="Dom Pane__component">
         <h2 className="Pane__title">
           DOM{' '}
-          <a className="Pane__titleButton button" href="/#~(~())">
+          <button className="Pane__titleButton button" onClick={this.props.onClearBoxes}>
             CLEAR
-          </a>
+          </button>
         </h2>
         <ul className="Dom__boxes" onClick={() => this.props.onSelectBox(undefined)}>
           {flattenBoxes(this.props.boxes).map((box, i) => (

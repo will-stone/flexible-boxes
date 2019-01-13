@@ -16,3 +16,5 @@ export interface IBox {
 export interface IFlattenedBox extends IBox {
   path: number[]
 }
+
+export const defaultBoxes = [{ c: [{}, {}, {}] }]

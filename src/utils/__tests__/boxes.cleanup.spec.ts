@@ -32,5 +32,12 @@ describe('boxes.cleanup', () => {
     ).toEqual([{ c: [{}] }])
   })
 
+  it('should remove unkown keys', () => {
+    expect(
+      // @ts-ignore
+      cleanupBoxes([{ c: [{ t: 'title', unknown: 'unknown' }] }]),
+    ).toEqual([{ c: [{ t: 'title' }] }])
+  })
+
   // TODO include tests for not removing items
 })
