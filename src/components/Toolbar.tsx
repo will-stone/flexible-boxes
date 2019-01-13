@@ -1,14 +1,14 @@
-import cc from 'classcat'
 import React, { Component } from 'react'
 import { IBox } from '../model'
 import './../css/Toolbar.css'
 import { TSelectedBoxPath } from './App'
+// import cc from 'classcat'
 
 class Toolbar extends Component<{
   resetBox: (path: number[]) => void
   selectedBoxPath: TSelectedBoxPath
   updateBox: (path: number[], key: keyof IBox, value: any) => void
-  nudge: (...any: any[]) => void
+  nudge: (...box: any[]) => void
   boxes: IBox[]
 }> {
   public render() {

@@ -28,11 +28,7 @@ class App extends Component<{}, IState> {
   public state: IState = {
     screenWarningHidden: false,
     selectedBoxPath: undefined,
-    boxes: [
-      {
-        c: [{}, {}, {}],
-      },
-    ],
+    boxes: [{ c: [{}, {}, {}] }],
     showEditTitle: false,
   }
 
@@ -57,11 +53,7 @@ class App extends Component<{}, IState> {
   public handleMoveBox = (direction: 'up' | 'down') => {
     this.setState((state: IState) => {
       if (state.selectedBoxPath) {
-        const [newBoxes, newPath] = moveBox(
-          state.boxes,
-          state.selectedBoxPath,
-          direction,
-        )
+        const [newBoxes, newPath] = moveBox(state.boxes, state.selectedBoxPath, direction)
         return {
           boxes: newBoxes,
           selectedBoxPath: newPath,
@@ -92,7 +84,6 @@ class App extends Component<{}, IState> {
           boxes: parsed,
         })
       } catch (err) {
-        console.log(err)
         window.location.hash = boxesToString(this.state.boxes)
       }
     } else {
@@ -115,7 +106,7 @@ class App extends Component<{}, IState> {
   }
 
   public render() {
-    let browserWarning = {
+    const browserWarning = {
       __html: `<!--[if lte IE 10]>
         <div class="App__browserWarning App__fullPageWarning">
           <div>
@@ -152,36 +143,24 @@ class App extends Component<{}, IState> {
             </h1>
             <h1>Flexible Boxes</h1>
             <p>
-              This is a tool to help with creating Flexbox based website
-              layouts. Due to all the toolbars and output boxes, it really does{' '}
-              <strong>NOT</strong> work well with small screen sizes.
+              This is a tool to help with creating Flexbox based website layouts. Due to all the
+              toolbars and output boxes, it really does <strong>NOT</strong> work well with small
+              screen sizes.
             </p>
             <p>
-              Try maximising your browser or, if you are using a tablet, try
-              turning it to landscape.
+              Try maximising your browser or, if you are using a tablet, try turning it to
+              landscape.
             </p>
             <p>
               If you would like to proceed anyway, please click{' '}
-              <button onClick={this.removeScreenWarning.bind(this)}>
-                here
-              </button>{' '}
-              (you have been warned).
+              <button onClick={this.removeScreenWarning.bind(this)}>here</button> (you have been
+              warned).
             </p>
           </div>
         </div>
 
-        <SplitPane
-          split="vertical"
-          defaultSize={275}
-          minSize={275}
-          primary="second"
-        >
-          <SplitPane
-            split="horizontal"
-            defaultSize="50%"
-            minSize={300}
-            maxSize={-300}
-          >
+        <SplitPane split="vertical" defaultSize={275} minSize={275} primary="second">
+          <SplitPane split="horizontal" defaultSize="50%" minSize={300} maxSize={-300}>
             <SplitPane split="vertical" defaultSize={250} minSize={250}>
               <Dom
                 boxes={this.state.boxes}
@@ -204,21 +183,11 @@ class App extends Component<{}, IState> {
               /> */}
             </SplitPane>
 
-            <SplitPane
-              split="vertical"
-              defaultSize={150}
-              minSize={150}
-              maxSize={150}
-            >
+            <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
               {/* <Sitebar handleSelectBox={this.handleSelectBox} /> */}
               <div />
 
-              <SplitPane
-                split="vertical"
-                defaultSize="50%"
-                minSize={300}
-                maxSize={-300}
-              >
+              <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
                 {/* <Html boxes={this.state.boxes} /> */}
                 <div />
 

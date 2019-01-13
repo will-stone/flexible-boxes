@@ -12,7 +12,12 @@
     ],
     "prettier": [
       true,
-      { "semi": false, "singleQuote": true, "trailingComma": "all", "ordered-imports": true }
+      {
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "printWidth": 100
+      }
     ],
     "max-classes-per-file": [true, 25],
     "no-var-requires": false,

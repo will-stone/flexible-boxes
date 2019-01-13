@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
 import './../css/Sitebar.css'
 
-class Sitebar extends Component<{ handleSelectBox: (any: any) => void }> {
+class Sitebar extends Component<{ handleSelectBox: (box: any) => void }> {
   public render() {
-    let selectBox = this.props.handleSelectBox
+    const selectBox = this.props.handleSelectBox
 
     return (
       <div className="Sitebar">
         <h1 className="Sitebar__logo">Flexible Boxes</h1>
         <h2 className="Sitebar__subTitle">
           By{' '}
-          <a
-            className="button button--link"
-            href="http://wstone.io/flexible-boxes-react-app/"
-          >
+          <a className="button button--link" href="http://wstone.io/flexible-boxes-react-app/">
             Will Stone
           </a>
         </h2>
@@ -57,10 +54,7 @@ class Sitebar extends Component<{ handleSelectBox: (any: any) => void }> {
             </a>
           </li>
           <li>
-            <a
-              href="https://twitter.com/will_stone_"
-              className="button button--link"
-            >
+            <a href="https://twitter.com/will_stone_" className="button button--link">
               <i className="fa fa-twitter" /> will_stone_
             </a>
           </li>

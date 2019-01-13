@@ -27,10 +27,7 @@ class Dom extends Component<{
             CLEAR
           </a>
         </h2>
-        <ul
-          className="Dom__boxes"
-          onClick={() => this.props.onSelectBox(undefined)}
-        >
+        <ul className="Dom__boxes" onClick={() => this.props.onSelectBox(undefined)}>
           {flattenBoxes(this.props.boxes).map((box, i) => (
             <DomBox
               key={i}
@@ -51,10 +48,7 @@ class Dom extends Component<{
               className={cc([
                 'button',
                 {
-                  'Dom__boxReorderButton--isDisabled': isEqual(
-                    this.props.selectedBoxPath,
-                    [0, 0],
-                  ),
+                  'Dom__boxReorderButton--isDisabled': isEqual(this.props.selectedBoxPath, [0, 0]),
                 },
               ])}
               onClick={() => this.props.onMoveBox('up')}
@@ -67,10 +61,7 @@ class Dom extends Component<{
                 {
                   'Dom__boxReorderButton--isDisabled':
                     this.props.boxes[0].c &&
-                    isEqual(this.props.selectedBoxPath, [
-                      0,
-                      this.props.boxes[0].c.length - 1,
-                    ]),
+                    isEqual(this.props.selectedBoxPath, [0, this.props.boxes[0].c.length - 1]),
                 },
               ])}
               onClick={() => this.props.onMoveBox('down')}

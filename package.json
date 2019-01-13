@@ -35,7 +35,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build",
-    "prettier": "prettier --config .prettierrc --write src/**/*.js",
+    "prettier": "prettier --write 'src/**/*.{js,ts,tsx}'",
     "test": "react-scripts test",
     "lint": "tslint --project .",
     "lint:fix": "tslint --project . --fix"

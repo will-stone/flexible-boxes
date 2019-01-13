@@ -6,9 +6,7 @@ describe('boxes.cleanup', () => {
   })
 
   it('should replace spaces in titles with underscores', () => {
-    expect(cleanupBoxes([{ c: [{ t: 'a space' }] }])).toEqual([
-      { c: [{ t: 'a_space' }] },
-    ])
+    expect(cleanupBoxes([{ c: [{ t: 'a space' }] }])).toEqual([{ c: [{ t: 'a_space' }] }])
   })
 
   it('should remove defaults', () => {
