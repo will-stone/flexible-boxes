@@ -15,6 +15,7 @@ import { boxesFromString } from '../utils/boxes.fromString'
 import { boxesToString } from '../utils/boxes.toString'
 import Dom from './Dom'
 import FBox from './FBox'
+import Toolbar from './Toolbar'
 
 export type TSelectedBoxPath = number[] | undefined
 
@@ -33,7 +34,7 @@ class App extends Component<{}, IState> {
     showEditTitle: false,
   }
 
-  public handleClearBoxes = () => this.setState({ boxes: [{}] })
+  public handleClearBoxes = () => this.setState({ boxes: [{}], selectedBoxPath: undefined })
 
   public handleSelectBox = (path: TSelectedBoxPath) => {
     this.setState(state => ({
@@ -192,14 +193,12 @@ class App extends Component<{}, IState> {
             </SplitPane>
           </SplitPane>
 
-          {/* <Toolbar
-            selectedBoxId={this.state.selectedBoxId}
+          <Toolbar
+            selectedBoxPath={this.state.selectedBoxPath}
             boxes={this.state.boxes}
-            updateBox={this.handleUpdateBox}
-            nudge={this.handleNudge}
-            resetBox={this.handleResetBox}
-          /> */}
-          <div />
+            onUpdateBox={this.handleUpdateBox}
+            onResetBox={this.handleResetBox}
+          />
         </SplitPane>
       </div>
     )

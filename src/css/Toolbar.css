@@ -128,6 +128,12 @@
 
 .Toolbar__iconRadioLabel {
   display: inline-block;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border: 0;
+  background-color: transparent;
+  color: white;
 }
 
 .Toolbar__iconRadioLabel > input {
@@ -161,25 +167,25 @@
   border: 3px solid #0b0c0f;
 }
 
-.Toolbar__iconRadioLabel:hover .fbi > .fbi-items {
+.Toolbar__iconRadioLabel:not(.Toolbar__iconRadioLabel--isActive):hover .fbi > .fbi-items {
   border-color: white;
 }
 
-.Toolbar__iconRadioLabel > input:checked + .fbi > .fbi-items {
+.Toolbar__iconRadioLabel--isActive .fbi > .fbi-items {
   border-color: #4b91b3;
   background-color: #4b91b3;
 }
 
-.Toolbar__iconRadioLabel > input:checked + .fbi > .fbi-items > i {
+.Toolbar__iconRadioLabel--isActive .fbi > .fbi-items > i {
   background-color: #ffffff;
 }
 
-.Toolbar__iconRadioLabel > input:disabled + .fbi > .fbi-items {
+.Toolbar__iconRadioLabel:disabled .fbi > .fbi-items {
   border-color: #0b0c0f;
   background-color: transparent;
 }
 
-.Toolbar__iconRadioLabel > input:disabled + .fbi > .fbi-items > i {
+.Toolbar__iconRadioLabel:disabled .fbi > .fbi-items > i {
   background-color: #0b0c0f;
 }
 
@@ -217,8 +223,8 @@
   line-height: 8px;
 }
 
-.Toolbar__iconRadioLabel > input:disabled + .fbi > span,
-.Toolbar__iconRadioLabel > input:disabled + .fbi > .Toolbar__default:after {
+.Toolbar__iconRadioLabel:disabled .fbi > span,
+.Toolbar__iconRadioLabel:disabled .fbi > .Toolbar__default:after {
   color: #0b0c0f;
 }
 
@@ -290,7 +296,7 @@
   font-style: normal;
 }
 
-.Toolbar__iconRadioLabel > input:checked + .fbi-as-auto > .fbi-items > i {
+.Toolbar__iconRadioLabel--isActive .fbi-as-auto > .fbi-items > i {
   background-color: transparent;
 }
 
