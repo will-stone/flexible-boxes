@@ -55,7 +55,6 @@ class Sitebar extends Component<{ onSetBoxes: (boxes: IBox[]) => void }> {
                   c: [
                     { t: 'header' },
                     {
-                      t: 'Box',
                       g: 1,
                       c: [{ t: 'sidebar' }, { t: 'main', g: 1 }, { t: 'sidebar' }],
                     },

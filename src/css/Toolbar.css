@@ -167,7 +167,9 @@
   border: 3px solid #0b0c0f;
 }
 
-.Toolbar__iconRadioLabel:not(.Toolbar__iconRadioLabel--isActive):hover .fbi > .fbi-items {
+.Toolbar__iconRadioLabel:not(.Toolbar__iconRadioLabel--isActive):not(.Toolbar__iconRadioLabel:disabled):hover
+  .fbi
+  > .fbi-items {
   border-color: white;
 }
 

@@ -1,3 +1,7 @@
+.Html {
+  height: 100%;
+}
+
 .Html pre {
   margin: 0 !important;
   background-color: transparent !important;

@@ -263,7 +263,6 @@ class Toolbar extends Component<{
                   onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'flex-start')}
                   itemCount={1}
                   isActive={box.as === 'flex-start'}
-                  isDisabled={!box.c}
                   iconClass="fbi-as fbi-as-flex-start"
                 />
                 <ToolbarIconButton
@@ -271,7 +270,6 @@ class Toolbar extends Component<{
                   onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'flex-end')}
                   itemCount={1}
                   isActive={box.as === 'flex-end'}
-                  isDisabled={!box.c}
                   iconClass="fbi-as fbi-as-flex-end"
                 />
                 <ToolbarIconButton
@@ -279,7 +277,6 @@ class Toolbar extends Component<{
                   onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'center')}
                   itemCount={1}
                   isActive={box.as === 'center'}
-                  isDisabled={!box.c}
                   iconClass="fbi-as fbi-as-center"
                 />
                 <ToolbarIconButton
@@ -287,7 +284,6 @@ class Toolbar extends Component<{
                   onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'stretch')}
                   itemCount={1}
                   isActive={box.as === 'stretch'}
-                  isDisabled={!box.c}
                   iconClass="fbi-as fbi-as-stretch"
                 />
                 <ToolbarIconButton
@@ -296,7 +292,6 @@ class Toolbar extends Component<{
                   itemCount={1}
                   item="A"
                   isActive={!box.as}
-                  isDisabled={!box.c}
                   isDefault
                   iconClass="fbi-as fbi-as-auto"
                 />

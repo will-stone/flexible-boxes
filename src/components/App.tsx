@@ -13,6 +13,7 @@ import { updateBox } from '../utils/box.update'
 import { cleanupBoxes } from '../utils/boxes.cleanup'
 import { boxesFromString } from '../utils/boxes.fromString'
 import { boxesToString } from '../utils/boxes.toString'
+import Css from './Css'
 import Dom from './Dom'
 import FBox from './FBox'
 import Html from './Html'
@@ -187,8 +188,7 @@ class App extends Component<{}, IState> {
               <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
                 <Html boxes={this.state.boxes} />
 
-                {/* <Css boxes={this.state.boxes} /> */}
-                <div />
+                <Css boxes={this.state.boxes} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
