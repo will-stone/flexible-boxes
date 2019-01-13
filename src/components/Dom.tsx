@@ -17,14 +17,14 @@ class Dom extends Component<{
   onUpdateBox: (path: number[], key: keyof IBox, value: any) => void
   onMoveBox: (direction: 'up' | 'down') => void
   onToggleEditTitle: () => void
-  onClearBoxes: () => void
+  onSetBoxes: (boxes: IBox[]) => void
 }> {
   public render() {
     return (
       <div className="Dom Pane__component">
         <h2 className="Pane__title">
           DOM{' '}
-          <button className="Pane__titleButton button" onClick={this.props.onClearBoxes}>
+          <button className="Pane__titleButton button" onClick={() => this.props.onSetBoxes([{}])}>
             CLEAR
           </button>
         </h2>

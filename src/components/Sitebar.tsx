@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
+import { IBox } from '../model'
 import './../css/Sitebar.css'
 
-class Sitebar extends Component<{ handleSelectBox: (box: any) => void }> {
+class Sitebar extends Component<{ onSetBoxes: (boxes: IBox[]) => void }> {
   public render() {
-    const selectBox = this.props.handleSelectBox
-
     return (
       <div className="Sitebar">
         <h1 className="Sitebar__logo">Flexible Boxes</h1>
@@ -19,27 +18,56 @@ class Sitebar extends Component<{ handleSelectBox: (box: any) => void }> {
 
         <h4 className="Sitebar__sectionHeading">PRESETS</h4>
         <div className="Sitebar__actions">
-          <a
+          <button
             className="Sitebar__button button"
-            href="#~(1~(c~(~2~3~4)~d~'column~t~'body)~2~(t~'header~c~(~5~6~7)~jc~'flex-end)~3~(t~'main~g~1)~4~(t~'footer~c~(~8)~jc~'center)~5~(t~'logo)~6~(g~1~t~'spacer)~7~(t~'navigation)~8~(t~'logo))"
-            onClick={() => selectBox(null)}
+            onClick={() =>
+              this.props.onSetBoxes([
+                {
+                  t: 'body',
+                  c: [
+                    { t: 'header', c: [{ t: 'logo' }, { t: 'spacer', g: 1 }, { t: 'navigation' }] },
+                    { t: 'main', g: 1 },
+                    { t: 'footer', c: [{ t: 'logo' }], jc: 'center' },
+                  ],
+                  d: 'column',
+                },
+              ])
+            }
           >
             SIMPLE
-          </a>
-          <a
+          </button>
+          <button
             className="Sitebar__button button"
-            href="#~(1~(t~'container~c~(~2)~jc~'center~ai~'center)~2~(t~'centered))"
-            onClick={() => selectBox(null)}
+            onClick={() =>
+              this.props.onSetBoxes([
+                { t: 'container', c: [{ t: 'centered' }], jc: 'center', ai: 'center' },
+              ])
+            }
           >
             CENTERED
-          </a>
-          <a
+          </button>
+          <button
             className="Sitebar__button button"
-            href="#~(1~(c~(~2~3~4)~t~'body~d~'column)~2~(t~'header)~3~(g~1~c~(~5~6~7))~4~(t~'footer)~5~(t~'sidebar)~6~(t~'main~g~1)~7~(t~'sidebar))"
-            onClick={() => selectBox(null)}
+            onClick={() =>
+              this.props.onSetBoxes([
+                {
+                  t: 'body',
+                  c: [
+                    { t: 'header' },
+                    {
+                      t: 'Box',
+                      g: 1,
+                      c: [{ t: 'sidebar' }, { t: 'main', g: 1 }, { t: 'sidebar' }],
+                    },
+                    { t: 'footer', jc: 'center' },
+                  ],
+                  d: 'column',
+                },
+              ])
+            }
           >
             HOLY GRAIL
-          </a>
+          </button>
         </div>
 
         <hr />

@@ -15,6 +15,8 @@ import { boxesFromString } from '../utils/boxes.fromString'
 import { boxesToString } from '../utils/boxes.toString'
 import Dom from './Dom'
 import FBox from './FBox'
+import Html from './Html'
+import Sitebar from './Sitebar'
 import Toolbar from './Toolbar'
 
 export type TSelectedBoxPath = number[] | undefined
@@ -34,7 +36,7 @@ class App extends Component<{}, IState> {
     showEditTitle: false,
   }
 
-  public handleClearBoxes = () => this.setState({ boxes: [{}], selectedBoxPath: undefined })
+  public handleSetBoxes = (boxes: IBox[]) => this.setState({ boxes, selectedBoxPath: undefined })
 
   public handleSelectBox = (path: TSelectedBoxPath) => {
     this.setState(state => ({
@@ -167,7 +169,7 @@ class App extends Component<{}, IState> {
                 onMoveBox={this.handleMoveBox}
                 onUpdateBox={this.handleUpdateBox}
                 onToggleEditTitle={this.handleToggleEditTitle}
-                onClearBoxes={this.handleClearBoxes}
+                onSetBoxes={this.handleSetBoxes}
                 showEditTitle={this.state.showEditTitle}
               />
 
@@ -180,12 +182,10 @@ class App extends Component<{}, IState> {
             </SplitPane>
 
             <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
-              {/* <Sitebar handleSelectBox={this.handleSelectBox} /> */}
-              <div />
+              <Sitebar onSetBoxes={this.handleSetBoxes} />
 
               <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
-                {/* <Html boxes={this.state.boxes} /> */}
-                <div />
+                <Html boxes={this.state.boxes} />
 
                 {/* <Css boxes={this.state.boxes} /> */}
                 <div />

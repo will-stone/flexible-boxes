@@ -8,6 +8,7 @@ export const ToolbarIconButton = ({
   isDefault,
   isDisabled,
   itemCount,
+  item,
   label,
   onClick,
 }: {
@@ -16,6 +17,7 @@ export const ToolbarIconButton = ({
   isDefault?: boolean
   isDisabled?: boolean
   itemCount: number
+  item?: string
   label: string
   onClick: () => void
 }) => (
@@ -27,7 +29,7 @@ export const ToolbarIconButton = ({
     <i className={`fbi ${iconClass}`}>
       <i className="fbi-items">
         {[...Array(itemCount)].map((_, i) => (
-          <i key={i} />
+          <i key={i}>{item}</i>
         ))}
       </i>
       <span className={cc([{ Toolbar__default: isDefault }])}>{label}</span>

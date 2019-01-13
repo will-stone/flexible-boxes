@@ -4,7 +4,6 @@ import { IBox } from '../model'
 import { selectBox } from '../utils/box.select'
 import './../css/Toolbar.css'
 import { TSelectedBoxPath } from './App'
-import { ToolbarIcon } from './Toolbar.icon'
 import { ToolbarIconButton } from './Toolbar.iconButton'
 
 class Toolbar extends Component<{
@@ -160,11 +159,11 @@ class Toolbar extends Component<{
                 />
                 <ToolbarIconButton
                   label="Center"
-                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'ai', 'flex-center')}
+                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'ai', 'center')}
                   itemCount={2}
-                  isActive={box.ai === 'flex-center'}
+                  isActive={box.ai === 'center'}
                   isDisabled={!box.c}
-                  iconClass="fbi-ai fbi-ai-flex-center"
+                  iconClass="fbi-ai fbi-ai-center"
                 />
                 <ToolbarIconButton
                   label="Stretch"
@@ -179,6 +178,7 @@ class Toolbar extends Component<{
                   label="Stretch"
                   onClick={() => this.props.onUpdateBox(selectedBoxPath, 'ai', 'baseline')}
                   itemCount={2}
+                  item="B"
                   isActive={box.ai === 'baseline'}
                   isDisabled={!box.c}
                   iconClass="fbi-ai fbi-ai-baseline"
@@ -240,106 +240,69 @@ class Toolbar extends Component<{
                       </button>
                     </div>
                   </div>
+                  <div className={cc({ Toolbar__default: !box.b })}>
+                    <h4>BASIS</h4>
+                    <input
+                      className="Toolbar__basisInput"
+                      type="text"
+                      name="b"
+                      placeholder="auto"
+                      value={box.b ? box.b : ''}
+                      onChange={e =>
+                        this.props.onUpdateBox(selectedBoxPath, 'b', e.currentTarget.value)
+                      }
+                      autoComplete="off"
+                    />
+                  </div>
                 </div>
+              </div>
+              <div className="Toolbar__section">
+                <h3>Align Self</h3>
+                <ToolbarIconButton
+                  label="Start"
+                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'flex-start')}
+                  itemCount={1}
+                  isActive={box.as === 'flex-start'}
+                  isDisabled={!box.c}
+                  iconClass="fbi-as fbi-as-flex-start"
+                />
+                <ToolbarIconButton
+                  label="End"
+                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'flex-end')}
+                  itemCount={1}
+                  isActive={box.as === 'flex-end'}
+                  isDisabled={!box.c}
+                  iconClass="fbi-as fbi-as-flex-end"
+                />
+                <ToolbarIconButton
+                  label="Center"
+                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'center')}
+                  itemCount={1}
+                  isActive={box.as === 'center'}
+                  isDisabled={!box.c}
+                  iconClass="fbi-as fbi-as-center"
+                />
+                <ToolbarIconButton
+                  label="Stretch"
+                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'stretch')}
+                  itemCount={1}
+                  isActive={box.as === 'stretch'}
+                  isDisabled={!box.c}
+                  iconClass="fbi-as fbi-as-stretch"
+                />
+                <ToolbarIconButton
+                  label="Auto"
+                  onClick={() => this.props.onUpdateBox(selectedBoxPath, 'as', 'auto')}
+                  itemCount={1}
+                  item="A"
+                  isActive={!box.as}
+                  isDisabled={!box.c}
+                  isDefault
+                  iconClass="fbi-as fbi-as-auto"
+                />
               </div>
             </div>
           )}
-          {
-            //         <div className={cc({ Toolbar__default: !thisBox.b })}>
-            //           <h4>BASIS</h4>
-            //           <input
-            //             className="Toolbar__basisInput"
-            //             type="text"
-            //             name="b"
-            //             placeholder="auto"
-            //             value={thisBox.b ? thisBox.b : ''}
-            //             onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
-            //             autoComplete="off"
-            //           />
-            //         </div>
-            //       </div>
-            //     </div>
-            //     <div className="Toolbar__section">
-            //       <h3>Align Self</h3>
-            //       <label className="Toolbar__iconRadioLabel">
-            //         <input
-            //           type="radio"
-            //           name="as"
-            //           value="flex-start"
-            //           checked={thisBox.as === 'flex-start'}
-            //           onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
-            //         />
-            //         <i className="fbi fbi-as fbi-as-flex-start">
-            //           <i className="fbi-items">
-            //             <i />
-            //           </i>
-            //           <span>Start</span>
-            //         </i>
-            //       </label>
-            //       <label className="Toolbar__iconRadioLabel">
-            //         <input
-            //           type="radio"
-            //           name="as"
-            //           value="flex-end"
-            //           checked={thisBox.as === 'flex-end'}
-            //           onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
-            //         />
-            //         <i className="fbi fbi-as fbi-as-flex-end">
-            //           <i className="fbi-items">
-            //             <i />
-            //           </i>
-            //           <span>End</span>
-            //         </i>
-            //       </label>
-            //       <label className="Toolbar__iconRadioLabel">
-            //         <input
-            //           type="radio"
-            //           name="as"
-            //           value="center"
-            //           checked={thisBox.as === 'center'}
-            //           onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
-            //         />
-            //         <i className="fbi fbi-as fbi-as-center">
-            //           <i className="fbi-items">
-            //             <i />
-            //           </i>
-            //           <span>Center</span>
-            //         </i>
-            //       </label>
-            //       <label className="Toolbar__iconRadioLabel">
-            //         <input
-            //           type="radio"
-            //           name="as"
-            //           value="stretch"
-            //           checked={thisBox.as === 'stretch'}
-            //           onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
-            //         />
-            //         <i className="fbi fbi-as fbi-as-stretch">
-            //           <i className="fbi-items">
-            //             <i />
-            //           </i>
-            //           <span>Stretch</span>
-            //         </i>
-            //       </label>
-            //       <label className="Toolbar__iconRadioLabel">
-            //         <input
-            //           type="radio"
-            //           name="as"
-            //           value="auto"
-            //           checked={!thisBox.as || thisBox.as === 'auto'}
-            //           onChange={e => this.props.updateBox(e, this.props.selectedBoxId)}
-            //         />
-            //         <i className="fbi fbi-as fbi-as-auto">
-            //           <i className="fbi-items">
-            //             <i>A</i>
-            //           </i>
-            //           <span className="Toolbar__default">Auto</span>
-            //         </i>
-            //       </label>
-            //     </div>
-            //   </div>
-            // )
-          }
           <div className="Toolbar__intro">
             <div className="Toolbar__introInner">Select a box</div>
           </div>

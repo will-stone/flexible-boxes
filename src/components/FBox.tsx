@@ -37,7 +37,9 @@ class FBox extends Component<{
         style={boxStyle}
       >
         {!isRootBox && (
-          <div className="FBox__label">{this.props.box.t ? this.props.box.t : 'Box'}</div>
+          <div className="FBox__label">
+            {!this.props.box.c && (this.props.box.t ? this.props.box.t : 'Box')}
+          </div>
         )}
         {this.props.box.c &&
           this.props.box.c.map((box, i) => {

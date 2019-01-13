@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
+import ClipboardButton from 'react-clipboard.js'
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
 import { IBox } from '../model'
 import './../css/Html.css'
-// import repeat from 'lodash/repeat'
-// import ClipboardButton from 'react-clipboard.js'
-// import SyntaxHighlighter from 'react-syntax-highlighter'
-// import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
 
 class Html extends Component<{ boxes: IBox[] }> {
   // public state = {
@@ -72,26 +71,23 @@ class Html extends Component<{ boxes: IBox[] }> {
     // ${rootComment}${builtCode}${rootCompEnd}`
 
     return (
-      <div />
-      // <div className="Html Pane__component">
-      //   <h2 className="Pane__title">
-      //     HTML
-      //     <ClipboardButton
-      //       button-className="Pane__titleButton button"
-      //       data-clipboard-text={html}
-      //       onSuccess={this.onSuccessfulyCopy.bind(this)}
-      //     >
-      //       {this.state.copyButtonText}
-      //     </ClipboardButton>
-      //   </h2>
-      //   <SyntaxHighlighter
-      //     language="html"
-      //     style={atomOneDark}
-      //     showLineNumbers={true}
-      //   >
-      //     {html}
-      //   </SyntaxHighlighter>
-      // </div>
+      <div className="Html Pane__component">
+        <h2 className="Pane__title">
+          HTML
+          <ClipboardButton
+            button-className="Pane__titleButton button"
+            // data-clipboard-text={html}
+            // onSuccess={this.onSuccessfulyCopy.bind(this)}
+          >
+            {/* {this.state.copyButtonText} */}
+            Copy
+          </ClipboardButton>
+        </h2>
+        <SyntaxHighlighter language="html" style={atomOneDark} showLineNumbers={true}>
+          {/* {html} */}
+          {'<div />'}
+        </SyntaxHighlighter>
+      </div>
     )
   }
 }
