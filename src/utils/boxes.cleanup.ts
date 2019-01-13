@@ -67,7 +67,12 @@ export const cleanupBoxes = (boxes: IBox[]) =>
           delete box.as
         }
 
-        // TODO include cleaning up types that are not allowed.
+        // Remove any non-whitelisted key
+        for (const key of Object.keys(box)) {
+          if (!['c', 't', 'd', 'w', 'g', 's', 'b', 'jc', 'ac', 'ai', 'as'].includes(key)) {
+            delete box[key as keyof IBox]
+          }
+        }
       })
     }
 
