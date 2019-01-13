@@ -51,6 +51,8 @@ class DomBox extends Component<{
             defaultValue={this.props.box.t}
             onChange={this.setTitle}
             onKeyDown={this.titleKeyDown}
+            onClick={e => e.stopPropagation()}
+            onFocus={e => e.currentTarget.select()}
           />
         ) : (
           <span className="DomBox__name">{this.props.box.t ? this.props.box.t : 'Box'}</span>

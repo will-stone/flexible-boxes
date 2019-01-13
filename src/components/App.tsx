@@ -39,12 +39,11 @@ class App extends Component<{}, IState> {
 
   public handleSetBoxes = (boxes: IBox[]) => this.setState({ boxes, selectedBoxPath: undefined })
 
-  public handleSelectBox = (path: TSelectedBoxPath) => {
-    this.setState(state => ({
+  public handleSelectBox = (path: TSelectedBoxPath) =>
+    this.setState({
       selectedBoxPath: path,
-      showEditTitle: !path ? false : state.showEditTitle,
-    }))
-  }
+      showEditTitle: false,
+    })
 
   public handleUpdateBox = (path: number[], key: keyof IBox, value: any) =>
     this.setState((state: IState) => ({
