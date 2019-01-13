@@ -1,6 +1,6 @@
 import { IBox } from '../model'
 
-export const selectBox = (boxes: [IBox], path: number[], parentOffset: number = 0): IBox => {
+export const selectBox = (boxes: IBox[], path: number[], parentOffset: number = 0): IBox => {
   let pathIndex = 0
   const recursion = (box: IBox): IBox => {
     if (pathIndex === path.length - 1 - parentOffset) {

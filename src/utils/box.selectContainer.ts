@@ -1,7 +1,7 @@
 import { IBox } from '../model'
 
 export const selectContainer = (
-  boxes: [IBox],
+  boxes: IBox[],
   path: number[],
   parentOffset: number = 0
 ): IBox[] => {

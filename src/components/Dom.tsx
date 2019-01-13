@@ -1,14 +1,14 @@
 import cc from 'classcat'
 import isEqual from 'lodash/isEqual'
 import React, { Component } from 'react'
-import { TSelectedBoxPath } from '../containers/App'
+import { TSelectedBoxPath } from './App'
 import '../css/Dom.css'
 import { IBox } from '../model'
 import { flattenBoxes } from '../utils/boxes.flatten'
 import DomBox from './DomBox'
 
 class Dom extends Component<{
-  boxes: [IBox]
+  boxes: IBox[]
   selectedBoxPath: TSelectedBoxPath
   showEditTitle: boolean
   onSelectBox: (path: TSelectedBoxPath) => void

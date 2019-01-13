@@ -1,7 +1,7 @@
 import { IBox } from '../../model'
 import { selectBox } from '../box.select'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/box.select', () => {
   it('should select a box', () => {

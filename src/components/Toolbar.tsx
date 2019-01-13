@@ -2,14 +2,14 @@ import cc from 'classcat'
 import React, { Component } from 'react'
 import './../css/Toolbar.css'
 import { IBox } from '../model'
-import { TSelectedBoxPath } from '../containers/App'
+import { TSelectedBoxPath } from './App'
 
 class Toolbar extends Component<{
   resetBox: (path: number[]) => void
   selectedBoxPath: TSelectedBoxPath
   updateBox: (path: number[], key: keyof IBox, value: any) => void
   nudge: (...any: any[]) => void
-  boxes: [IBox]
+  boxes: IBox[]
 }> {
   render() {
     // var thisBox = this.props.selectedBoxId && this.props.boxes[this.props.selectedBoxId]

@@ -1,7 +1,7 @@
 import { resetBox } from '../box.reset'
 import { IBox } from '../../model'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/box.reset', () => {
   it('should reset a box', () => {

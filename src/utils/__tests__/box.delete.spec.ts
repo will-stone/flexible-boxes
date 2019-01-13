@@ -1,7 +1,7 @@
 import { deleteBox } from '../box.delete'
 import { IBox } from '../../model'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/box.delete', () => {
   it('should delete a box', () => {

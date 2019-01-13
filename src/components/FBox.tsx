@@ -1,11 +1,11 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
-import { TSelectedBoxPath } from '../containers/App'
+import { TSelectedBoxPath } from './App'
 import { IBox } from '../model'
 import './../css/FBox.css'
 
 class FBox extends Component<{
-  boxes: [IBox]
+  boxes: IBox[]
   onSelectBox: (path: TSelectedBoxPath) => void
   selectedBoxPath: TSelectedBoxPath
   addBox?: any

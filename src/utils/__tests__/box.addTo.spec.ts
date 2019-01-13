@@ -1,7 +1,7 @@
 import { addBoxTo } from '../box.addTo'
 import { IBox } from '../../model'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/box.addTo', () => {
   it('should add a box', () => {

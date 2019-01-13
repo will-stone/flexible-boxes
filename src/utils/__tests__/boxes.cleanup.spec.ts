@@ -31,4 +31,6 @@ describe('boxes.cleanup', () => {
       ])
     ).toEqual([{ c: [{}] }])
   })
+
+  // TODO include tests for not removing items
 })

@@ -5,7 +5,7 @@ import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
 import './../css/Css.css'
 import { IBox } from '../model'
 
-class Css extends Component<{ boxes: [IBox] }> {
+class Css extends Component<{ boxes: IBox[] }> {
   state = {
     copyButtonText: 'COPY'
   }

@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { IBox } from '../model'
 
-export const cleanupBoxes = (boxes: [IBox]) =>
+export const cleanupBoxes = (boxes: IBox[]) =>
   produce(boxes, draft => {
     const recursion = (boxes: IBox[]) => {
       boxes.forEach(box => {
@@ -44,6 +44,8 @@ export const cleanupBoxes = (boxes: [IBox]) =>
 
         // Align Self
         if (!box.as || box.as === 'auto') delete box.as
+
+        // TODO include cleaning up types that are not allowed.
       })
     }
 

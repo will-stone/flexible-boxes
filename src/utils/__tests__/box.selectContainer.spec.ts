@@ -1,7 +1,7 @@
 import { IBox } from '../../model'
 import { selectContainer } from '../box.selectContainer'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/box.selectContainer', () => {
   it("should select root box's container", () => {

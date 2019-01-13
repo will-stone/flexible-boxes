@@ -1,6 +1,6 @@
 import cc from 'classcat'
 import React, { Component, FormEvent } from 'react'
-import { TSelectedBoxPath } from '../containers/App'
+import { TSelectedBoxPath } from './App'
 import { IBox, IFlattenedBox } from '../model'
 import './../css/DomBox.css'
 import isEqual from 'lodash/isEqual'

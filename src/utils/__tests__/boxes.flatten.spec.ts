@@ -1,7 +1,7 @@
 import { IBox } from '../../model'
 import { flattenBoxes } from '../boxes.flatten'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/boxes.flatten', () => {
   it('should flatten arrays of boxes', () => {

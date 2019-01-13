@@ -1,7 +1,7 @@
 import { moveBox } from '../box.move'
 import { IBox } from '../../model'
 
-const boxes: [IBox] = [{ c: [{}, { c: [{}] }, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] }]
+const boxes: IBox[] = [{ c: [{}, { c: [{}] }, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] }]
 
 describe('boxUtils/box.move', () => {
   it('should move first in array box up', () => {

@@ -10,16 +10,17 @@ import { deleteBox } from '../utils/box.delete'
 import { moveBox } from '../utils/box.move'
 import { resetBox } from '../utils/box.reset'
 import { updateBox } from '../utils/box.update'
-import Dom from '../components/Dom'
+import Dom from './Dom'
 import { boxesToString } from '../utils/boxes.toString'
 import { boxesFromString } from '../utils/boxes.fromString'
+import { cleanupBoxes } from '../utils/boxes.cleanup'
 
 export type TSelectedBoxPath = number[] | undefined
 
 interface IState {
   screenWarningHidden: boolean
   selectedBoxPath: TSelectedBoxPath
-  boxes: [IBox]
+  boxes: IBox[]
   showEditTitle: boolean
 }
 
@@ -69,11 +70,17 @@ class App extends Component<{}, IState> {
 
   handleToggleEditTitle = () => this.setState(state => ({ showEditTitle: !state.showEditTitle }))
 
+  setBoxes = (boxes: IBox[]) => {
+    const cleanedBoxes = cleanupBoxes(boxes)
+    this.setState({ boxes: cleanedBoxes })
+  }
+
   urlToBoxes = () => {
     if (window.location.hash) {
       try {
         // check if parse-able otherwise reset
         const parsed = boxesFromString(window.location.hash.substring(1))
+        cleanupBoxes(parsed)
         this.setState({
           boxes: parsed
         })

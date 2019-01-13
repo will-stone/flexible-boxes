@@ -1,7 +1,7 @@
 import { updateBox } from '../box.update'
 import { IBox } from '../../model'
 
-const boxes: [IBox] = [{ c: [{}, {}, { c: [{}, {}] }] }]
+const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
 describe('boxUtils/box.update', () => {
   it('should update first box', () => {
