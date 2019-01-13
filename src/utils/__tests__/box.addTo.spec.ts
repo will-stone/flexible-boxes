@@ -1,5 +1,5 @@
-import { addBoxTo } from '../box.addTo'
 import { IBox } from '../../model'
+import { addBoxTo } from '../box.addTo'
 
 const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 

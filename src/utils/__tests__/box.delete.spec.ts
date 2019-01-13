@@ -1,5 +1,5 @@
-import { deleteBox } from '../box.delete'
 import { IBox } from '../../model'
+import { deleteBox } from '../box.delete'
 
 const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 

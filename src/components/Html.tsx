@@ -3,44 +3,44 @@ import React, { Component } from 'react'
 import ClipboardButton from 'react-clipboard.js'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
-import './../css/Html.css'
 import { IBox } from '../model'
+import './../css/Html.css'
 
 class Html extends Component<{ boxes: IBox[] }> {
-  state = {
-    copyButtonText: 'COPY'
+  public state = {
+    copyButtonText: 'COPY',
   }
 
-  onSuccessfulyCopy() {
+  public onSuccessfulyCopy() {
     this.setState({
-      copyButtonText: 'COPIED!'
+      copyButtonText: 'COPIED!',
     })
 
     setTimeout(() => {
       this.setState({
-        copyButtonText: 'COPY'
+        copyButtonText: 'COPY',
       })
     }, 2000)
   }
 
-  render() {
-    var boxes = this.props.boxes as any
+  public render() {
+    const boxes = this.props.boxes as any
 
     function buildUpCode(id: any, indentMultiplier: any) {
-      var output = `` as any
+      let output = `` as any
       indentMultiplier++
-      let indent = repeat('  ', indentMultiplier)
+      const indent = repeat('  ', indentMultiplier)
 
       if (boxes[id].c) {
-        for (var i = 0; i < boxes[id].c.length; i++) {
-          var compId = boxes[id].c[i]
+        for (let i = 0; i < boxes[id].c.length; i++) {
+          const compId = boxes[id].c[i]
           output += `${indent}<div class="fb fb__${id}_${compId}${
             boxes[compId].t ? '-' + boxes[compId].t : ''
           }">\n`
 
           // Children
           if (boxes[compId].c && boxes[compId].c.length > 0) {
-            var childOutput = buildUpCode(compId, indentMultiplier)
+            const childOutput = buildUpCode(compId, indentMultiplier)
             output += childOutput
           } else {
             output += `${indent}  <!-- ${boxes[compId].t || id} -->\n\n`
@@ -52,12 +52,12 @@ class Html extends Component<{ boxes: IBox[] }> {
       return output
     }
 
-    var builtCode = buildUpCode(1, 0)
+    const builtCode = buildUpCode(1, 0)
 
-    var rootCompTitle = boxes[1].t ? '-' + boxes[1].t : ''
+    const rootCompTitle = boxes[1].t ? '-' + boxes[1].t : ''
 
     // if first comp is 'body'
-    var rootCompStart, rootCompEnd
+    let rootCompStart, rootCompEnd
     if (boxes[1].t && boxes[1].t === 'body') {
       rootCompStart = '<body>'
       rootCompEnd = '</body>'
@@ -66,9 +66,9 @@ class Html extends Component<{ boxes: IBox[] }> {
       rootCompEnd = '</div>'
     }
 
-    var rootComment = boxes[1].c ? '' : `  <!-- fb__1${rootCompTitle} -->\n`
+    const rootComment = boxes[1].c ? '' : `  <!-- fb__1${rootCompTitle} -->\n`
 
-    var html = `${rootCompStart}
+    const html = `${rootCompStart}
 ${rootComment}${builtCode}${rootCompEnd}`
 
     return (
@@ -83,7 +83,11 @@ ${rootComment}${builtCode}${rootCompEnd}`
             {this.state.copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter language="html" style={atomOneDark} showLineNumbers={true}>
+        <SyntaxHighlighter
+          language="html"
+          style={atomOneDark}
+          showLineNumbers={true}
+        >
           {html}
         </SyntaxHighlighter>
       </div>

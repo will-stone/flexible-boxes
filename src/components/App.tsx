@@ -2,18 +2,18 @@ import cc from 'classcat'
 import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
 import '../css/App.css'
-import '../css/button.css'
 import '../css/Pane.css'
+import '../css/button.css'
 import { IBox } from '../model'
 import { addBoxTo } from '../utils/box.addTo'
 import { deleteBox } from '../utils/box.delete'
 import { moveBox } from '../utils/box.move'
 import { resetBox } from '../utils/box.reset'
 import { updateBox } from '../utils/box.update'
-import Dom from './Dom'
-import { boxesToString } from '../utils/boxes.toString'
-import { boxesFromString } from '../utils/boxes.fromString'
 import { cleanupBoxes } from '../utils/boxes.cleanup'
+import { boxesFromString } from '../utils/boxes.fromString'
+import { boxesToString } from '../utils/boxes.toString'
+import Dom from './Dom'
 
 export type TSelectedBoxPath = number[] | undefined
 
@@ -25,64 +25,71 @@ interface IState {
 }
 
 class App extends Component<{}, IState> {
-  state: IState = {
+  public state: IState = {
     screenWarningHidden: false,
     selectedBoxPath: undefined,
     boxes: [
       {
-        c: [{}, {}, {}]
-      }
+        c: [{}, {}, {}],
+      },
     ],
-    showEditTitle: false
+    showEditTitle: false,
   }
 
-  handleSelectBox = (path: TSelectedBoxPath) => {
+  public handleSelectBox = (path: TSelectedBoxPath) => {
     this.setState(state => ({
       selectedBoxPath: path,
-      showEditTitle: !path ? false : state.showEditTitle
+      showEditTitle: !path ? false : state.showEditTitle,
     }))
   }
 
-  handleUpdateBox = (path: number[], key: keyof IBox, value: any) =>
-    this.setState((state: IState) => ({ boxes: updateBox(state.boxes, path, key, value) }))
+  public handleUpdateBox = (path: number[], key: keyof IBox, value: any) =>
+    this.setState((state: IState) => ({
+      boxes: updateBox(state.boxes, path, key, value),
+    }))
 
-  handleAddBoxTo = (path: number[]) =>
+  public handleAddBoxTo = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: addBoxTo(state.boxes, path) }))
 
-  handleDeleteBox = (path: number[]) =>
+  public handleDeleteBox = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: deleteBox(state.boxes, path) }))
 
-  handleMoveBox = (direction: 'up' | 'down') => {
+  public handleMoveBox = (direction: 'up' | 'down') => {
     this.setState((state: IState) => {
       if (state.selectedBoxPath) {
-        const [newBoxes, newPath] = moveBox(state.boxes, state.selectedBoxPath, direction)
+        const [newBoxes, newPath] = moveBox(
+          state.boxes,
+          state.selectedBoxPath,
+          direction,
+        )
         return {
           boxes: newBoxes,
-          selectedBoxPath: newPath
+          selectedBoxPath: newPath,
         }
       }
       return state
     })
   }
 
-  handleResetBox = (path: number[]) =>
+  public handleResetBox = (path: number[]) =>
     this.setState((state: IState) => ({ boxes: resetBox(state.boxes, path) }))
 
-  handleToggleEditTitle = () => this.setState(state => ({ showEditTitle: !state.showEditTitle }))
+  public handleToggleEditTitle = () =>
+    this.setState(state => ({ showEditTitle: !state.showEditTitle }))
 
-  setBoxes = (boxes: IBox[]) => {
+  public setBoxes = (boxes: IBox[]) => {
     const cleanedBoxes = cleanupBoxes(boxes)
     this.setState({ boxes: cleanedBoxes })
   }
 
-  urlToBoxes = () => {
+  public urlToBoxes = () => {
     if (window.location.hash) {
       try {
         // check if parse-able otherwise reset
         const parsed = boxesFromString(window.location.hash.substring(1))
         cleanupBoxes(parsed)
         this.setState({
-          boxes: parsed
+          boxes: parsed,
         })
       } catch (err) {
         console.log(err)
@@ -94,21 +101,21 @@ class App extends Component<{}, IState> {
     }
   }
 
-  removeScreenWarning = () =>
+  public removeScreenWarning = () =>
     this.setState({
-      screenWarningHidden: true
+      screenWarningHidden: true,
     })
 
-  componentWillMount = () => {
+  public componentWillMount = () => {
     this.urlToBoxes()
   }
 
-  componentDidUpdate = () => {
+  public componentDidUpdate = () => {
     window.location.hash = boxesToString(this.state.boxes)
   }
 
-  render() {
-    var browserWarning = {
+  public render() {
+    let browserWarning = {
       __html: `<!--[if lte IE 10]>
         <div class="App__browserWarning App__fullPageWarning">
           <div>
@@ -124,7 +131,7 @@ class App extends Component<{}, IState> {
             </p>
           </div>
         </div>
-      <![endif]-->`
+      <![endif]-->`,
     }
 
     return (
@@ -135,8 +142,8 @@ class App extends Component<{}, IState> {
           className={cc([
             'App__screenTooSmall App__fullPageWarning',
             {
-              'App__screenTooSmall--isHidden': this.state.screenWarningHidden
-            }
+              'App__screenTooSmall--isHidden': this.state.screenWarningHidden,
+            },
           ])}
         >
           <div>
@@ -145,24 +152,36 @@ class App extends Component<{}, IState> {
             </h1>
             <h1>Flexible Boxes</h1>
             <p>
-              This is a tool to help with creating Flexbox based website layouts. Due to all the
-              toolbars and output boxes, it really does <strong>NOT</strong> work well with small
-              screen sizes.
+              This is a tool to help with creating Flexbox based website
+              layouts. Due to all the toolbars and output boxes, it really does{' '}
+              <strong>NOT</strong> work well with small screen sizes.
             </p>
             <p>
-              Try maximising your browser or, if you are using a tablet, try turning it to
-              landscape.
+              Try maximising your browser or, if you are using a tablet, try
+              turning it to landscape.
             </p>
             <p>
               If you would like to proceed anyway, please click{' '}
-              <button onClick={this.removeScreenWarning.bind(this)}>here</button> (you have been
-              warned).
+              <button onClick={this.removeScreenWarning.bind(this)}>
+                here
+              </button>{' '}
+              (you have been warned).
             </p>
           </div>
         </div>
 
-        <SplitPane split="vertical" defaultSize={275} minSize={275} primary="second">
-          <SplitPane split="horizontal" defaultSize="50%" minSize={300} maxSize={-300}>
+        <SplitPane
+          split="vertical"
+          defaultSize={275}
+          minSize={275}
+          primary="second"
+        >
+          <SplitPane
+            split="horizontal"
+            defaultSize="50%"
+            minSize={300}
+            maxSize={-300}
+          >
             <SplitPane split="vertical" defaultSize={250} minSize={250}>
               <Dom
                 boxes={this.state.boxes}
@@ -185,11 +204,21 @@ class App extends Component<{}, IState> {
               /> */}
             </SplitPane>
 
-            <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
+            <SplitPane
+              split="vertical"
+              defaultSize={150}
+              minSize={150}
+              maxSize={150}
+            >
               {/* <Sitebar handleSelectBox={this.handleSelectBox} /> */}
               <div />
 
-              <SplitPane split="vertical" defaultSize="50%" minSize={300} maxSize={-300}>
+              <SplitPane
+                split="vertical"
+                defaultSize="50%"
+                minSize={300}
+                maxSize={-300}
+              >
                 {/* <Html boxes={this.state.boxes} /> */}
                 <div />
 

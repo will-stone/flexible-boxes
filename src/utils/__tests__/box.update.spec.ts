@@ -1,5 +1,5 @@
-import { updateBox } from '../box.update'
 import { IBox } from '../../model'
+import { updateBox } from '../box.update'
 
 const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 

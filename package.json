@@ -12,7 +12,10 @@
     "@types/react-syntax-highlighter": "^10.1.0",
     "gh-pages": "^0.12.0",
     "prettier": "^1.15.3",
-    "react-scripts": "^2.1.2"
+    "react-scripts": "^2.1.2",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-plugin-prettier": "^2.0.1"
   },
   "dependencies": {
     "classcat": "^3.2.5",
@@ -33,7 +36,9 @@
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build",
     "prettier": "prettier --config .prettierrc --write src/**/*.js",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "lint": "tslint --project .",
+    "lint:fix": "tslint --project . --fix"
   },
   "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
 }

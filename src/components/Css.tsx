@@ -2,35 +2,35 @@ import React, { Component } from 'react'
 import ClipboardButton from 'react-clipboard.js'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/styles/hljs'
-import './../css/Css.css'
 import { IBox } from '../model'
+import './../css/Css.css'
 
 class Css extends Component<{ boxes: IBox[] }> {
-  state = {
-    copyButtonText: 'COPY'
+  public state = {
+    copyButtonText: 'COPY',
   }
 
-  onSuccessfulyCopy() {
+  public onSuccessfulyCopy() {
     this.setState({
-      copyButtonText: 'COPIED!'
+      copyButtonText: 'COPIED!',
     })
 
     setTimeout(() => {
       this.setState({
-        copyButtonText: 'COPY'
+        copyButtonText: 'COPY',
       })
     }, 2000)
   }
 
-  render() {
-    var boxes = this.props.boxes as any
+  public render() {
+    const boxes = this.props.boxes as any
 
     function buildUpBoxCSSProperties(id: any) {
-      var output = ''
+      let output = ''
 
-      for (var property in boxes[id]) {
+      for (const property in boxes[id]) {
         if (boxes[id].hasOwnProperty(property)) {
-          var value = boxes[id][property]
+          const value = boxes[id][property]
           switch (property) {
             case 'c':
               output += '  display: flex;\n'
@@ -82,12 +82,12 @@ class Css extends Component<{ boxes: IBox[] }> {
     }
 
     function buildUpCode(id: any) {
-      var output = ``
+      let output = ``
 
       if (boxes[id].c) {
-        for (var i = 0; i < boxes[id].c.length; i++) {
-          var compId = boxes[id].c[i]
-          let compTitle = boxes[compId].t ? '-' + boxes[compId].t : ''
+        for (let i = 0; i < boxes[id].c.length; i++) {
+          const compId = boxes[id].c[i]
+          const compTitle = boxes[compId].t ? '-' + boxes[compId].t : ''
 
           // if has any css to set
           if (
@@ -109,7 +109,7 @@ class Css extends Component<{ boxes: IBox[] }> {
 
           // Children
           if (boxes[compId].c && boxes[compId].c.length > 0) {
-            var childOutput = buildUpCode(compId)
+            const childOutput = buildUpCode(compId)
             output += childOutput
           }
         }
@@ -118,12 +118,12 @@ class Css extends Component<{ boxes: IBox[] }> {
       return output
     }
 
-    var builtCode = buildUpCode(1)
+    const builtCode = buildUpCode(1)
 
-    var rootCompTitle = boxes[1].t ? '-' + boxes[1].t : ''
+    const rootCompTitle = boxes[1].t ? '-' + boxes[1].t : ''
 
     // if first comp is 'body'
-    var rootCompStart
+    let rootCompStart
     if (boxes[1].t && boxes[1].t === 'body') {
       rootCompStart = `height, body {
   height: 100%;
@@ -135,7 +135,7 @@ body {
       rootCompStart = `.fb__1${rootCompTitle} {`
     }
 
-    var css = `${rootCompStart}
+    const css = `${rootCompStart}
 ${buildUpBoxCSSProperties(1)}}
 
 ${builtCode}`
@@ -152,7 +152,11 @@ ${builtCode}`
             {this.state.copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter language="css" style={atomOneDark} showLineNumbers={true}>
+        <SyntaxHighlighter
+          language="css"
+          style={atomOneDark}
+          showLineNumbers={true}
+        >
           {css}
         </SyntaxHighlighter>
       </div>

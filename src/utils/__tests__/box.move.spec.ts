@@ -1,14 +1,16 @@
-import { moveBox } from '../box.move'
 import { IBox } from '../../model'
+import { moveBox } from '../box.move'
 
-const boxes: IBox[] = [{ c: [{}, { c: [{}] }, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] }]
+const boxes: IBox[] = [
+  { c: [{}, { c: [{}] }, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] },
+]
 
 describe('boxUtils/box.move', () => {
   it('should move first in array box up', () => {
     const [newBoxes, newPath] = moveBox(boxes, [0, 0], 'up')
     expect(newBoxes).toEqual([
       {},
-      { c: [{ c: [{}] }, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] }
+      { c: [{ c: [{}] }, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] },
     ])
     expect(newPath).toEqual([0])
   })
@@ -16,7 +18,7 @@ describe('boxUtils/box.move', () => {
   it('should move a non-first in array box up', () => {
     const [newBoxes, newPath] = moveBox(boxes, [0, 2], 'up')
     expect(newBoxes).toEqual([
-      { c: [{}, { c: [{}, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] }] }
+      { c: [{}, { c: [{}, { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }] }] },
     ])
     expect(newPath).toEqual([0, 1, 1])
   })
@@ -24,7 +26,7 @@ describe('boxUtils/box.move', () => {
   it('should swap a box up', () => {
     const [newBoxes, newPath] = moveBox(boxes, [0, 2, 2], 'up')
     expect(newBoxes).toEqual([
-      { c: [{}, { c: [{}] }, { c: [{ t: 'a' }, { t: 'c' }, { t: 'b' }] }] }
+      { c: [{}, { c: [{}] }, { c: [{ t: 'a' }, { t: 'c' }, { t: 'b' }] }] },
     ])
     expect(newPath).toEqual([0, 2, 1])
   })
@@ -32,7 +34,7 @@ describe('boxUtils/box.move', () => {
   it('should move a non-last in array box down', () => {
     const [newBoxes, newPath] = moveBox(boxes, [0, 1], 'down')
     expect(newBoxes).toEqual([
-      { c: [{}, { c: [{ c: [{}] }, { t: 'a' }, { t: 'b' }, { t: 'c' }] }] }
+      { c: [{}, { c: [{ c: [{}] }, { t: 'a' }, { t: 'b' }, { t: 'c' }] }] },
     ])
     expect(newPath).toEqual([0, 1, 0])
   })
@@ -41,7 +43,7 @@ describe('boxUtils/box.move', () => {
     const [newBoxes, newPath] = moveBox(boxes, [0, 2], 'down')
     expect(newBoxes).toEqual([
       { c: [{}, { c: [{}] }] },
-      { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] }
+      { c: [{ t: 'a' }, { t: 'b' }, { t: 'c' }] },
     ])
     expect(newPath).toEqual([1])
   })
@@ -49,7 +51,7 @@ describe('boxUtils/box.move', () => {
   it('should swap a box down', () => {
     const [newBoxes, newPath] = moveBox(boxes, [0, 2, 0], 'down')
     expect(newBoxes).toEqual([
-      { c: [{}, { c: [{}] }, { c: [{ t: 'b' }, { t: 'a' }, { t: 'c' }] }] }
+      { c: [{}, { c: [{}] }, { c: [{ t: 'b' }, { t: 'a' }, { t: 'c' }] }] },
     ])
     expect(newPath).toEqual([0, 2, 1])
   })

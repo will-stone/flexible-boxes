@@ -12,7 +12,7 @@ describe('boxUtils/boxes.flatten', () => {
       { path: [0, 1] },
       { c: [{}, {}], path: [0, 2] },
       { path: [0, 2, 0] },
-      { path: [0, 2, 1] }
+      { path: [0, 2, 1] },
     ])
   })
 })

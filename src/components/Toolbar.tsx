@@ -1,7 +1,7 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
-import './../css/Toolbar.css'
 import { IBox } from '../model'
+import './../css/Toolbar.css'
 import { TSelectedBoxPath } from './App'
 
 class Toolbar extends Component<{
@@ -11,7 +11,7 @@ class Toolbar extends Component<{
   nudge: (...any: any[]) => void
   boxes: IBox[]
 }> {
-  render() {
+  public render() {
     // var thisBox = this.props.selectedBoxId && this.props.boxes[this.props.selectedBoxId]
 
     return (

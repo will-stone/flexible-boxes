@@ -1,10 +1,10 @@
 import cc from 'classcat'
-import React, { Component, FormEvent } from 'react'
-import { TSelectedBoxPath } from './App'
-import { IBox, IFlattenedBox } from '../model'
-import './../css/DomBox.css'
 import isEqual from 'lodash/isEqual'
 import repeat from 'lodash/repeat'
+import React, { Component, FormEvent } from 'react'
+import { IBox, IFlattenedBox } from '../model'
+import './../css/DomBox.css'
+import { TSelectedBoxPath } from './App'
 
 class DomBox extends Component<{
   box: IFlattenedBox
@@ -16,32 +16,34 @@ class DomBox extends Component<{
   selectedBoxPath: TSelectedBoxPath
   showEditTitle: boolean
 }> {
-  setTitle = (e: React.FormEvent<HTMLInputElement>) => {
+  public setTitle = (e: React.FormEvent<HTMLInputElement>) => {
     this.props.onUpdateBox(this.props.box.path, 't', e.currentTarget.value)
   }
 
-  titleKeyDown = (e: any) => {
+  public titleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       this.props.onToggleEditTitle()
     }
   }
 
-  render() {
+  public render() {
     const isSelected = isEqual(this.props.box.path, this.props.selectedBoxPath)
     return (
       <li
         className={cc([
           'DomBox',
           {
-            'DomBox--isActive': isSelected
-          }
+            'DomBox--isActive': isSelected,
+          },
         ])}
         onClick={e => {
           e.stopPropagation()
           this.props.onSelectBox(this.props.box.path)
         }}
       >
-        <span className="DomBox__indenter">{repeat('..', this.props.box.path.length - 1)}</span>
+        <span className="DomBox__indenter">
+          {repeat('..', this.props.box.path.length - 1)}
+        </span>
         {this.props.showEditTitle && isSelected ? (
           <input
             autoFocus
@@ -53,7 +55,9 @@ class DomBox extends Component<{
             onKeyDown={this.titleKeyDown}
           />
         ) : (
-          <span className="DomBox__name">{this.props.box.t ? this.props.box.t : 'Box'}</span>
+          <span className="DomBox__name">
+            {this.props.box.t ? this.props.box.t : 'Box'}
+          </span>
         )}
 
         {isSelected && (

@@ -4,7 +4,11 @@ import { mutableArraySwap } from './array.mutableSwap'
 import { selectBox } from './box.select'
 import { selectContainer } from './box.selectContainer'
 
-export const moveBox = (boxes: IBox[], path: number[], direction: 'up' | 'down') => {
+export const moveBox = (
+  boxes: IBox[],
+  path: number[],
+  direction: 'up' | 'down',
+) => {
   const newPath = [...path]
   const newBoxes = produce(boxes, draft => {
     const currentIndex = path[path.length - 1]

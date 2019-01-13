@@ -1,8 +1,8 @@
 import cc from 'classcat'
 import React, { Component } from 'react'
-import { TSelectedBoxPath } from './App'
 import { IBox } from '../model'
 import './../css/FBox.css'
+import { TSelectedBoxPath } from './App'
 
 class FBox extends Component<{
   boxes: IBox[]
@@ -12,7 +12,7 @@ class FBox extends Component<{
   deleteBox?: any
   moveBox?: any
 }> {
-  render() {
+  public render() {
     // const thisBox = this.props.boxes[this.props.id]
 
     // Style of this box

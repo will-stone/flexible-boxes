@@ -1,5 +1,5 @@
-import { resetBox } from '../box.reset'
 import { IBox } from '../../model'
+import { resetBox } from '../box.reset'
 
 const boxes: IBox[] = [{ c: [{}, {}, { c: [{}, {}] }] }]
 
