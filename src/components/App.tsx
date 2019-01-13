@@ -14,6 +14,7 @@ import { cleanupBoxes } from '../utils/boxes.cleanup'
 import { boxesFromString } from '../utils/boxes.fromString'
 import { boxesToString } from '../utils/boxes.toString'
 import Dom from './Dom'
+import FBox from './FBox'
 
 export type TSelectedBoxPath = number[] | undefined
 
@@ -169,13 +170,12 @@ class App extends Component<{}, IState> {
                 showEditTitle={this.state.showEditTitle}
               />
 
-              <div />
-
-              {/* <FBox
-                boxes={this.state.boxes}
-                onSelectBox={this.handleSelectBox}
+              <FBox
+                box={this.state.boxes[0]}
+                path={[0]}
                 selectedBoxPath={this.state.selectedBoxPath}
-              /> */}
+                onSelectBox={this.handleSelectBox}
+              />
             </SplitPane>
 
             <SplitPane split="vertical" defaultSize={150} minSize={150} maxSize={150}>
