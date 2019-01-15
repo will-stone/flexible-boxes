@@ -7,7 +7,7 @@ import { flattenBoxes } from '../utils/boxes.flatten'
 import { TSelectedBoxPath } from './App'
 import DomBox from './DomBox'
 
-class Dom extends Component<{
+const Dom: React.FC<{
   boxes: IBox[]
   selectedBoxPath: TSelectedBoxPath
   showEditTitle: boolean
@@ -18,62 +18,60 @@ class Dom extends Component<{
   onMoveBox: (direction: 'up' | 'down') => void
   onToggleEditTitle: () => void
   onSetBoxes: (boxes: IBox[]) => void
-}> {
-  public render() {
-    return (
-      <div className="Dom Pane__component">
-        <h2 className="Pane__title">
-          DOM{' '}
-          <button className="Pane__titleButton button" onClick={() => this.props.onSetBoxes([{}])}>
-            CLEAR
+}> = props => {
+  return (
+    <div className="Dom Pane__component" data-testid="Dom">
+      <h2 className="Pane__title">
+        DOM{' '}
+        <button className="Pane__titleButton button" onClick={() => props.onSetBoxes([{}])}>
+          CLEAR
+        </button>
+      </h2>
+      <ul className="Dom__boxes" onClick={() => props.onSelectBox(undefined)}>
+        {flattenBoxes(props.boxes).map((box, i) => (
+          <DomBox
+            key={i}
+            box={box}
+            onUpdateBox={props.onUpdateBox}
+            onSelectBox={props.onSelectBox}
+            onDeleteBox={props.onDeleteBox}
+            onAddBoxTo={props.onAddBoxTo}
+            selectedBoxPath={props.selectedBoxPath}
+            showEditTitle={props.showEditTitle}
+            onToggleEditTitle={props.onToggleEditTitle}
+          />
+        ))}
+      </ul>
+      {props.selectedBoxPath && props.selectedBoxPath.length !== 1 && (
+        <div className="Dom__boxReorderButtons">
+          <button
+            className={cc([
+              'button',
+              {
+                'Dom__boxReorderButton--isDisabled': isEqual(props.selectedBoxPath, [0, 0]),
+              },
+            ])}
+            onClick={() => props.onMoveBox('up')}
+          >
+            UP
           </button>
-        </h2>
-        <ul className="Dom__boxes" onClick={() => this.props.onSelectBox(undefined)}>
-          {flattenBoxes(this.props.boxes).map((box, i) => (
-            <DomBox
-              key={i}
-              box={box}
-              onUpdateBox={this.props.onUpdateBox}
-              onSelectBox={this.props.onSelectBox}
-              onDeleteBox={this.props.onDeleteBox}
-              onAddBoxTo={this.props.onAddBoxTo}
-              selectedBoxPath={this.props.selectedBoxPath}
-              showEditTitle={this.props.showEditTitle}
-              onToggleEditTitle={this.props.onToggleEditTitle}
-            />
-          ))}
-        </ul>
-        {this.props.selectedBoxPath && this.props.selectedBoxPath.length !== 1 && (
-          <div className="Dom__boxReorderButtons">
-            <button
-              className={cc([
-                'button',
-                {
-                  'Dom__boxReorderButton--isDisabled': isEqual(this.props.selectedBoxPath, [0, 0]),
-                },
-              ])}
-              onClick={() => this.props.onMoveBox('up')}
-            >
-              UP
-            </button>
-            <button
-              className={cc([
-                'button',
-                {
-                  'Dom__boxReorderButton--isDisabled':
-                    this.props.boxes[0].c &&
-                    isEqual(this.props.selectedBoxPath, [0, this.props.boxes[0].c.length - 1]),
-                },
-              ])}
-              onClick={() => this.props.onMoveBox('down')}
-            >
-              DOWN
-            </button>
-          </div>
-        )}
-      </div>
-    )
-  }
+          <button
+            className={cc([
+              'button',
+              {
+                'Dom__boxReorderButton--isDisabled':
+                  props.boxes[0].c &&
+                  isEqual(props.selectedBoxPath, [0, props.boxes[0].c.length - 1]),
+              },
+            ])}
+            onClick={() => props.onMoveBox('down')}
+          >
+            DOWN
+          </button>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default Dom

@@ -175,7 +175,7 @@ class Toolbar extends Component<{
                   iconClass="fbi-ai fbi-ai-stretch"
                 />
                 <ToolbarIconButton
-                  label="Stretch"
+                  label="Baseline"
                   onClick={() => this.props.onUpdateBox(selectedBoxPath, 'ai', 'baseline')}
                   itemCount={2}
                   item="B"

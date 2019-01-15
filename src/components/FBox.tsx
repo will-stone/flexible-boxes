@@ -5,58 +5,60 @@ import { IBox } from '../model'
 import './../css/FBox.css'
 import { TSelectedBoxPath } from './App'
 
-class FBox extends Component<{
+const FBox: React.FC<{
   box: IBox
   path: number[]
   selectedBoxPath: TSelectedBoxPath
   onSelectBox: (path: TSelectedBoxPath) => void
-}> {
-  public render() {
-    const boxStyle = {
-      flexDirection: this.props.box.d ? this.props.box.d : 'row',
-      flexWrap: this.props.box.w ? this.props.box.w : 'nowrap',
-      flexGrow: this.props.box.g ? this.props.box.g : 0,
-      flexShrink: this.props.box.s || this.props.box.s === 0 ? this.props.box.s : 1,
-      flexBasis: this.props.box.b ? this.props.box.b : 'auto',
-      justifyContent: this.props.box.jc ? this.props.box.jc : 'flex-start',
-      alignContent: this.props.box.ac ? this.props.box.ac : 'stretch',
-      alignItems: this.props.box.ai ? this.props.box.ai : 'stretch',
-      alignSelf: this.props.box.as ? this.props.box.as : 'auto',
-    }
-
-    const isSelected = isEqual(this.props.path, this.props.selectedBoxPath)
-    const isRootBox = isEqual(this.props.path, [0])
-
-    return (
-      <div
-        className={cc(['FBox', { isSelected }, { isRootBox }])}
-        onClick={e => {
-          e.stopPropagation()
-          this.props.onSelectBox(this.props.path)
-        }}
-        style={boxStyle}
-      >
-        {!isRootBox && (
-          <div className="FBox__label">
-            {!this.props.box.c && (this.props.box.t ? this.props.box.t : 'Box')}
-          </div>
-        )}
-        {this.props.box.c &&
-          this.props.box.c.map((box, i) => {
-            const path = [...this.props.path, i]
-            return (
-              <FBox
-                key={JSON.stringify(path)}
-                box={box}
-                path={path}
-                selectedBoxPath={this.props.selectedBoxPath}
-                onSelectBox={this.props.onSelectBox}
-              />
-            )
-          })}
-      </div>
-    )
+}> = props => {
+  const boxStyle = {
+    flexDirection: props.box.d ? props.box.d : 'row',
+    flexWrap: props.box.w ? props.box.w : 'nowrap',
+    flexGrow: props.box.g ? props.box.g : 0,
+    flexShrink: props.box.s || props.box.s === 0 ? props.box.s : 1,
+    flexBasis: props.box.b ? props.box.b : 'auto',
+    justifyContent: props.box.jc ? props.box.jc : 'flex-start',
+    alignContent: props.box.ac ? props.box.ac : 'stretch',
+    alignItems: props.box.ai ? props.box.ai : 'stretch',
+    alignSelf: props.box.as ? props.box.as : 'auto',
   }
+  const isSelected = isEqual(props.path, props.selectedBoxPath)
+  const isRootBox = isEqual(props.path, [0])
+  return (
+    <div
+      className={cc([
+        'FBox',
+        {
+          isSelected,
+        },
+        {
+          isRootBox,
+        },
+      ])}
+      onClick={e => {
+        e.stopPropagation()
+        props.onSelectBox(props.path)
+      }}
+      style={boxStyle}
+    >
+      {!isRootBox && (
+        <div className="FBox__label">{!props.box.c && (props.box.t ? props.box.t : 'Box')}</div>
+      )}
+      {props.box.c &&
+        props.box.c.map((box, i) => {
+          const path = [...props.path, i]
+          return (
+            <FBox
+              key={JSON.stringify(path)}
+              box={box}
+              path={path}
+              selectedBoxPath={props.selectedBoxPath}
+              onSelectBox={props.onSelectBox}
+            />
+          )
+        })}
+    </div>
+  )
 }
 
 export default FBox

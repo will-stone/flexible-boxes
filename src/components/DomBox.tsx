@@ -40,6 +40,7 @@ class DomBox extends Component<{
           e.stopPropagation()
           this.props.onSelectBox(this.props.box.path)
         }}
+        data-testid="DomBox"
       >
         <span className="DomBox__indenter">{repeat('..', this.props.box.path.length - 1)}</span>
         {this.props.showEditTitle && isSelected ? (
