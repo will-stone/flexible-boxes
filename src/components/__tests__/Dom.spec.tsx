@@ -49,4 +49,18 @@ describe('components/Dom', () => {
     within(domBoxes[1]).getByText('Testing456')
     within(domBoxes[3]).getByText('Testing789')
   })
+
+  it('should move box down', () => {
+    const { queryAllByTestId, getByText } = setup()
+    const domBox2 = within(queryAllByTestId('DomBox')[2]).getByText('Testing456')
+    fireEvent.click(domBox2)
+    const upButton = getByText('DOWN')
+    fireEvent.click(upButton)
+    const domBoxes = queryAllByTestId('DomBox')
+    expect(domBoxes.length).toBe(4)
+    within(domBoxes[0]).getByText('Box')
+    within(domBoxes[1]).getByText('Testing123')
+    within(domBoxes[3]).getByText('Testing456')
+    within(domBoxes[2]).getByText('Testing789')
+  })
 })

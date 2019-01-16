@@ -68,6 +68,7 @@ class DomBox extends Component<{
                   e.stopPropagation()
                   this.props.onDeleteBox(this.props.box.path)
                 }}
+                data-testid="delete-box"
               >
                 <i className="fa fa-trash" />
               </button>
