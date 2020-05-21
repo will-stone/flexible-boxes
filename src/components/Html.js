@@ -1,7 +1,7 @@
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atomOneDark } from 'react-syntax-highlighter/styles/hljs'
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import ClipboardButton from 'react-clipboard.js'
 
 import './../css/Html.css'
@@ -11,18 +11,18 @@ class Html extends Component {
     super()
 
     this.state = {
-      copyButtonText: 'COPY'
+      copyButtonText: 'COPY',
     }
   }
 
   onSuccessfulyCopy() {
     this.setState({
-      copyButtonText: 'COPIED!'
+      copyButtonText: 'COPIED!',
     })
 
     setTimeout(() => {
       this.setState({
-        copyButtonText: 'COPY'
+        copyButtonText: 'COPY',
       })
     }, 2000)
   }
@@ -87,7 +87,11 @@ ${rootComment}${builtCode}${rootCompEnd}`
             {this.state.copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter language="html" style={atomOneDark} showLineNumbers={true}>
+        <SyntaxHighlighter
+          language="html"
+          style={atomOneDark}
+          showLineNumbers={true}
+        >
           {html}
         </SyntaxHighlighter>
       </div>

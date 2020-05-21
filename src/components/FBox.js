@@ -20,7 +20,7 @@ class FBox extends Component {
       justifyContent: thisBox.jc ? thisBox.jc : 'flex-start',
       alignContent: thisBox.ac ? thisBox.ac : 'stretch',
       alignItems: thisBox.ai ? thisBox.ai : 'stretch',
-      alignSelf: thisBox.as ? thisBox.as : 'auto' //,
+      alignSelf: thisBox.as ? thisBox.as : 'auto', //,
     }
 
     // Build JSX for all child boxes of this box
@@ -39,7 +39,7 @@ class FBox extends Component {
             deleteBox={this.props.deleteBox}
             moveBox={this.props.moveBox}
             selectedBoxId={this.props.selectedBoxId}
-          />
+          />,
         )
       }
     } else {
@@ -51,10 +51,10 @@ class FBox extends Component {
         className={cc([
           'FBox',
           { isActive: id === this.props.selectedBoxId },
-          { isRootBox: id === 1 }
+          { isRootBox: id === 1 },
         ])}
         style={divStyle}
-        onClick={e => {
+        onClick={(e) => {
           e.stopPropagation()
           this.props.selectBox(id)
         }}

@@ -33,7 +33,7 @@ class Dom extends Component {
               addBoxTo={addBoxTo}
               deleteBox={deleteBox}
               updateBox={updateBox}
-            />
+            />,
           )
           output.push.apply(output, buildDom(childId, indentMultiplier))
         }
@@ -53,7 +53,7 @@ class Dom extends Component {
         addBoxTo={addBoxTo}
         deleteBox={deleteBox}
         updateBox={updateBox}
-      />
+      />,
     ]
     domBoxes.push.apply(domBoxes, buildDom(1, 0))
 
@@ -61,7 +61,11 @@ class Dom extends Component {
       <div className="Dom Pane__component">
         <h2 className="Pane__title">
           DOM{' '}
-          <a className="Pane__titleButton button" href="/#~(1~())" onClick={() => selectBox(null)}>
+          <a
+            className="Pane__titleButton button"
+            href="/#~(1~())"
+            onClick={() => selectBox(null)}
+          >
             CLEAR
           </a>
         </h2>
@@ -74,8 +78,9 @@ class Dom extends Component {
               className={cc([
                 'button',
                 {
-                  'Dom__boxReorderButton--isDisabled': selectedBoxId === boxes[1].c[0]
-                }
+                  'Dom__boxReorderButton--isDisabled':
+                    selectedBoxId === boxes[1].c[0],
+                },
               ])}
               onClick={this.props.moveBox.bind(this, 'up')}
             >
@@ -86,8 +91,8 @@ class Dom extends Component {
                 'button',
                 {
                   'Dom__boxReorderButton--isDisabled':
-                    selectedBoxId === boxes[1].c[boxes[1].c.length - 1]
-                }
+                    selectedBoxId === boxes[1].c[boxes[1].c.length - 1],
+                },
               ])}
               onClick={this.props.moveBox.bind(this, 'down')}
             >
