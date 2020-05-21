@@ -11,7 +11,10 @@ class Sitebar extends Component {
         <h1 className="Sitebar__logo">Flexible Boxes</h1>
         <h2 className="Sitebar__subTitle">
           By{' '}
-          <a className="button button--link" href="http://wstone.io/flexible-boxes-react-app/">
+          <a
+            className="button button--link"
+            href="http://wstone.io/flexible-boxes-react-app/"
+          >
             Will Stone
           </a>
         </h2>
@@ -55,7 +58,10 @@ class Sitebar extends Component {
             </a>
           </li>
           <li>
-            <a href="https://twitter.com/will_stone_" className="button button--link">
+            <a
+              href="https://twitter.com/will_stone_"
+              className="button button--link"
+            >
               <i className="fa fa-twitter" /> will_stone_
             </a>
           </li>

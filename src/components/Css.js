@@ -10,18 +10,18 @@ class Css extends Component {
     super()
 
     this.state = {
-      copyButtonText: 'COPY'
+      copyButtonText: 'COPY',
     }
   }
 
   onSuccessfulyCopy() {
     this.setState({
-      copyButtonText: 'COPIED!'
+      copyButtonText: 'COPIED!',
     })
 
     setTimeout(() => {
       this.setState({
-        copyButtonText: 'COPY'
+        copyButtonText: 'COPY',
       })
     }, 2000)
   }
@@ -156,7 +156,11 @@ ${builtCode}`
             {this.state.copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter language="css" style={atomOneDark} showLineNumbers={true}>
+        <SyntaxHighlighter
+          language="css"
+          style={atomOneDark}
+          showLineNumbers={true}
+        >
           {css}
         </SyntaxHighlighter>
       </div>
