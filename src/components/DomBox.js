@@ -14,7 +14,7 @@ class DomBox extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.state.showEditTitle && this.props.id !== nextProps.selectedBoxId) {
       this.setState({
         showEditTitle: false,

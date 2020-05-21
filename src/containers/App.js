@@ -400,7 +400,7 @@ class App extends Component {
     })
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.urlToBoxes()
     window.addEventListener(
       'hashchange',
