@@ -1,7 +1,7 @@
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atomOneDark } from 'react-syntax-highlighter/styles/hljs'
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import ClipboardButton from 'react-clipboard.js'
 
 import './../css/Html.css'
