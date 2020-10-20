@@ -42,7 +42,7 @@
     "font-awesome": "^4.7.0",
     "immutability-helper": "^3.0.2",
     "jsurl": "^0.1.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "react": "^16.13.1",
     "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.13.1",
