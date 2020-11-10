@@ -8,6 +8,7 @@
   flex-direction: column;
   flex-grow: 1;
   color: white;
+  overflow: hidden;
 }
 
 .Pane__title {

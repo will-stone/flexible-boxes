@@ -73,7 +73,9 @@ class Html extends Component {
     var rootComment = boxes[1].c ? '' : `  <!-- fb__1${rootCompTitle} -->\n`
 
     var html = `${rootCompStart}
-${rootComment}${builtCode}${rootCompEnd}`
+${rootComment}${builtCode}${rootCompEnd}
+
+`
 
     return (
       <div className="Html Pane__component">
