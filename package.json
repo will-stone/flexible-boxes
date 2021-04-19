@@ -50,7 +50,7 @@
     "react-syntax-highlighter": "^12.2.1"
   },
   "devDependencies": {
-    "@will-stone/prettier-config": "^3.0.1",
+    "@will-stone/prettier-config": "^3.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.0.5",
