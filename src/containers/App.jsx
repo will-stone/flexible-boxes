@@ -1,20 +1,26 @@
-import React, { Component } from 'react'
-import update from 'immutability-helper'
-import jsurl from 'jsurl'
-import SplitPane from 'react-split-pane'
-import cc from 'classcat'
-
+/* eslint-disable react/no-danger */
+/* eslint-disable no-console */
+/* eslint-disable unicorn/no-null */
+/* eslint-disable react/no-set-state */
+/* eslint-disable max-depth */
 import './../css/App.css'
 import './../css/button.css'
 import './../css/Pane.css'
 
-import FBox from './../components/FBox'
-import Toolbar from './../components/Toolbar'
-import Html from './../components/Html'
-import Css from './../components/Css'
-import Dom from './../components/Dom'
-import Sitebar from './../components/Sitebar'
+import cc from 'classcat'
+import update from 'immutability-helper'
+import jsurl from 'jsurl'
+import React, { Component } from 'react'
+import SplitPane from 'react-split-pane'
 
+import Css from '../components/Css'
+import Dom from '../components/Dom'
+import FBox from '../components/FBox'
+import Html from '../components/Html'
+import Sitebar from '../components/Sitebar'
+import Toolbar from '../components/Toolbar'
+
+// eslint-disable-next-line react/no-unsafe
 class App extends Component {
   constructor() {
     super()
@@ -32,80 +38,133 @@ class App extends Component {
         4: {},
       },
     }
+
+    this.sanitiseBoxes = this.sanitiseBoxes.bind(this)
+    this.handleSelectBox = this.handleSelectBox.bind(this)
+    this.handleUpdateBox = this.handleUpdateBox.bind(this)
+    this.handleNudge = this.handleNudge.bind(this)
+    this.handleAddBoxTo = this.handleAddBoxTo.bind(this)
+    this.handleReorderBox = this.handleReorderBox.bind(this)
+    this.handleDeleteBox = this.handleDeleteBox.bind(this)
+    this.handleResetBox = this.handleResetBox.bind(this)
+    this.urlToBoxes = this.urlToBoxes.bind(this)
+    this.handleRemoveScreenWarning = this.handleRemoveScreenWarning.bind(this)
   }
 
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
+    this.urlToBoxes()
+    window.addEventListener(
+      'hashchange',
+      () => {
+        this.urlToBoxes()
+      },
+      false,
+    )
+  }
+
+  // componentDidUpdate() {
+  //   const { boxes } = this.state
+  //   window.history.pushState(
+  //     null,
+  //     null,
+  //     `#${jsurl.stringify(this.sanitiseBoxes(boxes))}`,
+  //   )
+  // }
+
   sanitiseBoxes(boxes) {
-    var counter = 1
-    for (var compId in boxes) {
-      if (boxes.hasOwnProperty(compId) && parseInt(compId, 10) === counter) {
+    let counter = 1
+    for (const [compId, box] of Object.entries(boxes)) {
+      if (box && Number.parseInt(compId, 10) === counter) {
         // second clause is dirty check for corrupt boxes; checks box IDs start at 1 and are squential.
-        for (var key in boxes[compId]) {
-          if (boxes[compId].hasOwnProperty(key)) {
-            var value = boxes[compId][key]
+        for (const key of Object.keys(boxes[compId])) {
+          if (boxes[compId][key]) {
+            const value = boxes[compId][key]
             if (value === '') {
               // remove an empty property
               delete boxes[compId][key]
             } else {
               switch (key) {
-                case 't': // title
-                  boxes[compId].t = boxes[compId].t.replace(' ', '_') // spaces to underscores
+                // title
+                case 't':
+                  // spaces to underscores
+                  boxes[compId].t = boxes[compId].t.replace(' ', '_')
                   break
 
-                case 'd': // direction
+                // direction
+                case 'd':
                   if (boxes[compId].d !== 'column') {
                     delete boxes[compId].d
                   }
+
                   break
 
-                case 'w': // wrap
+                // wrap
+                case 'w':
                   if (boxes[compId].w !== 'wrap') {
                     delete boxes[compId].w
                   }
+
                   break
 
-                case 'g': // grow
-                  if (parseInt(boxes[compId].g, 10) === 0) {
+                // grow
+                case 'g':
+                  if (Number.parseInt(boxes[compId].g, 10) === 0) {
                     delete boxes[compId].g
                   }
+
                   break
 
-                case 's': // shrink
-                  if (parseInt(boxes[compId].s, 10) === 1) {
+                // shrink
+                case 's':
+                  if (Number.parseInt(boxes[compId].s, 10) === 1) {
                     delete boxes[compId].s
                   }
+
                   break
 
-                case 'b': // basis
+                // basis
+                case 'b':
                   if (boxes[compId].b === 'auto') {
                     delete boxes[compId].b
                   }
+
                   break
 
-                case 'jc': // justify-content
+                // justify-content
+                case 'jc':
                   if (boxes[compId].jc === 'flex-start') {
                     delete boxes[compId].jc
                   }
+
                   break
 
-                case 'ac': // align-content
+                // align-content
+                case 'ac':
                   if (boxes[compId].ac === 'stretch') {
                     delete boxes[compId].ac
                   }
+
                   break
 
-                case 'ai': // align-items
+                // align-items
+                case 'ai':
                   if (boxes[compId].ai === 'stretch') {
                     delete boxes[compId].ai
                   }
+
                   break
 
-                case 'as': // align-items
+                // align-items
+                case 'as':
                   if (boxes[compId].as === 'auto') {
                     delete boxes[compId].as
                   }
+
                   break
 
-                case 'c': // children
+                // children
+                case 'c':
                   // remove empty child object
                   if (
                     typeof value === 'object' &&
@@ -113,6 +172,7 @@ class App extends Component {
                   ) {
                     delete boxes[compId].c
                   }
+
                   break
 
                 default:
@@ -122,14 +182,17 @@ class App extends Component {
             }
           }
         }
-        counter++
+
+        counter = counter + 1
       } else {
         // corrupt boxes
         console.log('Coponents are corrupt, resetting.')
+        // eslint-disable-next-line react/destructuring-assignment, prefer-destructuring, no-param-reassign
         boxes = this.state.boxes
         break
       }
     }
+
     return boxes
   }
 
@@ -139,79 +202,94 @@ class App extends Component {
 
   // TODO: merge this with nudge?
   handleUpdateBox(changeEvent, compId) {
-    var name = changeEvent.target.name
-    var value = changeEvent.target.value
-    var boxes = this.state.boxes
-    boxes = update(boxes, {
-      [compId]: {
-        [name]: { $set: value },
-      },
-    })
-    boxes = this.sanitiseBoxes(boxes)
-    window.location.hash = jsurl.stringify(boxes)
+    const { name } = changeEvent.target
+    const { value } = changeEvent.target
+    const { boxes } = this.state
+    window.location.hash = jsurl.stringify(
+      this.sanitiseBoxes(
+        update(boxes, {
+          [compId]: {
+            [name]: { $set: value },
+          },
+        }),
+      ),
+    )
   }
 
-  handleNudge(compId, name, newValue) {
-    var boxes = this.state.boxes
-    boxes = update(boxes, {
-      [compId]: {
-        [name]: { $set: newValue },
-      },
+  handleNudge(compId, name, updatedValue) {
+    const { boxes } = this.state
+    this.setState({
+      boxes: update(boxes, {
+        [compId]: {
+          [name]: { $set: updatedValue },
+        },
+      }),
     })
-    boxes = this.sanitiseBoxes(boxes)
-    window.location.hash = jsurl.stringify(boxes)
+    window.location.hash = jsurl.stringify(
+      this.sanitiseBoxes(
+        update(boxes, {
+          [compId]: {
+            [name]: { $set: updatedValue },
+          },
+        }),
+      ),
+    )
   }
 
   handleAddBoxTo(id) {
-    let boxes = this.state.boxes
+    const { boxes } = this.state
     let largestBoxId = 0
 
     // find next box id
-    for (var box in boxes) {
-      if (boxes.hasOwnProperty(box)) {
-        if (box > largestBoxId) {
-          largestBoxId++
-        }
+    for (const box in boxes) {
+      if (boxes[box] && box > largestBoxId) {
+        largestBoxId = largestBoxId + 1
       }
     }
-    largestBoxId++ // this is the new id
+
+    // this is the new id
+    largestBoxId = largestBoxId + 1
 
     if (boxes[id].c) {
       boxes[id].c.push(largestBoxId)
     } else {
       boxes[id].c = [largestBoxId]
     }
+
     boxes[largestBoxId] = {}
 
     window.location.hash = jsurl.stringify(boxes)
   }
 
   handleReorderBox(direction) {
-    var boxes = this.state.boxes
-    var selectedBoxId = this.state.selectedBoxId
+    const { boxes } = this.state
+    const { selectedBoxId } = this.state
 
-    var findParentOf = (id) => {
-      for (var boxId in boxes) {
-        if (boxes.hasOwnProperty(boxId)) {
-          var box = boxes[boxId]
-          if (box.c && box.c.indexOf(parseInt(id, 10)) > -1) {
+    const findParentOf = (id) => {
+      for (const boxId in boxes) {
+        if (boxes[boxId]) {
+          const box = boxes[boxId]
+          if (box.c && box.c.includes(Number.parseInt(id, 10))) {
             return boxId
           }
         }
       }
     }
 
-    var parentId = findParentOf(selectedBoxId)
-    var parentIdOfParent = findParentOf(parentId)
+    const parentId = findParentOf(selectedBoxId)
+    const parentIdOfParent = findParentOf(parentId)
+    let indexOfParentInParent
+
     if (parentIdOfParent) {
-      var indexOfParentInParent = boxes[parentIdOfParent].c.indexOf(
-        parseInt(parentId, 10),
+      indexOfParentInParent = boxes[parentIdOfParent].c.indexOf(
+        Number.parseInt(parentId, 10),
       )
     }
-    var indexOfSelected = boxes[parentId].c.indexOf(selectedBoxId)
+
+    const indexOfSelected = boxes[parentId].c.indexOf(selectedBoxId)
 
     // Remove selected from children array
-    var removeSelected = () => {
+    const removeSelected = () => {
       boxes[parentId].c.splice(indexOfSelected, 1)
     }
 
@@ -271,15 +349,13 @@ class App extends Component {
   }
 
   handleDeleteBox(id, parentId) {
-    var boxes = this.state.boxes
-    var selectedBoxChildren = boxes[id].c
-    var selectedBoxId = this.state.selectedBoxId
+    const { boxes } = this.state
+    const selectedBoxChildren = boxes[id].c
+    let { selectedBoxId } = this.state
 
     // delete all children of box
     if (selectedBoxChildren) {
-      for (let index = 0; index < selectedBoxChildren.length; index++) {
-        let child = selectedBoxChildren[index]
-
+      for (const child of selectedBoxChildren) {
         // deselect
         if (selectedBoxId === child) {
           selectedBoxId = null
@@ -298,8 +374,8 @@ class App extends Component {
     }
 
     // find link to id in parent's' children array and remove it
-    let indexOfChildInParent = boxes[parentId].c.indexOf(id)
-    let parentsChildrenCount = boxes[parentId].c.length
+    const indexOfChildInParent = boxes[parentId].c.indexOf(id)
+    const parentsChildrenCount = boxes[parentId].c.length
     if (parentsChildrenCount === 1) {
       // if only child, remove children (c) property from parent
       delete boxes[parentId].c
@@ -309,24 +385,23 @@ class App extends Component {
     }
 
     // Rebase box ids
-    var idCounter = 1
+    let idCounter = 1
     for (let boxId in boxes) {
-      if (boxes.hasOwnProperty(boxId)) {
-        boxId = parseInt(boxId, 10)
+      if (boxes[boxId]) {
+        boxId = Number.parseInt(boxId, 10)
         if (boxId !== idCounter && boxId !== 1) {
           boxes[idCounter] = boxes[boxId]
           delete boxes[boxId]
 
           // replace reference to child in parent's children array
-          for (var parentBoxId in boxes) {
+          for (const parentBoxId in boxes) {
             if (
-              boxes.hasOwnProperty(parentBoxId) &&
+              boxes[parentBoxId] &&
               boxes[parentBoxId].c &&
-              boxes[parentBoxId].c.indexOf(boxId) > -1
+              boxes[parentBoxId].c.includes(boxId)
             ) {
-              boxes[parentBoxId].c[
-                boxes[parentBoxId].c.indexOf(boxId)
-              ] = idCounter
+              boxes[parentBoxId].c[boxes[parentBoxId].c.indexOf(boxId)] =
+                idCounter
               break
             }
           }
@@ -336,19 +411,20 @@ class App extends Component {
             selectedBoxId = idCounter
           }
         }
-        idCounter++
+
+        idCounter = idCounter + 1
       }
     }
 
     // Update boxes in state
     window.location.hash = jsurl.stringify(boxes)
     this.setState({
-      selectedBoxId: selectedBoxId,
+      selectedBoxId,
     })
   }
 
   handleResetBox(id) {
-    var boxes = this.state.boxes
+    let { boxes } = this.state
     boxes = update(boxes, {
       [id]: {
         d: { $set: 'row' },
@@ -362,61 +438,51 @@ class App extends Component {
         jc: { $set: 'flex-start' },
       },
     })
-    boxes = this.sanitiseBoxes(boxes)
-    window.location.hash = jsurl.stringify(boxes)
+    window.history.pushState(
+      null,
+      null,
+      `#${jsurl.stringify(this.sanitiseBoxes(boxes))}`,
+    )
   }
 
   urlToBoxes() {
     if (window.location.hash) {
-      var parsedBoxes
+      let parsedBoxes
       try {
         // check if parse-able otherwise reset
-        parsedBoxes = jsurl.parse(window.location.hash.substring(1))
-      } catch (err) {
-        console.log(err)
+        parsedBoxes = jsurl.parse(window.location.hash.slice(1))
+      } catch (error) {
+        console.log(error)
         parsedBoxes = false
       }
 
       if (parsedBoxes) {
         // successful parse
-        parsedBoxes = this.sanitiseBoxes(parsedBoxes)
         this.setState({
-          boxes: parsedBoxes,
+          boxes: this.sanitiseBoxes(parsedBoxes),
         })
       } else {
         // unsuccessful parse
+        console.log('unsuccessful parse')
         // set to default
-        window.location.hash = jsurl.stringify(this.state.boxes)
+        const { boxes } = this.state
+        window.history.pushState(null, null, `#${jsurl.stringify(boxes)}`)
       }
     } else {
       // set to default
-      window.location.hash = jsurl.stringify(this.state.boxes)
+      const { boxes } = this.state
+      window.history.pushState(null, null, `#${jsurl.stringify(boxes)}`)
     }
   }
 
-  removeScreenWarning() {
+  handleRemoveScreenWarning() {
     this.setState({
       screenWarningHidden: true,
     })
   }
 
-  UNSAFE_componentWillMount() {
-    this.urlToBoxes()
-    window.addEventListener(
-      'hashchange',
-      () => {
-        this.urlToBoxes()
-      },
-      false,
-    )
-  }
-
-  componentDidUpdate() {
-    window.location.hash = jsurl.stringify(this.state.boxes)
-  }
-
   render() {
-    var browserWarning = {
+    const browserWarning = {
       __html: `<!--[if lte IE 10]>
         <div class="App__browserWarning App__fullPageWarning">
           <div>
@@ -428,6 +494,8 @@ class App extends Component {
       <![endif]-->`,
     }
 
+    const { screenWarningHidden, boxes, selectedBoxId } = this.state
+
     return (
       <div className="App">
         <div dangerouslySetInnerHTML={browserWarning} />
@@ -436,7 +504,7 @@ class App extends Component {
           className={cc([
             'App__screenTooSmall App__fullPageWarning',
             {
-              'App__screenTooSmall--isHidden': this.state.screenWarningHidden,
+              'App__screenTooSmall--isHidden': screenWarningHidden,
             },
           ])}
         >
@@ -456,7 +524,7 @@ class App extends Component {
             </p>
             <p>
               If you would like to proceed anyway, please click{' '}
-              <button onClick={this.removeScreenWarning.bind(this)}>
+              <button onClick={this.handleRemoveScreenWarning} type="button">
                 here
               </button>{' '}
               (you have been warned).
@@ -465,63 +533,63 @@ class App extends Component {
         </div>
 
         <SplitPane
-          split="vertical"
           defaultSize={275}
           minSize={275}
           primary="second"
+          split="vertical"
         >
           <SplitPane
-            split="horizontal"
             defaultSize="50%"
-            minSize={300}
             maxSize={-300}
+            minSize={300}
+            split="horizontal"
           >
-            <SplitPane split="vertical" defaultSize={250} minSize={250}>
+            <SplitPane defaultSize={250} minSize={250} split="vertical">
               <Dom
-                boxes={this.state.boxes}
-                handleSelectBox={this.handleSelectBox.bind(this)}
-                selectedBoxId={this.state.selectedBoxId}
-                handleAddBoxTo={this.handleAddBoxTo.bind(this)}
-                handleDeleteBox={this.handleDeleteBox.bind(this)}
-                updateBox={this.handleUpdateBox.bind(this)}
-                moveBox={this.handleReorderBox.bind(this)}
+                boxes={boxes}
+                onAddBoxTo={this.handleAddBoxTo}
+                onDeleteBox={this.handleDeleteBox}
+                onMoveBox={this.handleReorderBox}
+                onSelectBox={this.handleSelectBox}
+                onUpdateBox={this.handleUpdateBox}
+                selectedBoxId={selectedBoxId}
               />
 
               <FBox
-                boxes={this.state.boxes}
+                boxes={boxes}
                 id="1"
-                selectBox={this.handleSelectBox.bind(this)}
-                selectedBoxId={this.state.selectedBoxId}
+                onSelectBox={this.handleSelectBox}
+                selectedBoxId={selectedBoxId}
               />
             </SplitPane>
 
             <SplitPane
-              split="vertical"
               defaultSize={150}
-              minSize={150}
               maxSize={150}
+              minSize={150}
+              split="vertical"
             >
-              <Sitebar handleSelectBox={this.handleSelectBox.bind(this)} />
+              <Sitebar onSelectBox={this.handleSelectBox} />
 
               <SplitPane
-                split="vertical"
                 defaultSize="50%"
-                minSize={300}
                 maxSize={-300}
+                minSize={300}
+                split="vertical"
               >
-                <Html boxes={this.state.boxes} />
+                <Html boxes={boxes} />
 
-                <Css boxes={this.state.boxes} />
+                <Css boxes={boxes} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
 
           <Toolbar
-            id={this.state.selectedBoxId}
-            selectedBox={this.state.boxes[this.state.selectedBoxId]}
-            updateBox={this.handleUpdateBox.bind(this)}
-            nudge={this.handleNudge.bind(this)}
-            resetBox={this.handleResetBox.bind(this)}
+            id={selectedBoxId}
+            onNudge={this.handleNudge}
+            onResetBox={this.handleResetBox}
+            onUpdateBox={this.handleUpdateBox}
+            selectedBox={boxes[selectedBoxId]}
           />
         </SplitPane>
       </div>

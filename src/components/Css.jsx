@@ -1,9 +1,10 @@
+/* eslint-disable react/no-set-state */
+import './../css/Css.css'
+
 import React, { Component } from 'react'
+import ClipboardButton from 'react-clipboard.js'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import ClipboardButton from 'react-clipboard.js'
-
-import './../css/Css.css'
 
 class Css extends Component {
   constructor() {
@@ -12,6 +13,8 @@ class Css extends Component {
     this.state = {
       copyButtonText: 'COPY',
     }
+
+    this.onSuccessfulyCopy = this.onSuccessfulyCopy.bind(this)
   }
 
   onSuccessfulyCopy() {
@@ -27,53 +30,53 @@ class Css extends Component {
   }
 
   render() {
-    var boxes = this.props.boxes
+    const { boxes } = this.props
 
     function buildUpBoxCSSProperties(id) {
-      var output = ''
+      let output = ''
 
-      for (var property in boxes[id]) {
-        if (boxes[id].hasOwnProperty(property)) {
-          var value = boxes[id][property]
+      for (const property in boxes[id]) {
+        if (boxes[id].hasOwnProperty.call(property)) {
+          const value = boxes[id][property]
           switch (property) {
             case 'c':
-              output += '  display: flex;\n'
+              output = `${output}  display: flex;\n`
               break
 
             case 'b':
-              output += `  flex-basis: ${value};\n`
+              output = `${output}  flex-basis: ${value};\n`
               break
 
             case 'd':
-              output += '  flex-direction: column;\n'
+              output = `${output}  flex-direction: column;\n`
               break
 
             case 'g':
-              output += `  flex-grow: ${value};\n`
+              output = `${output}  flex-grow: ${value};\n`
               break
 
             case 's':
-              output += `  flex-shrink: ${value};\n`
+              output = `${output}  flex-shrink: ${value};\n`
               break
 
             case 'w':
-              output += `  flex-wrap: ${value};\n`
+              output = `${output}  flex-wrap: ${value};\n`
               break
 
             case 'ac':
-              output += `  align-content: ${value};\n`
+              output = `${output}  align-content: ${value};\n`
               break
 
             case 'ai':
-              output += `  align-items: ${value};\n`
+              output = `${output}  align-items: ${value};\n`
               break
 
             case 'as':
-              output += `  align-self: ${value};\n`
+              output = `${output}  align-self: ${value};\n`
               break
 
             case 'jc':
-              output += `  justify-content: ${value};\n`
+              output = `${output}  justify-content: ${value};\n`
               break
 
             default:
@@ -86,12 +89,12 @@ class Css extends Component {
     }
 
     function buildUpCode(id) {
-      var output = ``
+      let output = ``
 
       if (boxes[id].c) {
-        for (var i = 0; i < boxes[id].c.length; i++) {
-          var compId = boxes[id].c[i]
-          let compTitle = boxes[compId].t ? '-' + boxes[compId].t : ''
+        for (let index = 0; index < boxes[id].c.length; index = index + 1) {
+          const compId = boxes[id].c[index]
+          const compTitle = boxes[compId].t ? `-${boxes[compId].t}` : ''
 
           // if has any css to set
           if (
@@ -106,15 +109,15 @@ class Css extends Component {
             boxes[compId].as ||
             boxes[compId].js
           ) {
-            output += `.fb__${id}_${compId}${compTitle} {\n`
-            output += buildUpBoxCSSProperties(compId)
-            output += `}\n\n`
+            output = `${output}.fb__${id}_${compId}${compTitle} {\n`
+            output = output + buildUpBoxCSSProperties(compId)
+            output = `${output}}\n\n`
           }
 
           // Children
           if (boxes[compId].c && boxes[compId].c.length > 0) {
-            var childOutput = buildUpCode(compId)
-            output += childOutput
+            const childOutput = buildUpCode(compId)
+            output = output + childOutput
           }
         }
       }
@@ -122,27 +125,27 @@ class Css extends Component {
       return output
     }
 
-    var builtCode = buildUpCode(1)
+    const builtCode = buildUpCode(1)
 
-    var rootCompTitle = boxes[1].t ? '-' + boxes[1].t : ''
+    const rootCompTitle = boxes[1].t ? `-${boxes[1].t}` : ''
 
     // if first comp is 'body'
-    var rootCompStart
-    if (boxes[1].t && boxes[1].t === 'body') {
-      rootCompStart = `height, body {
+    const rootCompStart =
+      boxes[1].t && boxes[1].t === 'body'
+        ? `height, body {
   height: 100%;
 }
 
 body {
   overflow: hidden;`
-    } else {
-      rootCompStart = `.fb__1${rootCompTitle} {`
-    }
+        : `.fb__1${rootCompTitle} {`
 
-    var css = `${rootCompStart}
+    const css = `${rootCompStart}
 ${buildUpBoxCSSProperties(1)}}
 
 ${builtCode}`
+
+    const { copyButtonText } = this.state
 
     return (
       <div className="Css Pane__component">
@@ -151,16 +154,12 @@ ${builtCode}`
           <ClipboardButton
             button-className="Pane__titleButton button"
             data-clipboard-text={css}
-            onSuccess={this.onSuccessfulyCopy.bind(this)}
+            onSuccess={() => this.onSuccessfulyCopy()}
           >
-            {this.state.copyButtonText}
+            {copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter
-          language="css"
-          style={atomOneDark}
-          showLineNumbers={true}
-        >
+        <SyntaxHighlighter language="css" showLineNumbers style={atomOneDark}>
           {css}
         </SyntaxHighlighter>
       </div>

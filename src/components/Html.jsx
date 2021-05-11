@@ -1,10 +1,11 @@
+/* eslint-disable react/no-set-state */
+import './../css/Html.css'
+
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
+import ClipboardButton from 'react-clipboard.js'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import ClipboardButton from 'react-clipboard.js'
-
-import './../css/Html.css'
 
 class Html extends Component {
   constructor() {
@@ -13,6 +14,8 @@ class Html extends Component {
     this.state = {
       copyButtonText: 'COPY',
     }
+
+    this.onSuccessfulyCopy = this.onSuccessfulyCopy.bind(this)
   }
 
   onSuccessfulyCopy() {
@@ -28,40 +31,42 @@ class Html extends Component {
   }
 
   render() {
-    var boxes = this.props.boxes
+    const { boxes } = this.props
 
-    function buildUpCode(id, indentMultiplier) {
-      var output = ``
-      indentMultiplier++
-      let indent = repeat('  ', indentMultiplier)
+    function buildUpCode(id, indentMultiplier = 0) {
+      let output = ``
+      const indentMultiplierUpdated = indentMultiplier + 1
+      const indent = repeat('  ', indentMultiplierUpdated)
 
       if (boxes[id].c) {
-        for (var i = 0; i < boxes[id].c.length; i++) {
-          var compId = boxes[id].c[i]
-          output += `${indent}<div class="fb fb__${id}_${compId}${
-            boxes[compId].t ? '-' + boxes[compId].t : ''
+        for (let index = 0; index < boxes[id].c.length; index = index + 1) {
+          const compId = boxes[id].c[index]
+          output = `${output}${indent}<div class="fb fb__${id}_${compId}${
+            boxes[compId].t ? `-${boxes[compId].t}` : ''
           }">\n`
 
           // Children
           if (boxes[compId].c && boxes[compId].c.length > 0) {
-            var childOutput = buildUpCode(compId, indentMultiplier)
-            output += childOutput
+            const childOutput = buildUpCode(compId, indentMultiplierUpdated)
+            output = output + childOutput
           } else {
-            output += `${indent}  <!-- ${boxes[compId].t || id} -->\n\n`
+            output = `${output}${indent}  <!-- ${boxes[compId].t || id} -->\n\n`
           }
 
-          output += `${indent}</div>\n`
+          output = `${output}${indent}</div>\n`
         }
       }
+
       return output
     }
 
-    var builtCode = buildUpCode(1, 0)
+    const builtCode = buildUpCode(1, 0)
 
-    var rootCompTitle = boxes[1].t ? '-' + boxes[1].t : ''
+    const rootCompTitle = boxes[1].t ? `-${boxes[1].t}` : ''
 
     // if first comp is 'body'
-    var rootCompStart, rootCompEnd
+    let rootCompStart
+    let rootCompEnd
     if (boxes[1].t && boxes[1].t === 'body') {
       rootCompStart = '<body>'
       rootCompEnd = '</body>'
@@ -70,12 +75,14 @@ class Html extends Component {
       rootCompEnd = '</div>'
     }
 
-    var rootComment = boxes[1].c ? '' : `  <!-- fb__1${rootCompTitle} -->\n`
+    const rootComment = boxes[1].c ? '' : `  <!-- fb__1${rootCompTitle} -->\n`
 
-    var html = `${rootCompStart}
+    const html = `${rootCompStart}
 ${rootComment}${builtCode}${rootCompEnd}
 
 `
+
+    const { copyButtonText } = this.state
 
     return (
       <div className="Html Pane__component">
@@ -84,16 +91,12 @@ ${rootComment}${builtCode}${rootCompEnd}
           <ClipboardButton
             button-className="Pane__titleButton button"
             data-clipboard-text={html}
-            onSuccess={this.onSuccessfulyCopy.bind(this)}
+            onSuccess={() => this.onSuccessfulyCopy()}
           >
-            {this.state.copyButtonText}
+            {copyButtonText}
           </ClipboardButton>
         </h2>
-        <SyntaxHighlighter
-          language="html"
-          style={atomOneDark}
-          showLineNumbers={true}
-        >
+        <SyntaxHighlighter language="html" showLineNumbers style={atomOneDark}>
           {html}
         </SyntaxHighlighter>
       </div>
