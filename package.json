@@ -32,6 +32,7 @@
     "sshpk": "^1.16.1"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
     "classcat": "^4.1.0",
     "font-awesome": "^4.7.0",
     "immutability-helper": "^3.1.1",
