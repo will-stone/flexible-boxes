@@ -10,7 +10,7 @@ import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 function Html({ boxes }) {
   const [copyButtonText, setCopyButtonText] = useState('COPY')
 
-  function onSuccessfulyCopy() {
+  function onSuccessfulCopy() {
     setCopyButtonText('COPIED!')
     setTimeout(() => {
       setCopyButtonText('COPY')
@@ -70,7 +70,7 @@ ${rootComment}${builtCode}${rootCompEnd}
     <div className="Html Pane__component">
       <h2 className="Pane__title">
         HTML
-        <CopyToClipboard onCopy={onSuccessfulyCopy} text={html}>
+        <CopyToClipboard onCopy={onSuccessfulCopy} text={html}>
           <button className="Pane__titleButton button" type="button">
             {copyButtonText}
           </button>

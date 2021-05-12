@@ -9,7 +9,7 @@ import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 function Css({ boxes }) {
   const [copyButtonText, setCopyButtonText] = useState('COPY')
 
-  function onSuccessfulyCopy() {
+  function onSuccessfulCopy() {
     setCopyButtonText('COPIED!')
     setTimeout(() => {
       setCopyButtonText('COPY')
@@ -130,7 +130,7 @@ ${builtCode}`
     <div className="Css Pane__component">
       <h2 className="Pane__title">
         CSS
-        <CopyToClipboard onCopy={onSuccessfulyCopy} text={css}>
+        <CopyToClipboard onCopy={onSuccessfulCopy} text={css}>
           <button className="Pane__titleButton button" type="button">
             {copyButtonText}
           </button>
