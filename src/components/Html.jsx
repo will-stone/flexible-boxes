@@ -3,7 +3,7 @@ import './../css/Html.css'
 
 import repeat from 'lodash/repeat'
 import React, { Component } from 'react'
-import ClipboardButton from 'react-clipboard.js'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
@@ -88,13 +88,11 @@ ${rootComment}${builtCode}${rootCompEnd}
       <div className="Html Pane__component">
         <h2 className="Pane__title">
           HTML
-          <ClipboardButton
-            button-className="Pane__titleButton button"
-            data-clipboard-text={html}
-            onSuccess={() => this.onSuccessfulyCopy()}
-          >
-            {copyButtonText}
-          </ClipboardButton>
+          <CopyToClipboard onCopy={() => this.onSuccessfulyCopy()} text={html}>
+            <button className="Pane__titleButton button" type="button">
+              {copyButtonText}
+            </button>
+          </CopyToClipboard>
         </h2>
         <SyntaxHighlighter language="html" showLineNumbers style={atomOneDark}>
           {html}

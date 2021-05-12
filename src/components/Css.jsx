@@ -2,7 +2,7 @@
 import './../css/Css.css'
 
 import React, { Component } from 'react'
-import ClipboardButton from 'react-clipboard.js'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
@@ -148,13 +148,11 @@ ${builtCode}`
       <div className="Css Pane__component">
         <h2 className="Pane__title">
           CSS
-          <ClipboardButton
-            button-className="Pane__titleButton button"
-            data-clipboard-text={css}
-            onSuccess={() => this.onSuccessfulyCopy()}
-          >
-            {copyButtonText}
-          </ClipboardButton>
+          <CopyToClipboard onCopy={() => this.onSuccessfulyCopy()} text={css}>
+            <button className="Pane__titleButton button" type="button">
+              {copyButtonText}
+            </button>
+          </CopyToClipboard>
         </h2>
         <SyntaxHighlighter language="css" showLineNumbers style={atomOneDark}>
           {css}

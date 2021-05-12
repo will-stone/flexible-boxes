@@ -67,7 +67,7 @@ class App extends Component {
     let counter = 1
     for (const [compId, box] of Object.entries(boxes)) {
       if (box && Number.parseInt(compId, 10) === counter) {
-        // second clause is dirty check for corrupt boxes; checks box IDs start at 1 and are squential.
+        // second clause is dirty check for corrupt boxes; checks box IDs start at 1 and are sequential.
         for (const key of Object.keys(boxes[compId])) {
           if (boxes[compId][key]) {
             const value = boxes[compId][key]
