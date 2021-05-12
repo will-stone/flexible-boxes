@@ -63,15 +63,6 @@ class App extends Component {
     )
   }
 
-  // componentDidUpdate() {
-  //   const { boxes } = this.state
-  //   window.history.pushState(
-  //     null,
-  //     null,
-  //     `#${jsurl.stringify(this.sanitiseBoxes(boxes))}`,
-  //   )
-  // }
-
   sanitiseBoxes(boxes) {
     let counter = 1
     for (const [compId, box] of Object.entries(boxes)) {
@@ -424,24 +415,23 @@ class App extends Component {
   }
 
   handleResetBox(id) {
-    let { boxes } = this.state
-    boxes = update(boxes, {
-      [id]: {
-        d: { $set: 'row' },
-        w: { $set: 'nowrap' },
-        g: { $set: '0' },
-        s: { $set: '1' },
-        b: { $set: 'auto' },
-        ac: { $set: 'stretch' },
-        ai: { $set: 'stretch' },
-        as: { $set: 'auto' },
-        jc: { $set: 'flex-start' },
-      },
-    })
-    window.history.pushState(
-      null,
-      null,
-      `#${jsurl.stringify(this.sanitiseBoxes(boxes))}`,
+    const { boxes } = this.state
+    window.location.hash = jsurl.stringify(
+      this.sanitiseBoxes(
+        update(boxes, {
+          [id]: {
+            d: { $set: 'row' },
+            w: { $set: 'nowrap' },
+            g: { $set: '0' },
+            s: { $set: '1' },
+            b: { $set: 'auto' },
+            ac: { $set: 'stretch' },
+            ai: { $set: 'stretch' },
+            as: { $set: 'auto' },
+            jc: { $set: 'flex-start' },
+          },
+        }),
+      ),
     )
   }
 
@@ -466,12 +456,12 @@ class App extends Component {
         console.log('unsuccessful parse')
         // set to default
         const { boxes } = this.state
-        window.history.pushState(null, null, `#${jsurl.stringify(boxes)}`)
+        window.location.hash = jsurl.stringify(boxes)
       }
     } else {
       // set to default
       const { boxes } = this.state
-      window.history.pushState(null, null, `#${jsurl.stringify(boxes)}`)
+      window.location.hash = jsurl.stringify(boxes)
     }
   }
 
