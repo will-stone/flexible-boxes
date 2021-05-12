@@ -48,15 +48,15 @@ const Dom = ({
   const domBoxes = [
     <DomBox
       key={1}
-      addBoxTo={onAddBoxTo}
       box={boxes[1]}
-      deleteBox={onDeleteBox}
       id={1}
       indentLevel={0}
+      onAddBoxTo={onAddBoxTo}
+      onDeleteBox={onDeleteBox}
       onSelectBox={onSelectBox}
+      onUpdateBox={onUpdateBox}
       parentId="null"
       selectedBoxId={selectedBoxId}
-      updateBox={onUpdateBox}
     />,
     buildDom(1, 0),
   ]

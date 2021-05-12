@@ -35,53 +35,50 @@ class Css extends Component {
     function buildUpBoxCSSProperties(id) {
       let output = ''
 
-      for (const property in boxes[id]) {
-        if (boxes[id].hasOwnProperty.call(property)) {
-          const value = boxes[id][property]
-          switch (property) {
-            case 'c':
-              output = `${output}  display: flex;\n`
-              break
+      for (const [property, value] of Object.entries(boxes[id])) {
+        switch (property) {
+          case 'c':
+            output = `${output}  display: flex;\n`
+            break
 
-            case 'b':
-              output = `${output}  flex-basis: ${value};\n`
-              break
+          case 'b':
+            output = `${output}  flex-basis: ${value};\n`
+            break
 
-            case 'd':
-              output = `${output}  flex-direction: column;\n`
-              break
+          case 'd':
+            output = `${output}  flex-direction: column;\n`
+            break
 
-            case 'g':
-              output = `${output}  flex-grow: ${value};\n`
-              break
+          case 'g':
+            output = `${output}  flex-grow: ${value};\n`
+            break
 
-            case 's':
-              output = `${output}  flex-shrink: ${value};\n`
-              break
+          case 's':
+            output = `${output}  flex-shrink: ${value};\n`
+            break
 
-            case 'w':
-              output = `${output}  flex-wrap: ${value};\n`
-              break
+          case 'w':
+            output = `${output}  flex-wrap: ${value};\n`
+            break
 
-            case 'ac':
-              output = `${output}  align-content: ${value};\n`
-              break
+          case 'ac':
+            output = `${output}  align-content: ${value};\n`
+            break
 
-            case 'ai':
-              output = `${output}  align-items: ${value};\n`
-              break
+          case 'ai':
+            output = `${output}  align-items: ${value};\n`
+            break
 
-            case 'as':
-              output = `${output}  align-self: ${value};\n`
-              break
+          case 'as':
+            output = `${output}  align-self: ${value};\n`
+            break
 
-            case 'jc':
-              output = `${output}  justify-content: ${value};\n`
-              break
+          case 'jc':
+            output = `${output}  justify-content: ${value};\n`
+            break
 
-            default:
-              break
-          }
+          default:
+            break
         }
       }
 
