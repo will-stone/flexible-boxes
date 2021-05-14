@@ -1,24 +1,21 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable unicorn/no-null */
 import './../css/Dom.css'
 
 import cc from 'classcat'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { moveBox } from '../store/actions'
 import DomBox from './DomBox'
 
-const Dom = ({
-  onUpdateBox,
-  onDeleteBox,
-  onAddBoxTo,
-  onSelectBox,
-  selectedBoxId,
-  onMoveBox,
-  boxes,
-}) => {
+const Dom = () => {
+  const dispatch = useDispatch()
+  const boxes = useSelector((state) => state.ui.boxes)
+  const selectedBoxId = useSelector((state) => state.ui.selectedBoxId)
+
   const buildDom = (id, indentMultiplier = 0) => {
-    let output = null
+    let output
     if (boxes[id].c) {
       output = []
       const indentMultiplierUpdated = indentMultiplier + 1
@@ -30,10 +27,6 @@ const Dom = ({
             box={boxes[childId]}
             id={childId}
             indentLevel={indentMultiplierUpdated}
-            onAddBoxTo={onAddBoxTo}
-            onDeleteBox={onDeleteBox}
-            onSelectBox={onSelectBox}
-            onUpdateBox={onUpdateBox}
             parentId={id}
             selectedBoxId={selectedBoxId}
           />,
@@ -51,10 +44,6 @@ const Dom = ({
       box={boxes[1]}
       id={1}
       indentLevel={0}
-      onAddBoxTo={onAddBoxTo}
-      onDeleteBox={onDeleteBox}
-      onSelectBox={onSelectBox}
-      onUpdateBox={onUpdateBox}
       parentId="null"
       selectedBoxId={selectedBoxId}
     />,
@@ -68,12 +57,14 @@ const Dom = ({
         <a
           className="Pane__titleButton button"
           href="/#~(1~())"
-          onClick={() => onSelectBox(null)}
+          // eslint-disable-next-line no-alert
+          onClick={() => alert('not working')}
         >
           CLEAR
         </a>
       </h2>
-      <ul className="Dom__boxes" onClick={() => onSelectBox(null)}>
+      {/* eslint-disable-next-line no-alert */}
+      <ul className="Dom__boxes" onClick={() => alert('not working')}>
         {domBoxes}
       </ul>
       {selectedBoxId && selectedBoxId !== 1 && (
@@ -86,7 +77,7 @@ const Dom = ({
                   selectedBoxId === boxes[1].c[0],
               },
             ])}
-            onClick={() => onMoveBox('up')}
+            onClick={() => dispatch(moveBox('up'))}
             type="button"
           >
             UP
@@ -99,7 +90,7 @@ const Dom = ({
                   selectedBoxId === boxes[1].c[boxes[1].c.length - 1],
               },
             ])}
-            onClick={() => onMoveBox('down')}
+            onClick={() => dispatch(moveBox('down'))}
             type="button"
           >
             DOWN

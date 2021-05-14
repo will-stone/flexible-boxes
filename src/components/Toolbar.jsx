@@ -3,8 +3,16 @@ import './../css/Toolbar.css'
 
 import cc from 'classcat'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
+import { resetBox, updateBoxProperty } from '../store/actions'
+
+const Toolbar = ({ id }) => {
+  const dispatch = useDispatch()
+  const boxes = useSelector((state) => state.ui.boxes)
+  const selectedBoxId = useSelector((state) => state.ui.selectedBoxId)
+  const selectedBox = boxes[selectedBoxId]
+
   return (
     <div
       className={cc([
@@ -21,7 +29,7 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
         {selectedBox && (
           <button
             className="Pane__titleButton button"
-            onClick={() => onResetBox(id)}
+            onClick={() => dispatch(resetBox(id))}
             type="button"
           >
             DEFAULT
@@ -58,7 +66,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                         checked={!selectedBox.d || selectedBox.d === 'row'}
                         disabled={!selectedBox.c}
                         name="d"
-                        onChange={(event_) => onUpdateBox(event_, id)}
+                        onChange={(event_) =>
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              event_.target.name,
+                              event_.target.value,
+                            ),
+                          )
+                        }
                         type="radio"
                         value="row"
                       />
@@ -76,7 +92,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                         checked={selectedBox.d === 'column'}
                         disabled={!selectedBox.c}
                         name="d"
-                        onChange={(event_) => onUpdateBox(event_, id)}
+                        onChange={(event_) =>
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              event_.target.name,
+                              event_.target.value,
+                            ),
+                          )
+                        }
                         type="radio"
                         value="column"
                       />
@@ -100,7 +124,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                         checked={!selectedBox.w || selectedBox.w === 'nowrap'}
                         disabled={!selectedBox.c}
                         name="w"
-                        onChange={(event_) => onUpdateBox(event_, id)}
+                        onChange={(event_) =>
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              event_.target.name,
+                              event_.target.value,
+                            ),
+                          )
+                        }
                         type="radio"
                         value="nowrap"
                       />
@@ -121,7 +153,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                         checked={selectedBox.w === 'wrap'}
                         disabled={!selectedBox.c}
                         name="w"
-                        onChange={(event_) => onUpdateBox(event_, id)}
+                        onChange={(event_) =>
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              event_.target.name,
+                              event_.target.value,
+                            ),
+                          )
+                        }
                         type="radio"
                         value="wrap"
                       />
@@ -150,7 +190,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={!selectedBox.jc || selectedBox.jc === 'flex-start'}
                     disabled={!selectedBox.c}
                     name="jc"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="flex-start"
                   />
@@ -168,7 +216,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.jc === 'flex-end'}
                     disabled={!selectedBox.c}
                     name="jc"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="flex-end"
                   />
@@ -186,7 +242,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.jc === 'center'}
                     disabled={!selectedBox.c}
                     name="jc"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="center"
                   />
@@ -204,7 +268,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.jc === 'space-between'}
                     disabled={!selectedBox.c}
                     name="jc"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="space-between"
                   />
@@ -222,7 +294,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.jc === 'space-around'}
                     disabled={!selectedBox.c}
                     name="jc"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="space-around"
                   />
@@ -246,7 +326,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.ai === 'flex-start'}
                     disabled={!selectedBox.c}
                     name="ai"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="flex-start"
                   />
@@ -264,7 +352,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.ai === 'flex-end'}
                     disabled={!selectedBox.c}
                     name="ai"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="flex-end"
                   />
@@ -282,7 +378,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.ai === 'center'}
                     disabled={!selectedBox.c}
                     name="ai"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="center"
                   />
@@ -300,7 +404,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={!selectedBox.ai || selectedBox.ai === 'stretch'}
                     disabled={!selectedBox.c}
                     name="ai"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="stretch"
                   />
@@ -318,7 +430,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                     checked={selectedBox.ai === 'baseline'}
                     disabled={!selectedBox.c}
                     name="ai"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="baseline"
                   />
@@ -343,10 +463,12 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                       <button
                         className="Toolbar__nudgeButton"
                         onClick={() =>
-                          onNudge(
-                            id,
-                            'g',
-                            selectedBox.g ? selectedBox.g - 1 : 0,
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              'g',
+                              selectedBox.g ? selectedBox.g - 1 : 0,
+                            ),
                           )
                         }
                         type="button"
@@ -359,10 +481,12 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                       <button
                         className="Toolbar__nudgeButton"
                         onClick={() =>
-                          onNudge(
-                            id,
-                            'g',
-                            selectedBox.g ? selectedBox.g + 1 : 1,
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              'g',
+                              selectedBox.g ? selectedBox.g + 1 : 1,
+                            ),
                           )
                         }
                         type="button"
@@ -382,10 +506,12 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                       <button
                         className="Toolbar__nudgeButton"
                         onClick={() =>
-                          onNudge(
-                            id,
-                            's',
-                            selectedBox.s ? selectedBox.s - 1 : 0,
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              's',
+                              selectedBox.s ? selectedBox.s - 1 : 0,
+                            ),
                           )
                         }
                         type="button"
@@ -400,12 +526,14 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                       <button
                         className="Toolbar__nudgeButton"
                         onClick={() =>
-                          onNudge(
-                            id,
-                            's',
-                            selectedBox.s || selectedBox.s === 0
-                              ? selectedBox.s + 1
-                              : 2,
+                          dispatch(
+                            updateBoxProperty(
+                              id,
+                              's',
+                              selectedBox.s || selectedBox.s === 0
+                                ? selectedBox.s + 1
+                                : 2,
+                            ),
                           )
                         }
                         type="button"
@@ -421,7 +549,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                       autoComplete="off"
                       className="Toolbar__basisInput"
                       name="b"
-                      onChange={(event_) => onUpdateBox(event_, id)}
+                      onChange={(event_) =>
+                        dispatch(
+                          updateBoxProperty(
+                            id,
+                            event_.target.name,
+                            event_.target.value,
+                          ),
+                        )
+                      }
                       placeholder="auto"
                       type="text"
                       value={selectedBox.b ? selectedBox.b : ''}
@@ -436,7 +572,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                   <input
                     checked={selectedBox.as === 'flex-start'}
                     name="as"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="flex-start"
                   />
@@ -452,7 +596,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                   <input
                     checked={selectedBox.as === 'flex-end'}
                     name="as"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="flex-end"
                   />
@@ -468,7 +620,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                   <input
                     checked={selectedBox.as === 'center'}
                     name="as"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="center"
                   />
@@ -484,7 +644,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                   <input
                     checked={selectedBox.as === 'stretch'}
                     name="as"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="stretch"
                   />
@@ -500,7 +668,15 @@ const Toolbar = ({ selectedBox, onResetBox, id, onUpdateBox, onNudge }) => {
                   <input
                     checked={!selectedBox.as || selectedBox.as === 'auto'}
                     name="as"
-                    onChange={(event_) => onUpdateBox(event_, id)}
+                    onChange={(event_) =>
+                      dispatch(
+                        updateBoxProperty(
+                          id,
+                          event_.target.name,
+                          event_.target.value,
+                        ),
+                      )
+                    }
                     type="radio"
                     value="auto"
                   />

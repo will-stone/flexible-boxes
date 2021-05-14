@@ -1,4 +1,5 @@
 import produce from 'immer'
+import isNumber from 'lodash/isNumber'
 
 export const sanitiseBox = produce((box) => {
   for (const key of Object.keys(box)) {
@@ -27,7 +28,7 @@ export const sanitiseBox = produce((box) => {
 
       // grow
       case 'g':
-        if (Number.parseInt(box.g, 10) === 0) {
+        if (!isNumber(box.g) || Number.parseInt(box.g, 10) === 0) {
           delete box.g
         }
 

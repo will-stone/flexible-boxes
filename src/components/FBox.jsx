@@ -4,16 +4,15 @@ import './../css/FBox.css'
 
 import cc from 'classcat'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const FBox = ({
-  boxes,
-  id,
-  onAddBox,
-  onDeleteBox,
-  onMoveBox,
-  onSelectBox,
-  selectedBoxId,
-}) => {
+import { selectBox } from '../store/actions'
+
+const FBox = ({ id }) => {
+  const dispatch = useDispatch()
+  const boxes = useSelector((state) => state.ui.boxes)
+  const selectedBoxId = useSelector((state) => state.ui.selectedBoxId)
+
   const idAsNumber = Number.parseInt(id, 10)
 
   const thisBox = boxes[idAsNumber]
@@ -37,18 +36,7 @@ const FBox = ({
   if (thisBox.c) {
     for (let index = 0; index < thisBox.c.length; index = index + 1) {
       const childId = thisBox.c[index]
-      childBoxesJSX.push(
-        <FBox
-          key={childId}
-          boxes={boxes}
-          id={childId}
-          onAddBox={onAddBox}
-          onDeleteBox={onDeleteBox}
-          onMoveBox={onMoveBox}
-          onSelectBox={onSelectBox}
-          selectedBoxId={selectedBoxId}
-        />,
-      )
+      childBoxesJSX.push(<FBox key={childId} id={childId} />)
     }
   } else {
     inner = <div className="FBox__label">{thisBox.t ? thisBox.t : 'Box'}</div>
@@ -63,7 +51,7 @@ const FBox = ({
       ])}
       onClick={(event_) => {
         event_.stopPropagation()
-        onSelectBox(idAsNumber)
+        dispatch(selectBox(idAsNumber))
       }}
       style={divStyle}
     >

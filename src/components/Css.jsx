@@ -1,12 +1,14 @@
-/* eslint-disable react/no-set-state */
 import './../css/Css.css'
 
 import React, { useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { useSelector } from 'react-redux'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-function Css({ boxes }) {
+function Css() {
+  const boxes = useSelector((state) => state.ui.boxes)
+
   const [copyButtonText, setCopyButtonText] = useState('COPY')
 
   function onSuccessfulCopy() {
