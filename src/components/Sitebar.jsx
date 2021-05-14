@@ -8,10 +8,7 @@ function Sitebar() {
       <h1 className="Sitebar__logo">Flexible Boxes</h1>
       <h2 className="Sitebar__subTitle">
         By{' '}
-        <a
-          className="button button--link"
-          href="http://wstone.io/flexible-boxes-react-app/"
-        >
+        <a className="button button--link" href="https://wstone.io/">
           Will Stone
         </a>
       </h2>
