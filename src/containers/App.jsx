@@ -8,7 +8,7 @@ import './../css/button.css'
 import './../css/Pane.css'
 
 import cc from 'classcat'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SplitPane from 'react-split-pane'
 
@@ -18,7 +18,7 @@ import FBox from '../components/FBox'
 import Html from '../components/Html'
 import Sitebar from '../components/Sitebar'
 import Toolbar from '../components/Toolbar'
-import { removeBrowserWarning } from '../store/actions'
+import { appStarted, removeBrowserWarning } from '../store/actions'
 
 // // eslint-disable-next-line react/no-unsafe
 // class App extends Component {
@@ -499,6 +499,10 @@ function App() {
   const screenWarningHidden = useSelector(
     (state) => state.ui.screenWarningHidden,
   )
+
+  useEffect(() => {
+    dispatch(appStarted())
+  }, [dispatch])
 
   return (
     <div className="App">
