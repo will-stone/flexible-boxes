@@ -12,12 +12,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SplitPane from 'react-split-pane'
 
-import Css from '../components/Css'
+// import Css from '../components/Css'
 import Dom from '../components/Dom'
 import FBox from '../components/FBox'
-import Html from '../components/Html'
-import Sitebar from '../components/Sitebar'
-import Toolbar from '../components/Toolbar'
+// import Html from '../components/Html'
+// import Sitebar from '../components/Sitebar'
+// import Toolbar from '../components/Toolbar'
 import { appStarted, removeBrowserWarning } from '../store/actions'
 
 // // eslint-disable-next-line react/no-unsafe
@@ -27,7 +27,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 
 //     this.state = {
 //       screenWarningHidden: false,
-//       selectedBoxId: null,
+//       selectedBoxPath: null,
 //       boxes: {
 //         // default layout
 //         1: {
@@ -83,7 +83,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //   }
 
 //   handleSelectBox(id) {
-//     this.setState({ selectedBoxId: id })
+//     this.setState({ selectedBoxPath: id })
 //   }
 
 //   // TODO: merge this with nudge?
@@ -149,7 +149,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 
 //   handleReorderBox(direction) {
 //     const { boxes } = this.state
-//     const { selectedBoxId } = this.state
+//     const { selectedBoxPath } = this.state
 
 //     const findParentOf = (id) => {
 //       for (const boxId in boxes) {
@@ -162,7 +162,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //       }
 //     }
 
-//     const parentId = findParentOf(selectedBoxId)
+//     const parentId = findParentOf(selectedBoxPath)
 //     const parentIdOfParent = findParentOf(parentId)
 //     let indexOfParentInParent
 
@@ -172,7 +172,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //       )
 //     }
 
-//     const indexOfSelected = boxes[parentId].c.indexOf(selectedBoxId)
+//     const indexOfSelected = boxes[parentId].c.indexOf(selectedBoxPath)
 
 //     // Remove selected from children array
 //     const removeSelected = () => {
@@ -184,7 +184,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //       // if box above has children, move selected box into the end of that array
 //       if (boxes[boxes[parentId].c[indexOfSelected - 1]].c) {
 //         removeSelected()
-//         boxes[boxes[parentId].c[indexOfSelected - 1]].c.push(selectedBoxId)
+//         boxes[boxes[parentId].c[indexOfSelected - 1]].c.push(selectedBoxPath)
 //         // else swap selected with box above it in array
 //       } else {
 //         ;[
@@ -198,7 +198,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //     } else if (direction === 'up' && indexOfSelected === 0) {
 //       // Direction up and currently at beginning of children array, move to parent
 //       removeSelected()
-//       boxes[parentIdOfParent].c.splice(indexOfParentInParent, 0, selectedBoxId)
+//       boxes[parentIdOfParent].c.splice(indexOfParentInParent, 0, selectedBoxPath)
 //     } else if (
 //       direction === 'down' &&
 //       indexOfSelected !== boxes[parentId].c.length - 1
@@ -207,7 +207,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //       // if box below has children, move selected box into beginning of that array
 //       if (boxes[boxes[parentId].c[indexOfSelected + 1]].c) {
 //         removeSelected()
-//         boxes[boxes[parentId].c[indexOfSelected]].c.unshift(selectedBoxId)
+//         boxes[boxes[parentId].c[indexOfSelected]].c.unshift(selectedBoxPath)
 //         // else swap selected with box below it in array
 //       } else {
 //         ;[
@@ -227,7 +227,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //       boxes[parentIdOfParent].c.splice(
 //         indexOfParentInParent + 1,
 //         0,
-//         selectedBoxId,
+//         selectedBoxPath,
 //       )
 //     }
 
@@ -237,14 +237,14 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //   handleDeleteBox(id, parentId) {
 //     const { boxes } = this.state
 //     const selectedBoxChildren = boxes[id].c
-//     let { selectedBoxId } = this.state
+//     let { selectedBoxPath } = this.state
 
 //     // delete all children of box
 //     if (selectedBoxChildren) {
 //       for (const child of selectedBoxChildren) {
 //         // deselect
-//         if (selectedBoxId === child) {
-//           selectedBoxId = null
+//         if (selectedBoxPath === child) {
+//           selectedBoxPath = null
 //         }
 
 //         delete boxes[child]
@@ -255,8 +255,8 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //     delete boxes[id]
 
 //     // deselect if this id
-//     if (selectedBoxId === id) {
-//       selectedBoxId = null
+//     if (selectedBoxPath === id) {
+//       selectedBoxPath = null
 //     }
 
 //     // find link to id in parent's' children array and remove it
@@ -293,8 +293,8 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //           }
 
 //           // update selected id
-//           if (selectedBoxId === boxId) {
-//             selectedBoxId = idCounter
+//           if (selectedBoxPath === boxId) {
+//             selectedBoxPath = idCounter
 //           }
 //         }
 
@@ -305,7 +305,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //     // Update boxes in state
 //     window.location.hash = jsurl.stringify(boxes)
 //     this.setState({
-//       selectedBoxId,
+//       selectedBoxPath,
 //     })
 //   }
 
@@ -379,7 +379,7 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //       <![endif]-->`,
 //     }
 
-//     const { screenWarningHidden, boxes, selectedBoxId } = this.state
+//     const { screenWarningHidden, boxes, selectedBoxPath } = this.state
 
 //     return (
 //       <div className="App">
@@ -437,14 +437,14 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //                 onMoveBox={this.handleReorderBox}
 //                 onSelectBox={this.handleSelectBox}
 //                 onUpdateBox={this.handleUpdateBox}
-//                 selectedBoxId={selectedBoxId}
+//                 selectedBoxPath={selectedBoxPath}
 //               />
 
 //               <FBox
 //                 boxes={boxes}
 //                 id="1"
 //                 onSelectBox={this.handleSelectBox}
-//                 selectedBoxId={selectedBoxId}
+//                 selectedBoxPath={selectedBoxPath}
 //               />
 //             </SplitPane>
 
@@ -470,11 +470,11 @@ import { appStarted, removeBrowserWarning } from '../store/actions'
 //           </SplitPane>
 
 //           <Toolbar
-//             id={selectedBoxId}
+//             id={selectedBoxPath}
 //             onNudge={this.handleNudge}
 //             onResetBox={this.handleResetBox}
 //             onUpdateBox={this.handleUpdateBox}
-//             selectedBox={boxes[selectedBoxId]}
+//             selectedBox={boxes[selectedBoxPath]}
 //           />
 //         </SplitPane>
 //       </div>
@@ -557,7 +557,7 @@ function App() {
         >
           <SplitPane defaultSize={250} minSize={250} split="vertical">
             <Dom />
-            <FBox id="1" />
+            <FBox path={[]} />
           </SplitPane>
 
           <SplitPane
@@ -566,19 +566,23 @@ function App() {
             minSize={150}
             split="vertical"
           >
-            <Sitebar />
+            {/* <Sitebar /> */}
+            <div />
             <SplitPane
               defaultSize="50%"
               maxSize={-300}
               minSize={300}
               split="vertical"
             >
-              <Html />
-              <Css />
+              <div />
+              <div />
+              {/* <Html />
+              <Css /> */}
             </SplitPane>
           </SplitPane>
         </SplitPane>
-        <Toolbar />
+        {/* <Toolbar /> */}
+        <div />
       </SplitPane>
     </div>
   )

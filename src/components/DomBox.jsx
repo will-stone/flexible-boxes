@@ -4,6 +4,8 @@
 import './../css/DomBox.css'
 
 import cc from 'classcat'
+import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import repeat from 'lodash/repeat'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,28 +18,31 @@ import {
   updateTitle,
 } from '../store/actions'
 
-function DomBox({ id, indentLevel, title, box, parentId }) {
+function DomBox({ path, indentLevel, box }) {
   const dispatch = useDispatch()
-  const selectedBoxId = useSelector((state) => state.ui.selectedBoxId)
+  const selectedBoxPath = useSelector((state) => state.ui.selectedBoxPath)
 
   const showEditTitle = false
+
+  const isSelected = isEqual(path === selectedBoxPath)
+  const isRootBox = isEmpty(path)
 
   return (
     <li
       className={cc([
         'DomBox',
         {
-          'DomBox--isActive': id === selectedBoxId,
+          'DomBox--isActive': isSelected,
         },
       ])}
       onClick={(event_) => {
         event_.stopPropagation()
-        dispatch(selectBox(id))
+        dispatch(selectBox(path))
       }}
     >
-      <span className="DomBox__id">{id}</span>
+      <span className="DomBox__id">.</span>
       <span className="DomBox__indenter">{repeat('..', indentLevel)}</span>
-      {showEditTitle && id === selectedBoxId ? (
+      {showEditTitle && isSelected ? (
         <input
           autoFocus
           className="DomBox__titleInput"
@@ -45,23 +50,23 @@ function DomBox({ id, indentLevel, title, box, parentId }) {
           onChange={(event_) => dispatch(updateTitle(event_.target.value))}
           onKeyDown={(event_) => {
             if (event_.key === 'Enter') {
-              dispatch(editTitle(id))
+              dispatch(editTitle(path))
             }
           }}
           type="text"
-          value={title}
+          value={box.t}
         />
       ) : (
         <span className="DomBox__name">{box.t ? box.t : 'Box'}</span>
       )}
 
       <span className="DomBox__buttons">
-        {id !== 1 && (
+        {!isRootBox && (
           <button
             className="DomBox__deleteButton DomBox__button"
             onClick={(event_) => {
               event_.stopPropagation()
-              dispatch(deleteBox(id, parentId))
+              dispatch(deleteBox(path))
             }}
             type="button"
           >
@@ -73,7 +78,7 @@ function DomBox({ id, indentLevel, title, box, parentId }) {
           className="DomBox__renameButton DomBox__button"
           onClick={(event_) => {
             event_.stopPropagation()
-            dispatch(editTitle(id))
+            dispatch(editTitle(path))
           }}
           type="button"
         >
@@ -84,7 +89,7 @@ function DomBox({ id, indentLevel, title, box, parentId }) {
           className="DomBox__addButton DomBox__button"
           onClick={(event_) => {
             event_.stopPropagation()
-            dispatch(addBoxTo(id))
+            dispatch(addBoxTo(path))
           }}
           type="button"
         >

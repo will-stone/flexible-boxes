@@ -6,6 +6,7 @@ const removeBrowserWarning = cA('browserWarning/remove')
 /**
  * Box
  */
+const clearBoxes = cA('boxes/clear')
 const moveBox = cA('box/move')
 const selectBox = cA('box/select')
 const addBoxTo = cA('box/addTo')
@@ -22,6 +23,7 @@ const updateTitle = cA('box/updateTitle')
 export {
   addBoxTo,
   appStarted,
+  clearBoxes,
   deleteBox,
   editTitle,
   moveBox,

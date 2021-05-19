@@ -10,8 +10,8 @@ import { resetBox, updateBoxProperty } from '../store/actions'
 const Toolbar = ({ id }) => {
   const dispatch = useDispatch()
   const boxes = useSelector((state) => state.ui.boxes)
-  const selectedBoxId = useSelector((state) => state.ui.selectedBoxId)
-  const selectedBox = boxes[selectedBoxId]
+  const selectedBoxPath = useSelector((state) => state.ui.selectedBoxPath)
+  const selectedBox = boxes[selectedBoxPath]
 
   return (
     <div
