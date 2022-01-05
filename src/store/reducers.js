@@ -3,7 +3,13 @@ import jsurl from 'jsurl'
 import initial from 'lodash/initial'
 
 import { sanitiseBoxes } from '../lib/sanitiseBoxes'
-import { addBoxTo, appStarted, clearBoxes, deleteBox } from './actions'
+import {
+  addBoxTo,
+  appStarted,
+  clearBoxes,
+  deleteBox,
+  selectBox,
+} from './actions'
 
 const defaultBoxes = {
   c: [{ t: '1' }, { t: '2', c: [{}, { t: 'nested' }, {}, {}] }, { t: '3' }],
@@ -26,6 +32,13 @@ const ui = createReducer(
           console.warn('URL configuration is corrupt, resetting...', error)
           state.boxes = defaultBoxes
         }
+      })
+
+      /**
+       * Select Box
+       */
+      .addCase(selectBox, (state, action) => {
+        state.selectedBoxPath = action.payload
       })
 
       /**

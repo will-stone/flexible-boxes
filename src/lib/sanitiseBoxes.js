@@ -10,16 +10,6 @@ export const sanitiseBoxes = produce((box) => {
 
   for (const key of Object.keys(box)) {
     switch (key) {
-      // title
-      case 't':
-        if (!box.t) {
-          delete box.t
-        }
-
-        // spaces to underscores
-        box.t = box.t.replace(' ', '_')
-        break
-
       // direction
       case 'd':
         if (box.d !== 'column') {

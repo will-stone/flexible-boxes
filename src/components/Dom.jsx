@@ -49,14 +49,13 @@ const Dom = () => {
       <ul className="Dom__boxes" onClick={() => alert('not working')}>
         <DomBoxes box={boxes} indentLevel={0} path={[]} />
       </ul>
-      {selectedBoxPath && selectedBoxPath !== 1 && (
+      {selectedBoxPath && !isEmpty(selectedBoxPath) && (
         <div className="Dom__boxReorderButtons">
           <button
             className={cc([
               'button',
               {
-                'Dom__boxReorderButton--isDisabled':
-                  selectedBoxPath === boxes[1].c[0],
+                'Dom__boxReorderButton--isDisabled': isEmpty(selectedBoxPath),
               },
             ])}
             onClick={() => dispatch(moveBox('up'))}
@@ -68,8 +67,8 @@ const Dom = () => {
             className={cc([
               'button',
               {
-                'Dom__boxReorderButton--isDisabled':
-                  selectedBoxPath === boxes[1].c[boxes[1].c.length - 1],
+                // TODO need a way to know when selected is last box
+                'Dom__boxReorderButton--isDisabled': false,
               },
             ])}
             onClick={() => dispatch(moveBox('down'))}

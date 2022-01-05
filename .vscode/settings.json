@@ -3,7 +3,8 @@
     "titleBar.activeBackground": "#4c91b3",
     "titleBar.activeForeground": "#15202b",
     "titleBar.inactiveBackground": "#4c91b399",
-    "titleBar.inactiveForeground": "#15202b99"
+    "titleBar.inactiveForeground": "#15202b99",
+    "sash.hoverBorder": "#70a7c2"
   },
   "peacock.color": "4C91B3"
 }
