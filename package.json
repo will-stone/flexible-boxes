@@ -60,6 +60,7 @@
     "@typescript-eslint/parser": "^5.9.0",
     "@will-stone/eslint-config": "^6.6.0",
     "@will-stone/prettier-config": "^6.0.0",
+    "autoprefixer": "^10.4.1",
     "eslint": "^8.6.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^25.3.4",
@@ -72,7 +73,9 @@
     "eslint-plugin-unicorn": "^40.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.5",
+    "postcss": "^8.4.5",
     "prettier": "^2.5.1",
+    "tailwindcss": "^3.0.11",
     "typescript": "^4.5.4"
   }
 }
