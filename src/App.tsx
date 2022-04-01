@@ -1,38 +1,43 @@
 import clsx from 'clsx'
 
-import { clickedDummyButton } from './store/actions'
-import { useDispatch, useSelector } from './store/store'
+import type { Box } from './store/reducer.ui'
+import { useSelector } from './store/store'
+
+interface BoxComponentProps {
+  box: Box
+  className?: string
+}
+
+function BoxComponent({ box, className }: BoxComponentProps) {
+  return (
+    <div className={clsx('flex p-2 gap-2 min-w-[80px]', className)}>
+      {box.c?.map((b, index) => (
+        <BoxComponent
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          box={b}
+          className="border border-gray-900 bg-gray-700"
+        />
+      ))}
+    </div>
+  )
+}
 
 function App(): JSX.Element {
-  const dispatch = useDispatch()
-  const colour = useSelector((state) => state.ui.colour)
+  const boxes = useSelector((state) => state.ui.boxes)
 
   return (
-    <div className="h-full grid grid-cols-12">
-      <div className="col-span-10 grid grid-rows-2">
-        <div className="grid grid-cols-12">
-          <div className="bg-blue-500 col-span-3" />
-          <div className="bg-red-500 col-span-9" />
-        </div>
+    <div className="h-full grid grid-cols-12 bg-gray-800">
+      <div className="col-span-2" />
 
-        <div className="grid grid-cols-12">
-          <div className="bg-red-500 col-span-2" />
-          <div className="bg-yellow-500 col-span-10" />
+      <div className="col-span-7 grid grid-rows-6 border-l border-gray-900">
+        <div className="row-span-1" />
+        <div className="row-span-5 border-t border-gray-900">
+          <BoxComponent box={boxes} className="h-full" />
         </div>
       </div>
 
-      <div className="col-span-2 bg-blue-500">
-        <button
-          className={clsx(
-            'text-white font-bold p-4 rounded-3xl',
-            colour === 'GREEN' ? 'bg-green-700' : 'bg-red-700',
-          )}
-          onClick={() => dispatch(clickedDummyButton())}
-          type="button"
-        >
-          Click Me
-        </button>
-      </div>
+      <div className="col-span-3 border-l border-gray-900" />
     </div>
   )
 }
